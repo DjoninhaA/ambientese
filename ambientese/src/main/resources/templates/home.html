@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ambientese</title>
+    <link rel="icon" type="image/x-icon" href="/images/fav-Icon/favIcon.png">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #EEEEFF;
+            min-height: 100vh;
+        }
+
+        .home-container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .imagem-usuario img {
+            border-radius: 50%;
+            border: 4px solid #0077C8;
+            object-fit: cover;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 20px auto;
+        }
+
+        .options .option1,
+        .options .option2,
+        .options .option3 {
+            width: calc((100% - 20px) / 3);
+            display: flex;
+            align-items: center;
+            background-color: #FFFFFF;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 5px;
+            border: 1px solid #D5D5D5;
+        }
+
+
+
+        .options .option1 img,
+        .options .option2 img,
+        .options .option3 img {
+            margin-right: 20px;
+            width: 50px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="home-container">
+
+    <div class="imagem-usuario">
+        <img src="/images/user-image.jpeg" alt="Perfil" width="100" height="100">
+    </div>
+
+    <div class="title-home">
+        <h1 style="text-align: center;">Bem vindo, Usuário</h1>
+        <p style="text-align: center;  font-size: 20px;">Conheça as opções que você pode realizar:</p>
+    </div>
+
+    <div class="options">
+        <div class="option1">
+            <img src="/images/ic_round-add-business.png" alt="Empresas">
+            <div class="title-option">
+                <p style="font-weight: bold; font-size: 20px;">Cadastrar empresas</p>
+                <p style="font-weight: lighter; font-size: 16px;">Aqui você pode cadastrar as empresas que serão atendidas</p>
+            </div>
+        </div>
+
+        <div class="option2">
+            <img src="/images/fa6-solid_user-plus.png" alt="Funcionários">
+            <div class="title-option">
+                <p style="font-weight: bold; font-size: 20px;">Cadastrar funcionário</p>
+                <p style="font-weight: lighter; font-size: 16px;">Aqui você pode cadastrar os funcionários que utilizarão o sistema</p>
+            </div>
+        </div>
+
+        <div class="option3">
+            <img src="/images/solar_ranking-outline.png" alt="Ranking">
+            <div class="title-option">
+                <p style="font-weight: bold; font-size: 20px;">Visualizar ranking</p>
+                <p style="font-weight: lighter; font-size: 16px;">Aqui você pode visualizar o ranking com a pontuação das empresas atendidas</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+</body>
+</html>
