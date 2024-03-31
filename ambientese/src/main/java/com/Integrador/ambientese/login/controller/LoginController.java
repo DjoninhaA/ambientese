@@ -67,10 +67,6 @@ public class LoginController {
 		}
 	}
 
-	@GetMapping("/home")
-	public String home() {
-		return "home";
-	}
 
 	@GetMapping("/Erro")
 	public String erro() {
