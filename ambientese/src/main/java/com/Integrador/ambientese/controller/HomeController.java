@@ -1,4 +1,4 @@
-package com.Integrador.ambientese.login.controller;
+package com.Integrador.ambientese.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

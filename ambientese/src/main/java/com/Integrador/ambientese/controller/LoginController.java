@@ -1,4 +1,4 @@
-package com.Integrador.ambientese.login.controller;
+package com.Integrador.ambientese.controller;
 
 
 import com.Integrador.ambientese.interfac.LoginRepository;
