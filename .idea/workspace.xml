@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1659da1-603b-47e8-9106-0f0dcdd5ccba" name="Changes" comment="" />
+    <list default="true" id="d1659da1-603b-47e8-9106-0f0dcdd5ccba" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ambientese/src/main/resources/templates/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/ambientese/src/main/resources/templates/home.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -43,7 +46,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "fix/pastas__controler",
+    "git-widget-placeholder": "feat/sidebar",
     "last_opened_file_path": "C:/Users/vitor/Desktop/AMBIENTESE  FILES/redme-test/ambientese",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -67,6 +70,7 @@
       <workItem from="1710976774443" duration="1046000" />
       <workItem from="1711060892680" duration="332000" />
       <workItem from="1711500228850" duration="1416000" />
+      <workItem from="1712616142284" duration="234000" />
     </task>
     <servers />
   </component>
