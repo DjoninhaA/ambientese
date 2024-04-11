@@ -4,11 +4,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class CadastroempresaController {
+public class ListarempresaController {
 
     @GetMapping("/empresa")
     public String home() {
-        return "cadastroEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
+        return "listarEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
     }
 }
 
