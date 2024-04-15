@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscar empresa</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-alpha1/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+  <style>
+    body{
+
+    background: #d1d5db;
+    }
+
+    .height{
+
+    height: 100vh;
+    }
+
+    .form{
+
+    position: relative;
+    margin-bottom: 10px;
+    }
+
+    .form .fa-search {
+    position: absolute;
+    top: 50%;  
+    left: 20px;
+    transform: translateY(-50%); 
+    color: #9ca3af;
+    }
+
+    .form span{
+
+    position: absolute;
+    right: 17px;
+    top: 13px;
+    padding: 2px;
+    border-left: 1px solid #adadad;
+    }
+
+    .left-pan{
+    padding-left: 7px;
+    }
+
+    .left-pan i{
+    padding-left: 10px;
+    }
+
+    .form-input{
+
+    height: 55px;
+    text-indent: 33px;
+    border-radius: 10px;
+    }
+
+    .form-input:focus{
+
+    box-shadow: none;
+    border:none;
+    }
+    
+
+    .search-title{
+      display:flex !important; 
+      justify-content: center !important;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .btn-next {
+    background-color: #007BFF; /* Azul */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    width: 150px;
+    }
+
+    .btn-next:hover {
+    background-color: #0056b3; /* Tom mais escuro de azul ao passar o mouse */
+    }
+
+  </style>
+
+</head>
+
+
+<body>
+
+  <div class="container">
+
+    
+    <div class="row height d-flex justify-content-center align-items-center">
+
+      <div class="col-md-6">
+        <div class="search-title">
+          <p>Selecione a empresa para realizar o questionário</p>
+        </div>
+
+        <div class="form">
+          <i class="fa fa-search"></i>
+          <input type="text" class="form-control form-input" placeholder="Procurar empresa...">
+        </div>
+
+        <div class="text-center">
+          <button class="btn-next">Próximo</button>
+        </div>
+      </div>
+      
+    </div>
+    
+  </div>
+</body>
+</html>
