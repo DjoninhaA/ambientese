@@ -361,8 +361,9 @@
                         </div>
                     </div>
                     <div class="col-xs-">
-                        <a href="#addEmployeeModal" class="btn btn-success btn-novo-registro" data-toggle="modal"><i
+                        <a href="/cadastro" class="btn btn-novo-registro"><i
                                 class="material-icons">&#xE147;</i> <span>Novo registro</span></a>
+
                         <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i
                                 class="material-icons">&#xE15C;</i> <span>Deletar</span></a>
                     </div>
@@ -373,119 +374,145 @@
                     <thead>
                     <tr>
                         <th>
-									<span class="custom-checkbox">
-										<input type="checkbox" id="selectAll">
-										<label for="selectAll"></label>
-									</span>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="selectAll">
+                                        <label for="selectAll"></label>
+                                    </span>
                         </th>
                         <th>ID</th>
-                        <th>Nome</th>
-                        <th>Função</th>
-                        <th>Telefone</th>
+                        <th>Razão Social</th>
                         <th>E-mail</th>
+                        <th>Ramo</th>
+                        <th>CNPJ</th>
+                        <th>Porte</th>
                         <th>Ações</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td>
-									<span class="custom-checkbox">
-										<input type="checkbox" id="checkbox1" name="options[]" value="1">
-										<label for="checkbox1"></label>
-									</span>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
+                                        <label for="checkbox1"></label>
+                                    </span>
                         </td>
                         <td>1</td>
-                        <td>Thomas Hardy</td>
-                        <td>Administrador</td>
-                        <td>(171) 555-2222</td>
-                        <td>thomashardy@mail.com</td>
+                        <td>BURGER KING DO BRASIL ASSESSORIA A RESTAURANTES LTDA.</td>
+                        <td>bk@mail.com</td>
+                        <td>Alimentício</td>
+                        <td>00.000 000 0001 91</td>
+                        <td>Grande</td>
 
                         <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            <a href="/cadastro" class="edit">
+                                <i class="material-icons" data-toggle="tooltip" title="Edit"
+                                   data-target="#editEmployeeModal">edit</i>
+                            </a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
+                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                            </a>
                         </td>
+
                     </tr>
                     <tr>
                         <td>
-									<span class="custom-checkbox">
-										<input type="checkbox" id="checkbox2" name="options[]" value="1">
-										<label for="checkbox2"></label>
-									</span>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="checkbox2" name="options[]" value="1">
+                                        <label for="checkbox2"></label>
+                                    </span>
                         </td>
                         <td>2</td>
-                        <td>Dominique Perrier</td>
-                        <td>Consultor</td>
-                        <td>(313) 555-5735</td>
-                        <td>dominiqueperrier@mail.com</td>
+                        <td>BURGER KING DO BRASIL ASSESSORIA A RESTAURANTES LTDA.</td>
+                        <td>bk@mail.com</td>
+                        <td>Alimentício</td>
+                        <td>00.000 000 0001 91</td>
+                        <td>Grande</td>
 
                         <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            <a href="/cadastro" class="edit">
+                                <i class="material-icons" data-toggle="tooltip" title="Edit"
+                                   data-target="#editEmployeeModal">edit</i>
+                            </a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
+                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                            </a>
                         </td>
+
                     </tr>
                     <tr>
                         <td>
-									<span class="custom-checkbox">
-										<input type="checkbox" id="checkbox3" name="options[]" value="1">
-										<label for="checkbox3"></label>
-									</span>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="checkbox3" name="options[]" value="1">
+                                        <label for="checkbox3"></label>
+                                    </span>
                         </td>
                         <td>3</td>
-                        <td>Maria Anders</td>
-                        <td>Consultor</td>
-                        <td>(503) 555-9931</td>
-                        <td>mariaanders@mail.com</td>
+                        <td>BURGER KING DO BRASIL ASSESSORIA A RESTAURANTES LTDA.</td>
+                        <td>bk@mail.com</td>
+                        <td>Alimentício</td>
+                        <td>00.000 000 0001 91</td>
+                        <td>Grande</td>
 
                         <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            <a href="/cadastro" class="edit">
+                                <i class="material-icons" data-toggle="tooltip" title="Edit"
+                                   data-target="#editEmployeeModal">edit</i>
+                            </a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
+                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                            </a>
                         </td>
+
                     </tr>
                     <tr>
                         <td>
-									<span class="custom-checkbox">
-										<input type="checkbox" id="checkbox4" name="options[]" value="1">
-										<label for="checkbox4"></label>
-									</span>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="checkbox4" name="options[]" value="1">
+                                        <label for="checkbox4"></label>
+                                    </span>
                         </td>
                         <td>4</td>
-                        <td>Fran Wilson</td>
-                        <td>Consultor</td>
-                        <td>(204) 619-5731</td>
-                        <td>franwilson@mail.com</td>
+                        <td>BURGER KING DO BRASIL ASSESSORIA A RESTAURANTES LTDA.</td>
+                        <td>bk@mail.com</td>
+                        <td>Alimentício</td>
+                        <td>00.000 000 0001 91</td>
+                        <td>Grande</td>
 
                         <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            <a href="/cadastro" class="edit">
+                                <i class="material-icons" data-toggle="tooltip" title="Edit"
+                                   data-target="#editEmployeeModal">edit</i>
+                            </a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
+                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                            </a>
                         </td>
+
                     </tr>
                     <tr>
                         <td>
-									<span class="custom-checkbox">
-										<input type="checkbox" id="checkbox5" name="options[]" value="1">
-										<label for="checkbox5"></label>
-									</span>
+                                    <span class="custom-checkbox">
+                                        <input type="checkbox" id="checkbox5" name="options[]" value="1">
+                                        <label for="checkbox5"></label>
+                                    </span>
                         </td>
                         <td>5</td>
-                        <td>Martin Blank</td>
-                        <td>Consultor</td>
-                        <td>(480) 631-2097</td>
-                        <td>martinblank@mail.com</td>
+                        <td>BURGER KING DO BRASIL ASSESSORIA A RESTAURANTES LTDA.</td>
+                        <td>bk@mail.com</td>
+                        <td>Alimentício</td>
+                        <td>00.000 000 0001 91</td>
+                        <td>Grande</td>
 
                         <td>
-                            <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i
-                                    class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                            <a href="/cadastro" class="edit">
+                                <i class="material-icons" data-toggle="tooltip" title="Edit"
+                                   data-target="#editEmployeeModal">edit</i>
+                            </a>
+                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
+                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+                            </a>
                         </td>
+
                     </tr>
                     </tbody>
                 </table>
