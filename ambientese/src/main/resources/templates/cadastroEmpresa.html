@@ -11,113 +11,119 @@
 </head>
 
 <style>
+    body{
+        color: #101828;
+        background: #F8F8F8;
+        font-family: 'Roboto', sans-serif;
+        font-size: 15px;
+    }
     .btn-salvar {
         background-color: #0077C8;
         border-color: #0077C8;
     }
+    .container-forms{
+        margin : 10%;
+        background:#F8F8F8;
+        padding: 2%;
+        border-radius: 15px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.219);
+    }
 </style>
 
-<body class="p-3 m-0 border-0 bd-example m-0 border-0">
+<body class="p-3 m-0 border-0 bd-example m-0 border-0" >
 
 
+<div class = "container-forms">
+    <form class="row g-3">
+        <div class="col-md-12"><p> <b>Dados da Empresa</b></p></div>
+        <div class="col-md-4">
+            <label class="form-label">Razão Social</label>
+            <input type="text" class="form-control" id="razao_social" placeholder="Digite a razão social da empresa">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Nome fantasia</label>
+            <input type="text" class="form-control" id="nome_fantasia" placeholder=" Nome fantasia">
+        </div>
+        <div class="col-4">
+            <label class="form-label">CNPJ</label>
+            <input type="number" class="form-control" id="cnpj" placeholder="CNPJ da empresa">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Nome do solicitante</label>
+            <input type="text" class="form-control" id="nome_solicitante" placeholder="Digite o nome do solicitante">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Telefone do solicitante</label>
+            <input type="text" class="form-control" id="telefone_solicitante" placeholder="Digite o telefone do solicitante">
+        </div>
+        <div class="col-4">
+            <label class="form-label">Inscrição Social</label>
+            <input type="text" class="form-control" id="inscricao_social" placeholder="Inscrição Social da empresa">
+        </div>
+        <div class="col-md-4">
+            <label for="Ramo" class="form-label">Ramo</label>
+            <input type="text" class="form-control" id="Ramo" placeholder="Escolha o ramo da empresa">
+        </div>
 
-<form class="row g-3">
-    <div class="col-md-12"><p> <b>Dados da Empresa</b></p></div>
-    <div class="col-md-4">
-        <label class="form-label">Razão Social</label>
-        <input type="text" class="form-control" id="razao_social" placeholder="Digite a razão social da empresa">
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">Nome fantasia</label>
-        <input type="text" class="form-control" id="nome_fantasia" placeholder=" Nome fantasia">
-    </div>
-    <div class="col-4">
-        <label class="form-label">CNPJ</label>
-        <input type="number" class="form-control" id="cnpj" placeholder="CNPJ da empresa">
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">Nome do solicitante</label>
-        <input type="text" class="form-control" id="nome_solicitante" placeholder="Digite o nome do solicitante">
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">Telefone do solicitante</label>
-        <input type="text" class="form-control" id="telefone_solicitante" placeholder="Digite o telefone do solicitante">
-    </div>
-    <div class="col-4">
-        <label class="form-label">Inscrição Social</label>
-        <input type="text" class="form-control" id="inscricao_social" placeholder="Inscrição Social da empresa">
-    </div>
-    <div class="col-md-4">
-        <label for="Ramo" class="form-label">Ramo</label>
-        <input type="text" class="form-control" id="Ramo" placeholder="Escolha o ramo da empresa">
-    </div>
+        <div class="col-md-4">
+            <label for="porte" class="form-label">Porte</label>
+            <select id="porte" class="form-select">
+                <option selected="">Selecione o porte da empresa</option>
+                <option>Microempresa</option>
+                <option>Empresa de Pequeno Porte</option>
+                <option>Empresa de médio porte</option>
+                <option>Grandes empresas</option>
+            </select>
+        </div>
+        <div class="col-4">
+            <label for="logo">Logo</label> <br>
+            <input type="file" class="form-control-file" id="logo">
+        </div>
+        <div class="col-md-12"><p> <b>Endereço</b></p></div>
+        <div class="col-md-4">
+            <label class="form-label">CEP</label>
+            <input type="number" class="form-control" id="cep" placeholder="000.000.000.00">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Endereço</label>
+            <input type="text" class="form-control" id="endereco" placeholder="Endereço da empresa">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Número</label>
+            <input type="number" class="form-control" id="numero" placeholder="0000">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Cidade</label>
+            <input type="text" class="form-control" id="cidade" placeholder="Cidade">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Estado </label>
+            <input type="text" class="form-control" id="estado" placeholder="Estado">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">País </label>
+            <input type="text" class="form-control" id="pais" placeholder="País">
+        </div>
+        <div class="col-md-12"><p> <b>Contato</b></p></div>
+        <div class="col-md-4">
+            <label class="form-label">E-mail</label>
+            <input type="email" class="form-control" id="email" placeholder="email@email.com">
+        </div>
+        <div class="col-4">
+            <label class="form-label">Telefone da Empresa</label>
+            <input type="number" class="form-control" id="telefone_empresa" placeholder="Telefone da empresa">
+        </div>
 
-    <div class="col-md-4">
-        <label for="porte" class="form-label">Porte</label>
-        <select id="porte" class="form-select">
-            <option selected="">Selecione o porte da empresa</option>
-            <option>Microempresa</option>
-            <option>Empresa de Pequeno Porte</option>
-            <option>Empresa de médio porte</option>
-            <option>Grandes empresas</option>
-        </select>
-    </div>
-    <div class="col-4">
-        <label for="logo">Logo</label> <br>
-        <input type="file" class="form-control-file" id="logo">
-    </div>
-    <div class="col-md-12"><p> <b>Endereço</b></p></div>
-    <div class="col-md-4">
-        <label class="form-label">CEP</label>
-        <input type="number" class="form-control" id="cep" placeholder="000.000.000.00">
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">Endereço</label>
-        <input type="text" class="form-control" id="endereco" placeholder="Endereço da empresa">
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">Número</label>
-        <input type="number" class="form-control" id="numero" placeholder="0000">
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">Cidade</label>
-        <input type="text" class="form-control" id="cidade" placeholder="Cidade">
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">Estado </label>
-        <input type="text" class="form-control" id="estado" placeholder="Estado">
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">País </label>
-        <input type="text" class="form-control" id="pais" placeholder="País">
-    </div>
-    <div class="col-md-12"><p> <b>Contato</b></p></div>
-    <div class="col-md-4">
-        <label class="form-label">E-mail</label>
-        <input type="email" class="form-control" id="email" placeholder="email@email.com">
-    </div>
-    <div class="col-4">
-        <label class="form-label">Telefone da Empresa</label>
-        <input type="number" class="form-control" id="telefone_empresa" placeholder="Telefone da empresa">
-    </div>
-    <div class="col-md-4">
-        <label class="form-label">Data de abertura</label>
-        <input type="date" class="form-control" id="data" placeholder="Digite a data de abertura">
-    </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-outline-secondary me-1">Cancelar</button>
+            <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 
+        </div>
 
-
-
-    <div class="col-12">
-        <button type="submit" class="btn btn-outline-secondary me-1">Cancelar</button>
-        <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
-
-    </div>
-    </div>
 
 </form>
 
-
+</div>
 </body>
 
 </html>
