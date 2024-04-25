@@ -16,7 +16,6 @@ import lombok.Setter;
 @Data
 @Entity
 public class Empresa {
-
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idEmpresa;
@@ -42,7 +41,6 @@ public class Empresa {
     private String email;
     @Column(name = "telefone_empresa", nullable = false)
     private String telefoneEmpresa;
-
 
     
 }
