@@ -3,6 +3,7 @@ package com.Integrador.ambientese.model;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Formulario")
 public class Formulario {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

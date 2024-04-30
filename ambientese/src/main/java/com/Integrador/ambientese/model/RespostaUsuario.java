@@ -2,9 +2,48 @@ package com.Integrador.ambientese.model;
 
 import jakarta.persistence.*;
 
+@Entity
+@Table(name = "RespostaUsuario")
 public class RespostaUsuario {
-    @Id
+    
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idRespostaUsuario;
+	private int idRespostaUsuario;
+	@Column(name = "Resposta", nullable = false)
+	private RespostaUsuario resposta;
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idRespostaUsuario;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RespostaUsuario other = (RespostaUsuario) obj;
+		if (idRespostaUsuario != other.idRespostaUsuario)
+			return false;
+		return true;
+	}
+	
+	public long getIdRespostaUsuario() {
+		return idRespostaUsuario;
+	}
+	public void setIdRespostaUsuario(int idRespostaUsuario) {
+		this.idRespostaUsuario = idRespostaUsuario;
+	}
+	public RespostaUsuario getResposta() {
+		return resposta;
+	}
+	public void setResposta(RespostaUsuario resposta) {
+		this.resposta = resposta;
+	}
+	
 }
