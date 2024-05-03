@@ -10,7 +10,8 @@ public class RespostaUsuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idRespostaUsuario;
 	@Column(name = "Resposta", nullable = false)
-	private RespostaUsuario resposta;
+	private String resposta;
+	
 
 	@Override
 	public int hashCode() {
@@ -39,10 +40,10 @@ public class RespostaUsuario {
 	public void setIdRespostaUsuario(int idRespostaUsuario) {
 		this.idRespostaUsuario = idRespostaUsuario;
 	}
-	public RespostaUsuario getResposta() {
+	public String getResposta() {
 		return resposta;
 	}
-	public void setResposta(RespostaUsuario resposta) {
+	public void setResposta(String resposta) {
 		this.resposta = resposta;
 	}
 	
