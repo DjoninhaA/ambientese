@@ -1,5 +1,7 @@
 package com.Integrador.ambientese.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,11 +27,11 @@ public class CadastroempresaController {
 
 
 
-    // @GetMapping("/buscaEmpresa")
-    // public ResponseEntity<List<Empresa>>GetAll(){
-    //     List<Empresa>allEmpresas = empresaRepository.findAll();
-    //     return ResponseEntity.ok(allEmpresas);
-    // }
+    @GetMapping("/buscaEmpresa2")
+    public ResponseEntity<List<Empresa>>GetAll(){
+        List<Empresa>allEmpresas = empresaRepository.findAll();
+        return ResponseEntity.ok(allEmpresas);
+    }
 
     @GetMapping("/buscaEmpresa")
     public ResponseEntity<Empresa> GetByName(@PathVariable String nome_fantasia){
