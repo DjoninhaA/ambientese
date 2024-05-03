@@ -14,7 +14,7 @@ import com.Integrador.ambientese.model.Empresa;
 
 @RestController
 @RequestMapping("/empresa")
-public class CadastroempresaController {
+public class EmpresaController {
     @Autowired
     private EmpresaRepository empresaRepository;
 
