@@ -27,21 +27,22 @@ public class CadastroempresaController {
 
 
 
-    @GetMapping("/buscaEmpresa2")
+    @GetMapping("/buscarTodas")
     public ResponseEntity<List<Empresa>>GetAll(){
         List<Empresa>allEmpresas = empresaRepository.findAll();
         return ResponseEntity.ok(allEmpresas);
     }
 
-    @GetMapping("/buscaEmpresa")
+    @GetMapping("/buscaEmpresa/{nome_fantasia}")
     public ResponseEntity<Empresa> GetByName(@PathVariable String nome_fantasia){
         Empresa empresa = empresaRepository.findByNomeFantasia(nome_fantasia);
         return ResponseEntity.ok(empresa);
     }
 
-    @PostMapping("/")
+    @PostMapping("/cadastrar")
     public ResponseEntity<Empresa> PostEmpresa(@RequestBody Empresa empresa){
         empresaRepository.save(empresa);
+        System.err.println(empresa);
         return ResponseEntity.ok(empresa);
     }
 

@@ -24,7 +24,7 @@ public class Empresa {
     private String nomeFantasia;
     @Column(name = "cnpj", nullable = false)
     private String cnpj;
-    // @Column(name = "nome_solicitante", nullable = true)
+    // @Column(name = "nome_solicitante", nullable = false)
     // private String nomeSolicitante;
     // @Column(name = "telefone_solicitante", nullable = true)
     // private String telefoneSolicitante;
@@ -35,8 +35,6 @@ public class Empresa {
     // @Column(name = "porte", nullable = false)
     // private String porte;
     // @Column(name = "logo", nullable = false)
-    // private File logo;
-    // @Column(name = "email", nullable = false)
     // private String email;
     // @Column(name = "telefone_empresa", nullable = false)
     // private String telefoneEmpresa;
