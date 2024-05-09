@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-title {
+            text-align: center; 
+            margin-bottom: 30px; 
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight:600;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            display: block;
+            margin: 20px auto; 
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background-color: #ccc; 
+            margin: 20px 0; 
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="form-title">Formulário Ambiental</h2>
+
+    <form action="#" method="post">
+
+        <div class="form-group">
+            <label>A empresa demonstra conformidade com as regulamentações ambientais relativas à gestão de resíduos sólidos?</label>
+            <select name="resposta1">
+                <option value="conforme">Conforme</option>
+                <option value="naoconforme">Não conforme</option>
+                <option value="naoaplicavel">Não aplicável</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="arquivo1">Anexar Arquivo:</label>
+            <input type="file" id="arquivo1" name="arquivo1">
+        </div>
+
+        <hr>
+
+        <div class="form-group">
+            <label>A empresa demonstra conformidade com as regulamentações ambientais relativas à gestão de resíduos sólidos?</label>
+            <select name="resposta2">
+                <option value="conforme">Conforme</option>
+                <option value="naoconforme">Não conforme</option>
+                <option value="naoaplicavel">Não aplicável</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="arquivo2">Anexar Arquivo:</label>
+            <input type="file" id="arquivo2" name="arquivo2">
+        </div>
+
+        <hr>
+        <button type="submit" class="btn">Enviar</button>
+
+    </form>
+</div>
+
+</body>
+</html>

@@ -18,7 +18,7 @@ public class LoginController {
 	@Autowired
 	private LoginRepository loginRepository;
 
-	@GetMapping("/")
+	@GetMapping("/auth")
 	public ModelAndView login() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.setViewName("html/login");
