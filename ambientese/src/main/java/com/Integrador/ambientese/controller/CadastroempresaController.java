@@ -8,7 +8,7 @@ public class CadastroempresaController {
 
     @GetMapping("/empresa")
     public String home() {
-        return "cadastroEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
+        return "html/cadastroEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
     }
 }
 
