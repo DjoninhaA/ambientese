@@ -24,22 +24,20 @@ public class Empresa {
     private String nomeFantasia;
     @Column(name = "cnpj", nullable = false)
     private String cnpj;
-    // @Column(name = "nome_solicitante", nullable = true)
-    // private String nomeSolicitante;
-    // @Column(name = "telefone_solicitante", nullable = true)
-    // private String telefoneSolicitante;
-    // @Column(name = "inscricao_social", nullable = true)
-    // private String inscricaoSocial;
-    // @Column(name = "ramo", nullable = false)
-    // private String ramo;
-    // @Column(name = "porte", nullable = false)
-    // private String porte;
-    // @Column(name = "logo", nullable = false)
-    // private File logo;
-    // @Column(name = "email", nullable = false)
-    // private String email;
-    // @Column(name = "telefone_empresa", nullable = false)
-    // private String telefoneEmpresa;
+    @Column(name = "nome_solicitante", nullable = true)
+    private String nomeSolicitante;
+    @Column(name = "telefone_solicitante", nullable = true)
+    private String telefoneSolicitante;
+    @Column(name = "inscricao_social", nullable = true)
+    private String inscricaoSocial;
+    @Column(name = "ramo", nullable = false)
+    private String ramo;
+    @Column(name = "porte", nullable = false)
+    private String porte;
+    @Column(name = "email", nullable = false)
+    private String email;
+    @Column(name = "telefone_empresa", nullable = false)
+    private String telefoneEmpresa;
 
     
 }

@@ -20,7 +20,7 @@ public class CadastroempresaController {
     @Autowired
     private EmpresaRepository empresaRepository;
 
-    @GetMapping("/cadastro")
+    @GetMapping("/cadastro23")
     public String home() {
         return "cadastroEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
     }
@@ -39,10 +39,10 @@ public class CadastroempresaController {
         return ResponseEntity.ok(empresa);
     }
 
-    @PostMapping("/")
+    @PostMapping("/cadastrar")
     public ResponseEntity<Empresa> PostEmpresa(@RequestBody Empresa empresa){
         empresaRepository.save(empresa);
-        return ResponseEntity.ok(empresa);
+            return ResponseEntity.ok(empresa);
     }
 
 
