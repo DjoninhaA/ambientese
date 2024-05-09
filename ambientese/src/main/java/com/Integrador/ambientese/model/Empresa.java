@@ -34,9 +34,9 @@ public class Empresa {
     private String ramo;
     @Column(name = "porte", nullable = false)
     private String porte;
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", columnDefinition = "varchar(100) default 'email'", nullable = false)
     private String email;
-    @Column(name = "telefone_empresa", nullable = false)
+    @Column(name = "telefone_empresa",columnDefinition = "varchar(20) default 'telefone'", nullable = false)
     private String telefoneEmpresa;
 
     

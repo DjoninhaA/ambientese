@@ -20,20 +20,20 @@ public class CadastroempresaController {
     @Autowired
     private EmpresaRepository empresaRepository;
 
-    @GetMapping("/cadastro23")
+    @GetMapping("/cadastro")
     public String home() {
         return "cadastroEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
     }
 
 
 
-    @GetMapping("/buscaEmpresa2")
+    @GetMapping("/buscarTodas")
     public ResponseEntity<List<Empresa>>GetAll(){
         List<Empresa>allEmpresas = empresaRepository.findAll();
         return ResponseEntity.ok(allEmpresas);
     }
 
-    @GetMapping("/buscaEmpresa")
+    @GetMapping("/buscarEmpresa")
     public ResponseEntity<Empresa> GetByName(@PathVariable String nome_fantasia){
         Empresa empresa = empresaRepository.findByNomeFantasia(nome_fantasia);
         return ResponseEntity.ok(empresa);
