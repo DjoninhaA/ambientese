@@ -20,105 +20,90 @@
         company: "Ambiente-se",
         sector: "Meio-Ambiente",
         points: "100 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 2,
         company: "Burger King",
         sector: "Alimentício",
         points: "99 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 3,
         company: "Steam",
         sector: "Tecnologia",
         points: "95 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 4,
         company: "Roblox",
         sector: "Tecnologia",
         points: "94 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 5,
         company: "Nintendo",
         sector: "Tecnologia",
         points: "92 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 6,
         company: "Ipiranga",
         sector: "Varejo",
         points: "91 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 7,
         company: "McDonalds",
         sector: "Alimentício",
         points: "90 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 8,
         company: "Subway",
         sector: "Alimentício",
         points: "89 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 9,
         company: "Shell",
         sector: "Varejo",
         points: "85 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 10,
         company: "Lego",
         sector: "Tecnologia",
         points: "84 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 11,
         company: "Rockstar",
         sector: "Tecnologia",
         points: "82 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 12,
         company: "Starbucks",
         sector: "Alimentício",
         points: "81 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 13,
         company: "Pixar",
         sector: "Entretenimento",
         points: "79 pontos",
-        image: "../../static/images/wpp.png",
       },
       {
         position: 14,
         company: "Coca-Cola",
         sector: "Bebidas",
         points: "78 pontos",
-        image: "Steam.svg",
       },
       {
         position: 15,
         company: "Amazon",
         sector: "Varejo",
         points: "76 pontos",
-        image: "Steam.svg",
       },
     ];
 
@@ -176,8 +161,6 @@
           separator.textContent = " - ";
           separator.style.marginRight = "5px";
 
-          companyDiv.appendChild(img);
-          companyDiv.appendChild(separator);
           companyDiv.appendChild(title);
 
           cellCompany.appendChild(companyDiv);
@@ -260,10 +243,10 @@
       }
       .table.bordered-table {
         border: 2px solid #0077c8;
-        border-radius: 15px;
         border-collapse: separate;
         border-spacing: 0;
       }
+
 
       .table th {
         border-top: 0px solid #dee2e6;
@@ -436,7 +419,7 @@
               </svg>
             </button>
             <img
-              src="../static/images/ambientetext.svg"
+              src="/images/ambientetext.svg"
               alt="Logo da Empresa"
               width="120"
               height="60"

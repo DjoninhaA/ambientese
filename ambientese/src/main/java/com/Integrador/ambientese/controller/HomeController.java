@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
         @GetMapping("/home")
         public String home() {
-            return "html/home"; // Retorna o nome do arquivo HTML sem a extensão
+            return "html/home";
         }
     }
 
