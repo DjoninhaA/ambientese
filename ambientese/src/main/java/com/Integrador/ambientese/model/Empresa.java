@@ -18,8 +18,8 @@ public class Empresa {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idEmpresa;
-	// @Column(name = "razao_social", nullable = false)
-    // private String razaoSocial;
+	@Column(name = "razao_social", nullable = false)
+    private String razaoSocial;
     @Column(name = "nome_fantasia", nullable = true)
     private String nomeFantasia;
     @Column(name = "cnpj", nullable = false)
