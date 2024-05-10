@@ -33,7 +33,7 @@ public class CadastroempresaController {
         return ResponseEntity.ok(allEmpresas);
     }
 
-    @GetMapping("/buscarEmpresa")
+    @GetMapping("/buscarEmpresa/{nome_fantasia}")
     public ResponseEntity<Empresa> GetByName(@PathVariable String nome_fantasia){
         Empresa empresa = empresaRepository.findByNomeFantasia(nome_fantasia);
         return ResponseEntity.ok(empresa);
