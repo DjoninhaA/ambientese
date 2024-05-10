@@ -33,7 +33,7 @@ public class CadastroempresaController {
         return ResponseEntity.ok(allEmpresas);
     }
 
-    @GetMapping("/buscaEmpresa/{nome_fantasia}")
+    @GetMapping("/buscarEmpresa/{nome_fantasia}")
     public ResponseEntity<Empresa> GetByName(@PathVariable String nome_fantasia){
         Empresa empresa = empresaRepository.findByNomeFantasia(nome_fantasia);
         return ResponseEntity.ok(empresa);
@@ -42,8 +42,7 @@ public class CadastroempresaController {
     @PostMapping("/cadastrar")
     public ResponseEntity<Empresa> PostEmpresa(@RequestBody Empresa empresa){
         empresaRepository.save(empresa);
-        System.err.println(empresa);
-        return ResponseEntity.ok(empresa);
+            return ResponseEntity.ok(empresa);
     }
 
 
