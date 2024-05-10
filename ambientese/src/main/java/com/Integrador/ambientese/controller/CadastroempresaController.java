@@ -2,6 +2,7 @@ package com.Integrador.ambientese.controller;
 
 import java.util.List;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,17 +14,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Integrador.ambientese.interfac.EmpresaRepository;
 import com.Integrador.ambientese.model.Empresa;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-@RequestMapping("/empresa")
+//@RequestMapping("/empresa")
+@Controller
 public class CadastroempresaController {
     @Autowired
     private EmpresaRepository empresaRepository;
 
-    @GetMapping("/cadastro")
-    public String home() {
-        return "cadastroEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
-    }
+    @GetMapping("/cadastro/empresa")
+    public ModelAndView cadastroDeEmpresa() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("cadastroDeEmpresa");
+        return modelAndView;
+    } // Retorna o nome do arquivo HTML sem a extensão
 
 
 
