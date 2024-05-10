@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ListarempresaController {
 
     @GetMapping("/empresa")
-    public String home() {
+    public String empresa() {
         return "listarEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
     }
 }
