@@ -18,26 +18,26 @@ public class Empresa {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idEmpresa;
-	// @Column(name = "razao_social", nullable = false)
-    // private String razaoSocial;
+	@Column(name = "razao_social", nullable = false)
+    private String razaoSocial;
     @Column(name = "nome_fantasia", nullable = true)
     private String nomeFantasia;
     @Column(name = "cnpj", nullable = false)
     private String cnpj;
-    // @Column(name = "nome_solicitante", nullable = false)
-    // private String nomeSolicitante;
-    // @Column(name = "telefone_solicitante", nullable = true)
-    // private String telefoneSolicitante;
-    // @Column(name = "inscricao_social", nullable = true)
-    // private String inscricaoSocial;
-    // @Column(name = "ramo", nullable = false)
-    // private String ramo;
-    // @Column(name = "porte", nullable = false)
-    // private String porte;
-    // @Column(name = "logo", nullable = false)
-    // private String email;
-    // @Column(name = "telefone_empresa", nullable = false)
-    // private String telefoneEmpresa;
+    @Column(name = "nome_solicitante", nullable = true)
+    private String nomeSolicitante;
+    @Column(name = "telefone_solicitante", nullable = true)
+    private String telefoneSolicitante;
+    @Column(name = "inscricao_social", nullable = true)
+    private String inscricaoSocial;
+    @Column(name = "ramo", nullable = false)
+    private String ramo;
+    @Column(name = "porte", nullable = false)
+    private String porte;
+    @Column(name = "email", columnDefinition = "varchar(100) default 'email'", nullable = false)
+    private String email;
+    @Column(name = "telefone_empresa",columnDefinition = "varchar(20) default 'telefone'", nullable = false)
+    private String telefoneEmpresa;
 
     
 }
