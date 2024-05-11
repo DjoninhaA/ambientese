@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ranking</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+    <script> const rankingList = [
+      {
+        position: 1,
+        company: "Ambiente-se",
+        sector: "Meio-Ambiente",
+        points: "100 pontos",
+      },
+      {
+        position: 2,
+        company: "Burger King",
+        sector: "Alimentício",
+        points: "99 pontos",
+      },
+      {
+        position: 3,
+        company: "Steam",
+        sector: "Tecnologia",
+        points: "95 pontos",
+      },
+      {
+        position: 4,
+        company: "Roblox",
+        sector: "Tecnologia",
+        points: "94 pontos",
+      },
+      {
+        position: 5,
+        company: "Nintendo",
+        sector: "Tecnologia",
+        points: "92 pontos",
+      },
+      {
+        position: 6,
+        company: "Ipiranga",
+        sector: "Varejo",
+        points: "91 pontos",
+      },
+      {
+        position: 7,
+        company: "McDonalds",
+        sector: "Alimentício",
+        points: "90 pontos",
+      },
+      {
+        position: 8,
+        company: "Subway",
+        sector: "Alimentício",
+        points: "89 pontos",
+      },
+      {
+        position: 9,
+        company: "Shell",
+        sector: "Varejo",
+        points: "85 pontos",
+      },
+      {
+        position: 10,
+        company: "Lego",
+        sector: "Tecnologia",
+        points: "84 pontos",
+      },
+      {
+        position: 11,
+        company: "Rockstar",
+        sector: "Tecnologia",
+        points: "82 pontos",
+      },
+      {
+        position: 12,
+        company: "Starbucks",
+        sector: "Alimentício",
+        points: "81 pontos",
+      },
+      {
+        position: 13,
+        company: "Pixar",
+        sector: "Entretenimento",
+        points: "79 pontos",
+      },
+      {
+        position: 14,
+        company: "Coca-Cola",
+        sector: "Bebidas",
+        points: "78 pontos",
+      },
+      {
+        position: 15,
+        company: "Amazon",
+        sector: "Varejo",
+        points: "76 pontos",
+      },
+    ];
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const topRankCard = document.getElementById("topRankCard");
+      const rankingTableBody = document.getElementById("rankingTableBody");
+      const pagination = document.getElementById("pagination");
+      const itemsPerPage = 10;
+      let currentPage = 1;
+
+      function renderTopRank() {
+        const topRankHtml = `
+        <div class="card-header">
+          ${rankingList[0].company}
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">${rankingList[0].position}º LUGAR - ${rankingList[0].points}</h5>
+          <p class="card-text">${rankingList[0].sector}</p>
+        </div>
+      `;
+        topRankCard.innerHTML = topRankHtml;
+      }
+
+      function renderTable(page) {
+        const start = (page - 1) * itemsPerPage + 1;
+        const end = start + itemsPerPage;
+        const paginatedItems = rankingList.slice(
+                start - 1,
+                Math.min(end - 1, rankingList.length)
+        );
+
+        rankingTableBody.innerHTML = "";
+
+        paginatedItems.forEach((item) => {
+          let row = rankingTableBody.insertRow();
+          let cellPosition = row.insertCell(0);
+          let cellCompany = row.insertCell(1);
+          let cellSector = row.insertCell(2);
+          let cellPoints = row.insertCell(3);
+
+          cellPosition.textContent = `${item.position + 1}º`;
+
+          let companyDiv = document.createElement("div");
+          companyDiv.style.display = "flex";
+          companyDiv.style.alignItems = "center";
+
+          let img = document.createElement("img");
+          img.src = item.image;
+          img.style.width = "50px";
+
+          let title = document.createElement("strong");
+          title.textContent = item.company;
+
+          let separator = document.createElement("span");
+          separator.textContent = " - ";
+          separator.style.marginRight = "5px";
+
+          companyDiv.appendChild(title);
+
+          cellCompany.appendChild(companyDiv);
+
+          cellSector.textContent = item.sector;
+          cellPoints.textContent = item.points;
+        });
+      }
+
+      function renderPagination() {
+        const pageCount = Math.ceil((rankingList.length - 1) / itemsPerPage);
+        pagination.innerHTML = "";
+
+        let prevPageItem = document.createElement("li");
+        prevPageItem.classList.add("page-item");
+        if (currentPage === 1) prevPageItem.classList.add("disabled");
+        let prevPageLink = document.createElement("a");
+        prevPageLink.classList.add("page-link");
+        prevPageLink.href = "#";
+        prevPageLink.setAttribute("aria-label", "Previous");
+        prevPageLink.innerHTML = "&laquo; Anterior";
+        prevPageLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          if (currentPage > 1) {
+            currentPage--;
+            renderTable(currentPage);
+            renderPagination();
+          }
+        });
+        prevPageItem.appendChild(prevPageLink);
+        pagination.appendChild(prevPageItem);
+
+        for (let i = 1; i <= pageCount; i++) {
+          let pageItem = document.createElement("li");
+          pageItem.classList.add("page-item");
+          if (currentPage === i) pageItem.classList.add("active");
+          let pageLink = document.createElement("a");
+          pageLink.classList.add("page-link");
+          pageLink.href = "#";
+          pageLink.textContent = i;
+          pageLink.addEventListener("click", function (e) {
+            e.preventDefault();
+            currentPage = i;
+            renderTable(currentPage);
+            renderPagination();
+          });
+          pageItem.appendChild(pageLink);
+          pagination.appendChild(pageItem);
+        }
+
+        let nextPageItem = document.createElement("li");
+        nextPageItem.classList.add("page-item");
+        if (currentPage === pageCount) nextPageItem.classList.add("disabled");
+        let nextPageLink = document.createElement("a");
+        nextPageLink.classList.add("page-link");
+        nextPageLink.href = "#";
+        nextPageLink.setAttribute("aria-label", "Next");
+        nextPageLink.innerHTML = "Avançar &raquo;";
+        nextPageLink.addEventListener("click", function (e) {
+          e.preventDefault();
+          if (currentPage < pageCount) {
+            currentPage++;
+            renderTable(currentPage);
+            renderPagination();
+          }
+        });
+        nextPageItem.appendChild(nextPageLink);
+        pagination.appendChild(nextPageItem);
+      }
+
+      renderTopRank();
+      renderTable(currentPage);
+      renderPagination();
+    });
+    </script>
+
+    <style>
+      .card {
+        border-radius: 15px;
+      }
+      .table.bordered-table {
+        border: 2px solid #0077c8;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+
+
+      .table th {
+        border-top: 0px solid #dee2e6;
+        vertical-align: middle !important;
+        height: 60px !important;
+      }
+
+      .card-header:first-child {
+        border-radius: 15px 15px 0px 0px;
+      }
+
+      .table.bordered-table tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+      }
+
+      .table.bordered-table tbody tr:nth-child(even) {
+        background-color: rgba(0, 119, 200, 0.24);
+      }
+
+      .table td,
+      .table th {
+        border-top: 0px solid #dee2e6;
+        padding: 0.5rem;
+        vertical-align: middle;
+      }
+
+      #topRankCard {
+        border: 2px solid #0077c8;
+      }
+
+      .select-style {
+        border: 2px solid #0077c8;
+        border-radius: 8px;
+      }
+      .btn {
+        border: 2px solid #00548d;
+        border-radius: 8px;
+      }
+      .nav-pills {
+        height: 100%;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #eeeeff;
+        min-height: 100vh;
+        padding-right: 0 !important;
+      }
+
+      .home-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: calc(100vh - 80px);
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .imagem-usuario img {
+        border-radius: 50%;
+        border: 4px solid #0077c8;
+        object-fit: cover;
+      }
+
+      .options {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1000px;
+        margin: 20px auto;
+      }
+
+      .options .option1,
+      .options .option2,
+      .options .option3 {
+        width: calc((100% - 20px) / 3);
+        display: flex;
+        align-items: center;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 5px;
+        border: 1px solid #d5d5d5;
+      }
+
+      .options .option1 img,
+      .options .option2 img,
+      .options .option3 img {
+        margin-right: 20px;
+        width: 50px;
+      }
+      .icon-menu {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-left: 1rem;
+        height: 4rem;
+        color: white;
+      }
+      .ms-1 {
+        font-size: 1.2rem;
+        color: white;
+      }
+
+      .item-list {
+        background: #0077c8;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        border-radius: 0.75rem;
+      }
+      .sign-out {
+        display: flex;
+        /*background: #0077C8;*/
+        align-items: center;
+        flex-direction: column;
+        border-radius: 20px;
+        height: 100%;
+        width: 60%;
+        margin-left: 3.5rem;
+        /*box-shadow: 5px 5px rgba(0, 0, 0, 0.635);*/
+      }
+      .sign-out:hover {
+        box-shadow: 5px 5px rgba(0, 0, 0, 0.635);
+      }
+
+      .space-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+      }
+
+      .firstPosition{
+        border-radius: 15px 0 0 0;
+      }
+
+      .UltimaPosition{
+        border-radius: 0 15px 0 0;
+      }
+
+    </style>
+
+    <nav
+      class="navbar"
+      style="height: 80px; padding-left: 20px; background: #0077c8"
+    >
+      <a class="navbar-brand" href="#">
+        <div class="row">
+          <div style="display: contents" class="col min-vh-100 p-4">
+            <!-- toggler -->
+            <button
+              class="btn float-end"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvas"
+              role="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="36"
+                height="36   "
+                fill="white"
+                class="bi bi-list"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+                />
+              </svg>
+            </button>
+            <img
+              src="/images/ambientetext.svg"
+              alt="Logo da Empresa"
+              width="120"
+              height="60"
+            />
+          </div>
+        </div>
+      </a>
+    </nav>
+
+  </head>
+
+  <body style="background: #edf8ff">
+    <div>
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="offcanvas"
+        data-bs-keyboard="false"
+        data-bs-backdrop="false"
+        style="margin-top: 80px; overflow-x: auto; width: 20rem"
+      >
+        <div
+          class="offcanvas-body px-0"
+          style="margin-left: 0.5rem; margin-right: 0.5rem"
+        >
+          <ul
+            class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start"
+            id="menu"
+          >
+            <div class="space-list" style="width: 100%">
+              <div style="width: 100%">
+                <li class="item-list">
+                  <div class="icon-menu">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                      class="bi bi-building-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M3 0a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h3v-3.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5V16h3a1 1 0 0 0 1-1V1a1 1 0 0 0-1-1zm1 2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5M4 5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM7.5 5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5m2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zM4.5 8h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5m2.5.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3.5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5"
+                      />
+                    </svg>
+
+                    <a href="/empresa" class="nav-link text-truncate">
+                      <i class="fs-5 bi-grid"></i
+                      ><span class="ms-1 d-none d-sm-inline">Empresas</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="item-list">
+                  <div class="icon-menu">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                      class="bi bi-person-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
+                      />
+                    </svg>
+                    <a href="#" class="nav-link text-truncate">
+                      <i class="fs-5 bi-grid"></i
+                      ><span class="ms-1 d-none d-sm-inline">Funcionários</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="item-list">
+                  <div class="icon-menu">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                      class="bi bi-clipboard2-data-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M10 .5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5.5.5 0 0 1-.5.5.5.5 0 0 0-.5.5V2a.5.5 0 0 0 .5.5h5A.5.5 0 0 0 11 2v-.5a.5.5 0 0 0-.5-.5.5.5 0 0 1-.5-.5"
+                      />
+                      <path
+                        d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585q.084.236.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5q.001-.264.085-.5M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1"
+                      />
+                    </svg>
+                    <a href="#" class="nav-link text-truncate">
+                      <i class="fs-5 bi-grid"></i
+                      ><span class="ms-1 d-none d-sm-inline">Ranking</span>
+                    </a>
+                  </div>
+                </li>
+                <li class="item-list">
+                  <div class="icon-menu">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="currentColor"
+                      class="bi bi-file-check-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2m-1.146 6.854-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7.5 8.793l2.646-2.647a.5.5 0 0 1 .708.708"
+                      />
+                    </svg>
+                    <a href="#" class="nav-link text-truncate">
+                      <i class="fs-5 bi-people"></i
+                      ><span class="ms-1 d-none d-sm-inline"
+                        >Realizar Teste</span
+                      >
+                    </a>
+                  </div>
+                </li>
+              </div>
+              <div style="width: 100%">
+                <li class="sign-out">
+                  <div class="icon-menu">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="black"
+                      class="bi bi-box-arrow-left"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M6 12.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5h-8a.5.5 0 0 0-.5.5v2a.5.5 0 0 1-1 0v-2A1.5 1.5 0 0 1 6.5 2h8A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 5 12.5v-2a.5.5 0 0 1 1 0z"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        d="M.146 8.354a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L1.707 7.5H10.5a.5.5 0 0 1 0 1H1.707l2.147 2.146a.5.5 0 0 1-.708.708z"
+                      />
+                    </svg>
+                    <a href="/static" class="nav-link text-truncate">
+                      <i class="fs-5 bi-people"></i
+                      ><span
+                        class="ms-1 d-none d-sm-inline"
+                        style="color: black"
+                        >Sair</span
+                      >
+                    </a>
+                  </div>
+                </li>
+              </div>
+            </div>
+          </ul>
+        </div>
+      </div>
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-4" id="topRankCard"></div>
+
+            <div>
+              <select class="custom-select mb-2 select-style">
+                <option selected>Ramo da Empresa</option>
+                <option value="1">Tecnologia</option>
+                <option value="2">Alimentício</option>
+                <option value="3">Varejo</option>
+              </select>
+
+              <select class="custom-select mb-2 select-style">
+                <option selected>Porte da Empresa</option>
+                <option value="1">Pequeno</option>
+                <option value="2">Médio</option>
+                <option value="3">Grande</option>
+              </select>
+
+              <input
+                type="text"
+                class="form-control mb-4 select-style"
+                placeholder="Nome da Empresa"
+                aria-label="Nome da Empresa"
+              />
+
+              <button type="button" class="btn btn-primary mb-4 w-100">
+                Buscar
+              </button>
+            </div>
+          </div>
+
+          <div class="col-md-8">
+            <table class="table table-striped bordered-table" id="rankingTable">
+              <thead>
+                <tr>
+                  <th scope="col" class="firstPosition">Posição</th>
+
+                  <th scope="col">Empresa</th>
+                  <th scope="col">Ramo</th>
+                  <th scope="col" class="UltimaPosition" >Pontos</th>
+                </tr>
+              </thead>
+              <tbody id="rankingTableBody"></tbody>
+            </table>
+
+            <nav aria-label="Page navigation">
+              <ul class="pagination justify-content-center" id="pagination">
+                <li class="page-item" id="previousPage">
+                  <a class="page-link" href="#" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span> Anterior
+                  </a>
+                </li>
+
+                <li class="page-item" id="nextPage">
+                  <a class="page-link" href="#" aria-label="Next">
+                    Avançar <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"
+  ></script>
+  </body>
+
+</html>
