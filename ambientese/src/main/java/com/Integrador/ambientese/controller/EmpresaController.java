@@ -2,7 +2,6 @@ package com.Integrador.ambientese.controller;
 
 import java.util.List;
 
-import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,21 +15,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.Integrador.ambientese.interfac.EmpresaRepository;
 import com.Integrador.ambientese.model.Empresa;
-import org.springframework.web.servlet.ModelAndView;
 
 @RestController
-//@RequestMapping("/empresa")
-@Controller
-public class CadastroempresaController {
+@RequestMapping("/empresa")
+public class EmpresaController {
     @Autowired
     private EmpresaRepository empresaRepository;
 
-    @GetMapping("/cadastro/empresa")
-    public ModelAndView cadastroDeEmpresa() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("cadastroDeEmpresa");
-        return modelAndView;
-    } // Retorna o nome do arquivo HTML sem a extensão
+    @GetMapping("/cadastro")
+    public String home() {
+        return "html/cadastroEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
+    }
 
 
 
@@ -40,7 +35,7 @@ public class CadastroempresaController {
         return ResponseEntity.ok(allEmpresas);
     }
 
-    @GetMapping("/buscarEmpresa/{nome_fantasia}")
+    @GetMapping("/buscaEmpresa/{nome_fantasia}")
     public ResponseEntity<Empresa> GetByName(@PathVariable String nome_fantasia){
         Empresa empresa = empresaRepository.findByNomeFantasia(nome_fantasia);
         return ResponseEntity.ok(empresa);
@@ -49,9 +44,9 @@ public class CadastroempresaController {
     @PostMapping("/cadastrar")
     public ResponseEntity<Empresa> PostEmpresa(@RequestBody Empresa empresa){
         empresaRepository.save(empresa);
-            return ResponseEntity.ok(empresa);
+        System.err.println(empresa);
+        return ResponseEntity.ok(empresa);
     }
-
 
     @PutMapping("/editar/{idEmpresa}")
     public Empresa atualizarEmpresa(@PathVariable long idEmpresa, @RequestBody Empresa empresaAtualizada){
