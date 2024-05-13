@@ -252,8 +252,8 @@
         <div class="options">
           <div
             style="cursor: pointer"
-            class="option1"
-            onclick="window.location='/cadastro/empresa'"
+            class="option1" 
+            onclick="redirectTo('/redme-test/ambientese/src/main/resources/templates/html/cadastroEmpresa.html')"
           >
             <img src="/images/ic_round-add-business.png" alt="Empresas" />
             <div class="title-option">
@@ -308,4 +308,11 @@
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"
   ></script>
+  <script>
+    function redirectTo(url) {
+      window.location.href = url;
+  }
+
+  </script>
+  
 </html>
