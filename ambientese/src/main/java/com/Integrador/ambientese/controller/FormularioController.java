@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @Controller
 public class FormularioController {
 
-    @GetMapping("/formulario")
-    public String mostrarFormulario(Model model) {
-        model.addAttribute("formData", new FormData());
-        return "formularioEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
-    }
-
-    @PostMapping("/formulario")
-    public String processarFormulario(@ModelAttribute("formData") FormData formData) {
-        return "resultadoFormulario"; //criar tela de resultado (ex:formulario enviado com sucesso!)
-    }
+//    @GetMapping("/formulario")
+//   public String mostrarFormulario(Model model) {
+//        model.addAttribute("formData", new FormData());
+//       return "formularioEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
+//   }
+//
+//   @PostMapping("/formulario")
+//   public String processarFormulario(@ModelAttribute("formData") FormData formData) {
+//       return "resultadoFormulario"; //criar tela de resultado (ex:formulario enviado com sucesso!)
+//   }
 }
