@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,22 +13,24 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.Integrador.ambientese.interfac.EmpresaRepository;
 import com.Integrador.ambientese.model.Empresa;
 
+@Controller
 @RestController
-@RequestMapping("/empresa")
 public class EmpresaController {
+
     @Autowired
     private EmpresaRepository empresaRepository;
 
-    @GetMapping("/cadastro")
-    public String home() {
-        return "html/cadastroEmpresa"; // Retorna o nome do arquivo HTML sem a extensão
-    }
-
-
+    @GetMapping("/cadastroEmpresa")
+    public ModelAndView cadastroEmperesa() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("html/cadastroEmpresa");
+        return modelAndView;
+     }
 
     @GetMapping("/buscarTodas")
     public ResponseEntity<List<Empresa>>GetAll(){
