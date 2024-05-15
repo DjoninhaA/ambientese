@@ -23,7 +23,7 @@ public class Empresa {
     @Column(name = "nome_fantasia", nullable = true)
     private String nomeFantasia;
     @Column(name = "cnpj", nullable = false)
-    private String cnpj;
+    private long cnpj;
     @Column(name = "nome_solicitante", nullable = true)
     private String nomeSolicitante;
     @Column(name = "telefone_solicitante", nullable = true)
@@ -37,7 +37,9 @@ public class Empresa {
     @Column(name = "email", columnDefinition = "varchar(100) default 'email'", nullable = false)
     private String email;
     @Column(name = "telefone_empresa",columnDefinition = "varchar(20) default 'telefone'", nullable = false)
-    private String telefoneEmpresa;
+    private long telefoneEmpresa;
 
-    
+    @Embedded
+    private Endereco endereco; 
+
 }

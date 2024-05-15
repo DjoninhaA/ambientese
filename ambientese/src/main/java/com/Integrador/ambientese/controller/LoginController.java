@@ -2,7 +2,6 @@ package com.Integrador.ambientese.controller;
 
 
 import com.Integrador.ambientese.interfac.LoginRepository;
-import com.Integrador.ambientese.model.Empresa;
 import com.Integrador.ambientese.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 

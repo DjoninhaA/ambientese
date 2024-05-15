@@ -89,7 +89,7 @@
     </style>
   </head>
   <body>
-    <form action="###" method="POST"> 
+    <form id="formEmpresa" action="###" method="POST"> 
       
       <img src="../static/images/eu.png" alt="Ambientese">
       <div class="form-header">
@@ -154,6 +154,32 @@
           <button type="submit">Enviar</button>
       </div>
   </form>
+
+  <script>
+
+    $(document).ready(function() {
+      $('#formEmpresa').submit(function(event) {
+          // Impede o envio padrão do formulário
+          event.preventDefault();
+  
+          var formData = $(this).serialize();
+  
+          $.ajax({
+              url: 'http://localhost:8080/empresa/cadastrar',
+              type: 'POST',  
+              data: formData,
+              success: function(response) {
+                  console.log('Dados Enviados!', response);
+              },
+              error: function(xhr, status, error) {
+                  console.error('Erro ao Enviar os Dados!', error);
+              }
+          });
+      });
+  });
+  
+  </script>
+
 </body>
 
 </html>
