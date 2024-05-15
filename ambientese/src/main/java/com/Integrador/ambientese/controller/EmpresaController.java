@@ -1,24 +1,22 @@
 package com.Integrador.ambientese.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.Integrador.ambientese.interfac.EmpresaRepository;
 import com.Integrador.ambientese.model.Empresa;
+import com.Integrador.ambientese.model.Endereco;
 
-@Controller
 @RestController
 public class EmpresaController {
 
@@ -32,11 +30,19 @@ public class EmpresaController {
         return modelAndView;
      }
 
-    @GetMapping("/buscarTodas")
-    public ResponseEntity<List<Empresa>>GetAll(){
-        List<Empresa>allEmpresas = empresaRepository.findAll();
-        return ResponseEntity.ok(allEmpresas);
-    }
+     @GetMapping("/buscar")
+     public ModelAndView getEmpresas() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("html/listarEmpresa");
+        return modelAndView;
+
+     }
+
+    // @GetMapping("/buscarTodas")
+    // public ResponseEntity<List<Empresa>>GetAll(){
+    //     List<Empresa>allEmpresas = empresaRepository.findAll();
+    //     return ResponseEntity.ok(allEmpresas);
+    // }
 
     @GetMapping("/buscaEmpresa/{nome_fantasia}")
     public ResponseEntity<Empresa> GetByName(@PathVariable String nome_fantasia){
@@ -44,12 +50,56 @@ public class EmpresaController {
         return ResponseEntity.ok(empresa);
     }
 
-    @PostMapping("/cadastrar")
-    public ResponseEntity<Empresa> PostEmpresa(@RequestBody Empresa empresa){
+    @PostMapping("cadastroEmpresa")
+    public ResponseEntity<String> saveEmpresa(
+            @RequestParam("razao_social") String razaoSocial,
+            @RequestParam("nome_fantasia") String nomeFantasia,
+            @RequestParam("cnpj") Long cnpj,
+            @RequestParam("nome_solicitante") String nomeSolicitante,
+            @RequestParam("telefone_solicitante") String telefoneSolicitante,
+            @RequestParam("inscricao_social") String inscricaoSocial,
+            @RequestParam("ramo") String ramo,
+            @RequestParam("porte") String porte,
+            @RequestParam("logo") MultipartFile logo,
+            @RequestParam("cep") String cep,
+            @RequestParam("endereco") String endereco,
+            @RequestParam("numero") Integer numero,
+            @RequestParam("cidade") String cidade,
+            @RequestParam("estado") String estado,
+            @RequestParam("pais") String pais,
+            @RequestParam("email") String email,
+            @RequestParam("telefone_empresa") Long telefoneEmpresa) {
+    
+    
+        Empresa empresa = new Empresa();
+        empresa.setRazaoSocial(razaoSocial);
+        empresa.setNomeFantasia(nomeFantasia);
+        empresa.setCnpj(cnpj);
+        empresa.setNomeSolicitante(nomeSolicitante);
+        empresa.setTelefoneSolicitante(telefoneSolicitante);
+        empresa.setInscricaoSocial(inscricaoSocial);
+        empresa.setRamo(ramo);
+        empresa.setPorte(porte);    
+        empresa.setEmail(email);
+        empresa.setTelefoneEmpresa(telefoneEmpresa);
+    
+        // Criar o objeto Endereco e configurar os dados
+        Endereco enderecoEmpresa = new Endereco();
+        enderecoEmpresa.setCep(String.valueOf(cep));
+        enderecoEmpresa.setNumero(numero);
+        enderecoEmpresa.setCidade(cidade);
+        enderecoEmpresa.setUF(estado);
+        enderecoEmpresa.setPais(pais);
+    
+        // Definir o endereço na empresa
+        empresa.setEndereco(enderecoEmpresa);
+    
+        // Salvar a empresa no repositório
         empresaRepository.save(empresa);
-        System.err.println(empresa);
-        return ResponseEntity.ok(empresa);
+    
+        return ResponseEntity.ok("Dados salvos com sucesso!");
     }
+    
 
     @PutMapping("/editar/{idEmpresa}")
     public Empresa atualizarEmpresa(@PathVariable long idEmpresa, @RequestBody Empresa empresaAtualizada){
