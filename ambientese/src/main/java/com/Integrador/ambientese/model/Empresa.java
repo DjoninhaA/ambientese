@@ -38,6 +38,8 @@ public class Empresa {
     private String email;
     @Column(name = "telefone_empresa",columnDefinition = "varchar(20) default 'telefone'", nullable = false)
     private String telefoneEmpresa;
+    @Column(name = "pontuacao", nullable = true)
+    private Float pontuacao;
 
     
 }
