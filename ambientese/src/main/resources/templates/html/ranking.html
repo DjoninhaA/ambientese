@@ -8,233 +8,116 @@
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"
+    ></script>
     <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
     rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
     crossorigin="anonymous"
   />
-    <script> const rankingList = [
-      {
-        position: 1,
-        company: "Ambiente-se",
-        sector: "Meio-Ambiente",
-        points: "100 pontos",
-      },
-      {
-        position: 2,
-        company: "Burger King",
-        sector: "Alimentício",
-        points: "99 pontos",
-      },
-      {
-        position: 3,
-        company: "Steam",
-        sector: "Tecnologia",
-        points: "95 pontos",
-      },
-      {
-        position: 4,
-        company: "Roblox",
-        sector: "Tecnologia",
-        points: "94 pontos",
-      },
-      {
-        position: 5,
-        company: "Nintendo",
-        sector: "Tecnologia",
-        points: "92 pontos",
-      },
-      {
-        position: 6,
-        company: "Ipiranga",
-        sector: "Varejo",
-        points: "91 pontos",
-      },
-      {
-        position: 7,
-        company: "McDonalds",
-        sector: "Alimentício",
-        points: "90 pontos",
-      },
-      {
-        position: 8,
-        company: "Subway",
-        sector: "Alimentício",
-        points: "89 pontos",
-      },
-      {
-        position: 9,
-        company: "Shell",
-        sector: "Varejo",
-        points: "85 pontos",
-      },
-      {
-        position: 10,
-        company: "Lego",
-        sector: "Tecnologia",
-        points: "84 pontos",
-      },
-      {
-        position: 11,
-        company: "Rockstar",
-        sector: "Tecnologia",
-        points: "82 pontos",
-      },
-      {
-        position: 12,
-        company: "Starbucks",
-        sector: "Alimentício",
-        points: "81 pontos",
-      },
-      {
-        position: 13,
-        company: "Pixar",
-        sector: "Entretenimento",
-        points: "79 pontos",
-      },
-      {
-        position: 14,
-        company: "Coca-Cola",
-        sector: "Bebidas",
-        points: "78 pontos",
-      },
-      {
-        position: 15,
-        company: "Amazon",
-        sector: "Varejo",
-        points: "76 pontos",
-      },
-    ];
+    <script>
+      $(document).ready(function () {
+        function loadEmpresas(page, sortBy = 'pontuacao', sortOrder = 'desc') {
+          $.ajax({
+            url: `/empresas?page=${page}&size=13&sortBy=${sortBy}&sortOrder=${sortOrder}`, // Endpoint com suporte a paginação
+            type: 'GET',
+            success: function (response) {
+              var tbody = $('#tableEmpresas tbody');
+              tbody.empty();
+              let start = page * 13 + 2;
 
-    document.addEventListener("DOMContentLoaded", function () {
-      const topRankCard = document.getElementById("topRankCard");
-      const rankingTableBody = document.getElementById("rankingTableBody");
-      const pagination = document.getElementById("pagination");
-      const itemsPerPage = 10;
-      let currentPage = 1;
-
-      function renderTopRank() {
-        const topRankHtml = `
-        <div class="card-header">
-          ${rankingList[0].company}
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">${rankingList[0].position}º LUGAR - ${rankingList[0].points}</h5>
-          <p class="card-text">${rankingList[0].sector}</p>
-        </div>
-      `;
-        topRankCard.innerHTML = topRankHtml;
-      }
-
-      function renderTable(page) {
-        const start = (page - 1) * itemsPerPage + 1;
-        const end = start + itemsPerPage;
-        const paginatedItems = rankingList.slice(
-                start - 1,
-                Math.min(end - 1, rankingList.length)
-        );
-
-        rankingTableBody.innerHTML = "";
-
-        paginatedItems.forEach((item) => {
-          let row = rankingTableBody.insertRow();
-          let cellPosition = row.insertCell(0);
-          let cellCompany = row.insertCell(1);
-          let cellSector = row.insertCell(2);
-          let cellPoints = row.insertCell(3);
-
-          cellPosition.textContent = `${item.position + 1}º`;
-
-          let companyDiv = document.createElement("div");
-          companyDiv.style.display = "flex";
-          companyDiv.style.alignItems = "center";
-
-          let img = document.createElement("img");
-          img.src = item.image;
-          img.style.width = "50px";
-
-          let title = document.createElement("strong");
-          title.textContent = item.company;
-
-          let separator = document.createElement("span");
-          separator.textContent = " - ";
-          separator.style.marginRight = "5px";
-
-          companyDiv.appendChild(title);
-
-          cellCompany.appendChild(companyDiv);
-
-          cellSector.textContent = item.sector;
-          cellPoints.textContent = item.points;
-        });
-      }
-
-      function renderPagination() {
-        const pageCount = Math.ceil((rankingList.length - 1) / itemsPerPage);
-        pagination.innerHTML = "";
-
-        let prevPageItem = document.createElement("li");
-        prevPageItem.classList.add("page-item");
-        if (currentPage === 1) prevPageItem.classList.add("disabled");
-        let prevPageLink = document.createElement("a");
-        prevPageLink.classList.add("page-link");
-        prevPageLink.href = "#";
-        prevPageLink.setAttribute("aria-label", "Previous");
-        prevPageLink.innerHTML = "&laquo; Anterior";
-        prevPageLink.addEventListener("click", function (e) {
-          e.preventDefault();
-          if (currentPage > 1) {
-            currentPage--;
-            renderTable(currentPage);
-            renderPagination();
-          }
-        });
-        prevPageItem.appendChild(prevPageLink);
-        pagination.appendChild(prevPageItem);
-
-        for (let i = 1; i <= pageCount; i++) {
-          let pageItem = document.createElement("li");
-          pageItem.classList.add("page-item");
-          if (currentPage === i) pageItem.classList.add("active");
-          let pageLink = document.createElement("a");
-          pageLink.classList.add("page-link");
-          pageLink.href = "#";
-          pageLink.textContent = i;
-          pageLink.addEventListener("click", function (e) {
-            e.preventDefault();
-            currentPage = i;
-            renderTable(currentPage);
-            renderPagination();
+              if (response.content.length > 0) {
+                // Renderiza o topRank com o primeiro item
+                renderTopRank(response.content[0]);
+              }
+              response.content.slice(1).forEach(function (empresa, index) {
+                tbody.append(`
+            <tr>
+              <td>${start + index}</td>
+              <td>${empresa.cnpj}</td>
+              <td>${empresa.razaoSocial}</td>
+              <td>${empresa.porte}</td>
+              <td>${empresa.ramo}</td>
+              <td>${empresa.pontuacao}</td>
+            </tr>
+          `);
+              });
+              updatePagination(response.totalPages, page);
+            },
+            error: function (error) {
+              console.error('Erro ao buscar empresas:', error);
+            }
           });
-          pageItem.appendChild(pageLink);
-          pagination.appendChild(pageItem);
         }
 
-        let nextPageItem = document.createElement("li");
-        nextPageItem.classList.add("page-item");
-        if (currentPage === pageCount) nextPageItem.classList.add("disabled");
-        let nextPageLink = document.createElement("a");
-        nextPageLink.classList.add("page-link");
-        nextPageLink.href = "#";
-        nextPageLink.setAttribute("aria-label", "Next");
-        nextPageLink.innerHTML = "Avançar &raquo;";
-        nextPageLink.addEventListener("click", function (e) {
-          e.preventDefault();
-          if (currentPage < pageCount) {
-            currentPage++;
-            renderTable(currentPage);
-            renderPagination();
-          }
-        });
-        nextPageItem.appendChild(nextPageLink);
-        pagination.appendChild(nextPageItem);
-      }
+        function renderTopRank(empresa) {
+          const topRankHtml = `
+      <div class="card-header">
+        ${empresa.razaoSocial}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">1º LUGAR - ${empresa.pontuacao} pontos</h5>
+        <p class="card-text">Ramo: ${empresa.ramo}</p>
+        <p class="card-text">Porte: ${empresa.porte}</p>
+      </div>
+    `;
+          $('#topRankCard').html(topRankHtml);
+        }
 
-      renderTopRank();
-      renderTable(currentPage);
-      renderPagination();
-    });
+        function updatePagination(totalPages, currentPage) {
+          var pagination = $('.pagination');
+          pagination.empty();
+
+          // Botão "Anterior"
+          var previousClass = currentPage === 0 ? ' disabled' : '';
+          pagination.append(`<li class="page-item${previousClass}"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`);
+
+          // Evento para o botão "Anterior"
+          if (currentPage > 0) {
+            $('.pagination li:first a').click(function (event) {
+              event.preventDefault();
+              loadEmpresas(currentPage - 1);
+            });
+          }
+
+          // Números de página
+          for (let i = 0; i < totalPages; i++) {
+            var className = i === currentPage ? ' active' : '';
+            var link = $(`<li class="page-item ${className}"><a class="page-link" href="#">${i + 1}</a></li>`);
+            link.click(function (event) {
+              event.preventDefault();
+              loadEmpresas(i);
+            });
+            pagination.append(link);
+          }
+
+          // Botão "Próximo"
+          var nextClass = currentPage === totalPages - 1 ? ' disabled' : '';
+          pagination.append(`<li class="page-item${nextClass}"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`);
+
+          // Evento para o botão "Próximo"
+          if (currentPage < totalPages - 1) {
+            $('.pagination li:last a').click(function (event) {
+              event.preventDefault();
+              loadEmpresas(currentPage + 1);
+            });
+          }
+        }
+
+
+        // Carregar a primeira página de empresas quando a página é carregada
+        loadEmpresas(0);
+      });
     </script>
 
     <style>
@@ -607,48 +490,29 @@
           </div>
 
           <div class="col-md-8">
-            <table class="table table-striped bordered-table" id="rankingTable">
-              <thead>
+            <table class="table table-striped bordered-table" id="tableEmpresas">
+
+                <thead>
                 <tr>
-                  <th scope="col" class="firstPosition">Posição</th>
-
-                  <th scope="col">Empresa</th>
-                  <th scope="col">Ramo</th>
-                  <th scope="col" class="UltimaPosition" >Pontos</th>
+                  <th>Posicao</th>
+                  <th>CNPJ</th>
+                  <th>Razão Social</th>
+                  <th>Porte</th>
+                  <th>Ramo</th>
+                  <th>Pontuacao</th>
                 </tr>
-              </thead>
-              <tbody id="rankingTableBody"></tbody>
-            </table>
-
-            <nav aria-label="Page navigation">
-              <ul class="pagination justify-content-center" id="pagination">
-                <li class="page-item" id="previousPage">
-                  <a class="page-link" href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span> Anterior
-                  </a>
-                </li>
-
-                <li class="page-item" id="nextPage">
-                  <a class="page-link" href="#" aria-label="Next">
-                    Avançar <span aria-hidden="true">&raquo;</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center"></ul>
+              </nav>
           </div>
         </div>
       </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"
-  ></script>
   </body>
 
 </html>
