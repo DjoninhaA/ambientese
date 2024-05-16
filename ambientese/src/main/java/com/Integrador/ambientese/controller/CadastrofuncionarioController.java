@@ -52,14 +52,13 @@ public class CadastrofuncionarioController {
     @PostMapping("/cadastro/funcionario")
     public ResponseEntity<String> saveFuncionario(
             @RequestParam("nome") String name,
-            @RequestParam("CPF") String cpf,
+            @RequestParam("cpf") String cpf,
             @RequestParam("data_nascimento") Date dataNascimento,
             @RequestParam("email") String email,
             @RequestParam("cargo") Cargo cargo,
             @RequestParam("genero") Genero genero,
             @RequestParam("login") String login,
-            @RequestParam("senha") String senha,
-            @RequestParam("isAdmin") int isAdmin){
+            @RequestParam("senha") String senha){
     
         Funcionarios funcionario = new Funcionarios();
         funcionario.setName(name);
@@ -73,7 +72,6 @@ public class CadastrofuncionarioController {
         Usuario usuario = new Usuario();
         usuario.setLogin(login);
         usuario.setSenha(senha);
-        usuario.setIsAdmin(isAdmin);
     
         // Salvar a empresa no repositório
         funcionariosRepository.save(funcionario);
