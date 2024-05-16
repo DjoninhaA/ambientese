@@ -22,7 +22,7 @@ public class CadastrofuncionarioController {
     @GetMapping("/cadastro/funcionario")
     public ModelAndView cadastroFuncionario() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("cadastroFuncionario");
+        modelAndView.setViewName("html/cadastroFuncionario");
         return modelAndView;
     } // Retorna o nome do arquivo HTML sem a extensão
 
