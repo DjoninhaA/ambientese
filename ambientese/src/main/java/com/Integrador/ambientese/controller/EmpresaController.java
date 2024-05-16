@@ -1,5 +1,7 @@
 package com.Integrador.ambientese.controller;
 
+import com.Integrador.ambientese.model.enums.Porte;
+import com.Integrador.ambientese.model.enums.Ramo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,6 +46,43 @@ public class EmpresaController {
         return ResponseEntity.ok(empresa);
     }
 
+    Porte porte;
+    private Porte convertIntToPorte(int porteNum) {
+        switch(porteNum) {
+            case 0:
+                return Porte.Microempresa;
+            case 1:
+                return Porte.PequenoPorte;
+            case 2:
+                return Porte.IVMedioPorte;
+            case 3:
+                return Porte.IIIMedioPorte;
+            case 4:
+                return Porte.IIGrandePorte;
+            case 5:
+                return Porte.IGrandePorte;
+            default:
+                throw new IllegalArgumentException("Porte inválido: " + porteNum);
+        }
+    }
+    Ramo ramo;
+    private Ramo convertIntToRamo(int ramoNum) {
+        switch(ramoNum) {
+            case 0:
+                return Ramo.Alimenticio;
+            case 1:
+                return Ramo.Tecnologico;
+            case 2:
+                return Ramo.Varejo;
+            case 3:
+                return Ramo.Saude;
+            case 4:
+                return Ramo.ContrucaoCivil;
+            default:
+                throw new IllegalArgumentException("Ramo inválido: " + ramoNum);
+        }
+    }
+
     @PostMapping("cadastroEmpresa")
     public ResponseEntity<String> saveEmpresa(
             @RequestParam("razao_social") String razaoSocial,
@@ -52,8 +91,8 @@ public class EmpresaController {
             @RequestParam("nome_solicitante") String nomeSolicitante,
             @RequestParam("telefone_solicitante") String telefoneSolicitante,
             @RequestParam("inscricao_social") String inscricaoSocial,
-            @RequestParam("ramo") String ramo,
-            @RequestParam("porte") String porte,
+            @RequestParam("ramo") int ramoNum,
+            @RequestParam("porte") int porteNum,
             @RequestParam("logo") MultipartFile logo,
             @RequestParam("cep") String cep,
             @RequestParam("endereco") String endereco,
@@ -63,7 +102,10 @@ public class EmpresaController {
             @RequestParam("pais") String pais,
             @RequestParam("email") String email,
             @RequestParam("telefone_empresa") Long telefoneEmpresa) {
-    
+
+
+        Porte porte = convertIntToPorte(porteNum);
+        Ramo ramo = convertIntToRamo(ramoNum);
     
         Empresa empresa = new Empresa();
         empresa.setRazaoSocial(razaoSocial);
@@ -73,7 +115,7 @@ public class EmpresaController {
         empresa.setTelefoneSolicitante(telefoneSolicitante);
         empresa.setInscricaoSocial(inscricaoSocial);
         empresa.setRamo(ramo);
-        empresa.setPorte(porte);    
+        empresa.setPorte(porte);
         empresa.setEmail(email);
         empresa.setTelefoneEmpresa(telefoneEmpresa);
     
