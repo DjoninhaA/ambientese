@@ -102,23 +102,42 @@ public class EmpresaController {
     
 
     @PutMapping("/editar/{idEmpresa}")
-    public Empresa atualizarEmpresa(@PathVariable long idEmpresa, @RequestBody Empresa empresaAtualizada){
+    public ResponseEntity<Empresa> atualizarEmpresa(
+            @PathVariable long idEmpresa, 
+            @RequestBody Empresa empresaAtualizada) {
+    
         return empresaRepository.findById(idEmpresa)
-        .map(empresa -> {
-            empresa.setEmail(empresaAtualizada.getEmail());
-            empresa.setRazaoSocial(empresaAtualizada.getRazaoSocial());
-            empresa.setCnpj(empresa.getCnpj());
-            empresa.setNomeSolicitante(empresa.getNomeSolicitante());
-            empresa.setTelefoneSolicitante(empresa.getTelefoneSolicitante());
-            empresa.setInscricaoSocial(empresa.getInscricaoSocial());
-            empresa.setRamo(empresa.getRamo());
-            empresa.setPorte(empresa.getPorte());
-            empresa.setEmail(empresa.getEmail());
-            empresa.setTelefoneEmpresa(empresa.getTelefoneEmpresa());        
-            return empresaRepository.save(empresa);
-    })
-    .orElseThrow(() -> new RuntimeException("Empresa não encontrada com o ID: " + idEmpresa));
-}
+                .map(empresa -> {
+                    empresa.setEmail(empresaAtualizada.getEmail());
+                    empresa.setRazaoSocial(empresaAtualizada.getRazaoSocial());
+                    empresa.setCnpj(empresaAtualizada.getCnpj());
+                    empresa.setNomeSolicitante(empresaAtualizada.getNomeSolicitante());
+                    empresa.setTelefoneSolicitante(empresaAtualizada.getTelefoneSolicitante());
+                    empresa.setInscricaoSocial(empresaAtualizada.getInscricaoSocial());
+                    empresa.setRamo(empresaAtualizada.getRamo());
+                    empresa.setPorte(empresaAtualizada.getPorte());
+                    empresa.setTelefoneEmpresa(empresaAtualizada.getTelefoneEmpresa());
+    
+                    Endereco enderecoAtualizado = empresaAtualizada.getEndereco();
+                    Endereco enderecoEmpresa = empresa.getEndereco();
+    
+                    if (enderecoEmpresa == null) {
+                        enderecoEmpresa = new Endereco();
+                    }
+    
+                    enderecoEmpresa.setCep(enderecoAtualizado.getCep());
+                    enderecoEmpresa.setNumero(enderecoAtualizado.getNumero());
+                    enderecoEmpresa.setCidade(enderecoAtualizado.getCidade());
+                    enderecoEmpresa.setUF(enderecoAtualizado.getUF());
+                    enderecoEmpresa.setPais(enderecoAtualizado.getPais());
+                    empresa.setEndereco(enderecoEmpresa);
+    
+                    Empresa empresaSalva = empresaRepository.save(empresa);
+                    return ResponseEntity.ok(empresaSalva);
+                })
+                .orElseThrow(() -> new RuntimeException("Empresa não encontrada com o ID: " + idEmpresa));
+    }
+    
 
     @DeleteMapping("/deletar/{idEmpresa}")
         public void deletarEmpresa(@PathVariable Long idEmpresa){
