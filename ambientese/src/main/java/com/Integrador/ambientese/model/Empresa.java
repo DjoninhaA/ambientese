@@ -1,6 +1,8 @@
 package com.Integrador.ambientese.model;
 
 
+import com.Integrador.ambientese.model.enums.Porte;
+import com.Integrador.ambientese.model.enums.Ramo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,10 +32,12 @@ public class Empresa {
     private String telefoneSolicitante;
     @Column(name = "inscricao_social", nullable = true)
     private String inscricaoSocial;
+    @Enumerated(EnumType.STRING)
     @Column(name = "ramo", nullable = false)
-    private String ramo;
+    private Ramo ramo;
+    @Enumerated(EnumType.STRING)
     @Column(name = "porte", nullable = false)
-    private String porte;
+    private Porte porte;
     @Column(name = "email", columnDefinition = "varchar(100) default 'email'", nullable = false)
     private String email;
     @Column(name = "telefone_empresa",columnDefinition = "varchar(20) default 'telefone'", nullable = false)
