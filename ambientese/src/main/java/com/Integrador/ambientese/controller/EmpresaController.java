@@ -38,12 +38,6 @@ public class EmpresaController {
 
      }
 
-    // @GetMapping("/buscarTodas")
-    // public ResponseEntity<List<Empresa>>GetAll(){
-    //     List<Empresa>allEmpresas = empresaRepository.findAll();
-    //     return ResponseEntity.ok(allEmpresas);
-    // }
-
     @GetMapping("/buscaEmpresa/{nome_fantasia}")
     public ResponseEntity<Empresa> GetByName(@PathVariable String nome_fantasia){
         Empresa empresa = empresaRepository.findByNomeFantasia(nome_fantasia);

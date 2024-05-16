@@ -320,29 +320,120 @@
         }
     </style>
     <script>
-        $(document).ready(function () {
-            // Activate tooltip
-            $('[data-toggle="tooltip"]').tooltip();
 
-            // Select/Deselect checkboxes
-            var checkbox = $('table tbody input[type="checkbox"]');
-            $("#selectAll").click(function () {
-                if (this.checked) {
-                    checkbox.each(function () {
-                        this.checked = true;
-                    });
-                } else {
-                    checkbox.each(function () {
-                        this.checked = false;
-                    });
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+    
+            window.deleteEmpresa = function (id) {
+                $.ajax({
+                    url: '/funcionario/delete/' + id,
+                    type: 'DELETE',
+                    success: function(result) {
+                        $('#deleteEmployeeModal').modal('hide'); // Fecha o modal
+                        loadFuncionarios(0); // Recarrega a página ou atualiza a tabela de forma dinâmica
+                    },
+                    error: function(result) {
+                        alert("Erro ao deletar o funcionario. " + result.responseText);
+                    }
+                });
+            };
+    
+            function loadFuncionarios(page) {
+                $.ajax({
+                    url: '/funcionarios?page=' + page + '&size=10', // Endpoint com suporte a paginação
+                    type: 'GET',
+                    success: function (response) {
+                        var tbody = $('#tableFuncionarios tbody');
+                        tbody.empty(); // Limpa a tabela antes de adicionar novos dados
+                        response.content.forEach(function (funcionarios) { // Ajuste baseado na estrutura da resposta
+                            tbody.append(`
+                        <tr>
+                            <td>${funcionarios.idFuncionario}</td>
+                            <td>${funcionarios.name}</td>
+                            <td>${funcionarios.cargo}</td>
+                            <td>${funcionarios.email}</td>
+                            <td>
+                                <a href="/editar/${funcionarios.idFuncionario}" class="edit" data-toggle="tooltip" title="Editar">
+                                    <i class="material-icons">&#xE254;</i>
+                                </a>
+                              <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" data-id="${funcionarios.idFuncionario}" data-target="#deleteEmployeeModal">
+                                <i class="material-icons" data-toggle="tooltip" title="Deletar">&#xE872;</i>
+                              </a>
+    
+                            </td>
+                        </tr>
+                    `);
+                            console.log(funcionarios.name)
+                        });
+                        updatePagination(response.totalPages, page); // Atualiza os controles de paginação
+                        updateEntriesText(response.size, response.totalElements, page); // Função para atualizar controles de paginação
+                    }
+                });
+            }
+    
+    
+    
+            function updateEntriesText(pageSize, totalEntries, currentPage) {
+                var startEntry = currentPage * pageSize + 1;
+                var endEntry = startEntry + pageSize - 1;
+                endEntry = (endEntry > totalEntries) ? totalEntries : endEntry;
+                var text = `Mostrando ${startEntry} a ${endEntry} de ${totalEntries} entradas`;
+                $('.hint-text').text(text);
+            }
+    
+            function updatePagination(totalPages, currentPage) {
+                var pagination = $('.pagination');
+                pagination.empty(); // Limpa a paginação existente antes de adicionar novos links
+    
+                // Botão "Anterior"
+                var prevClassName = currentPage > 0 ? '' : 'disabled';
+                var prevLink = $(`<li class="page-item ${prevClassName}"><a href="#" class="page-link">Anterior</a></li>`);
+                prevLink.click(function(event) {
+                    event.preventDefault();
+                    if (currentPage > 0) {
+                        loadFuncionarios(currentPage - 1);
+                    }
+                });
+                pagination.append(prevLink);
+    
+                // Números de página
+                for (let i = 0; i < totalPages; i++) {
+                    var className = i === currentPage ? 'active' : '';
+                    var link = $('<li class="page-item ' + className + '"><a href="#" class="page-link">' + (i + 1) + '</a></li>');
+                    link.click((function(page) { // IIFE para capturar o valor correto de 'i' dentro do loop
+                        return function(event) {
+                            event.preventDefault(); // Prevenir o comportamento padrão do link
+                            loadFuncionarios(page);
+                        };
+                    })(i));
+                    pagination.append(link);
                 }
-            });
-            checkbox.click(function () {
-                if (!this.checked) {
-                    $("#selectAll").prop("checked", false);
-                }
+    
+                // Botão "Próximo"
+                var nextClassName = currentPage < totalPages - 1 ? '' : 'disabled';
+                var nextLink = $(`<li class="page-item ${nextClassName}"><a href="#" class="page-link">Próximo</a></li>`);
+                nextLink.click(function(event) {
+                    event.preventDefault();
+                    if (currentPage < totalPages - 1) {
+                        loadFuncionarios(currentPage + 1);
+                    }
+                });
+                pagination.append(nextLink);
+            }
+    
+    
+            // Carregar a primeira página de empresas quando a página é carregada
+            loadFuncionarios(0);
+    
+            $('#deleteEmployeeModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Botão que acionou o modal
+                var id = button.data('id'); // Extrai informação do data-* atributos
+                console.log("ID do funcionario: ", id);
+                window.funcionarioIdToDelete = id; // Armazena ID para ser usado na deleção
             });
         });
+        
+
     </script>
 </head>
 
@@ -358,11 +449,11 @@
                     <div class="col-xs-7">
                         <div class="input-group">
                             <input type="text" class="form-control" id="searchInput"
-                                   placeholder="Pesquisar empresas">
+                                   placeholder="Pesquisar funcionarios">
                         </div>
                     </div>
                     <div class="col-xs-">
-                        <a href="/cadastrofuncionario" class="btn btn-novo-registro"><i
+                        <a href="/cadastro/funcionario" class="btn btn-novo-registro"><i
                                 class="material-icons">&#xE147;</i> <span>Novo registro</span></a>
 
                         <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i
@@ -371,147 +462,16 @@
                 </div>
 
 
-                <table class="table table-striped table-hover">
+                <table class="table table-striped table-hover" id="tableFuncionarios">
                     <thead>
                     <tr>
-                        <th>
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="selectAll">
-                                        <label for="selectAll"></label>
-                                    </span>
-                        </th>
                         <th>ID</th>
                         <th>Nome</th>
-                        <th>Função</th>
-                        <th>Telefone</th>
+                        <th>Cargo</th>
                         <th>E-mail</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="checkbox1" name="options[]" value="1">
-                                        <label for="checkbox1"></label>
-                                    </span>
-                        </td>
-                        <td>1</td>
-                        <td>Ana Almeida</td>
-                        <td>Adiministrador</td>
-                        <td>(45)999999999</td>
-                        <td>ana@gmail</td>
-
-                        <td>
-                            <a href="/cadastrofuncionario" class="edit">
-                                <i class="material-icons" data-toggle="tooltip" title="Edit"
-                                   data-target="#editEmployeeModal">edit</i>
-                            </a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                            </a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="checkbox2" name="options[]" value="1">
-                                        <label for="checkbox2"></label>
-                                    </span>
-                        </td>
-                        <td>2</td>
-
-                        <td>Ana Almeida</td>
-                        <td>Adiministrador</td>
-                        <td>(45)999999999</td>
-                        <td>ana@gmail</td>
-
-                        <td>
-                            <a href="/cadastrofuncionario" class="edit">
-                                <i class="material-icons" data-toggle="tooltip" title="Edit"
-                                   data-target="#editEmployeeModal">edit</i>
-                            </a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                            </a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="checkbox3" name="options[]" value="1">
-                                        <label for="checkbox3"></label>
-                                    </span>
-                        </td>
-                        <td>3</td>
-
-                        <td>Ana Almeida</td>
-                        <td>Adiministrador</td>
-                        <td>(45)999999999</td>
-                        <td>ana@gmail</td>
-
-                        <td>
-                            <a href="/cadastrofuncionario" class="edit">
-                                <i class="material-icons" data-toggle="tooltip" title="Edit"
-                                   data-target="#editEmployeeModal">edit</i>
-                            </a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                            </a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="checkbox4" name="options[]" value="1">
-                                        <label for="checkbox4"></label>
-                                    </span>
-                        </td>
-                        <td>4</td>
-
-                        <td>Ana Almeida</td>
-                        <td>Adiministrador</td>
-                        <td>(45)999999999</td>
-                        <td>ana@gmail</td>
-
-                        <td>
-                            <a href="/cadastrofuncionario" class="edit">
-                                <i class="material-icons" data-toggle="tooltip" title="Edit"
-                                   data-target="#editEmployeeModal">edit</i>
-                            </a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                            </a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                                    <span class="custom-checkbox">
-                                        <input type="checkbox" id="checkbox5" name="options[]" value="1">
-                                        <label for="checkbox5"></label>
-                                    </span>
-                        </td>
-                        <td>5</td>
-                        <td>Ana Almeida</td>
-                        <td>Adiministrador</td>
-                        <td>(45)999999999</td>
-                        <td>ana@gmail</td>
-
-                        <td>
-                            <a href="/cadastrofuncionario" class="edit">
-                                <i class="material-icons" data-toggle="tooltip" title="Edit"
-                                   data-target="#editEmployeeModal">edit</i>
-                            </a>
-                            <a href="#deleteEmployeeModal" class="delete" data-toggle="modal">
-                                <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
-                            </a>
-                        </td>
-
-                    </tr>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
                 <div class="clearfix">
                     <div class="hint-text">Mostrando <b>5</b> de <b>25</b> entradas</div>
@@ -525,6 +485,75 @@
                         <li class="page-item"><a href="#" class="page-link">Próximo</a></li>
                     </ul>
                 </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Edit Modal HTML -->
+     <div id="addEmployeeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Novo registro</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="modal-body">
+                            <span class="custom-checkbox">
+                                <input type="checkbox" id="checkbox4" name="options[]" value="1">
+                                <label for="checkbox4"></label>
+                            </span>
+                            <div class="form-group">
+                                <label>Nome</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Cargo</label>
+                                <input type="text" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>E-mail</label>
+                                <textarea class="email" required></textarea>
+                            </div>
+                        </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                        <input type="submit" class="btn btn-success btn-novo-registro" value="Adicionar">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Modal HTML -->
+    <div id="editEmployeeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Editar funcionário</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Nome</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Cargo</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <textarea class="email" required></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                        <input type="submit" class="btn btn-info" value="Salvar">
+                    </div>
+                </form>
             </div>
         </div>
     </div>

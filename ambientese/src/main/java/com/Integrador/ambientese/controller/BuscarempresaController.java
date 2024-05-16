@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class BuscarempresaController {
 
-    private final EmpresaRepository empresaRepository;
-
     @Autowired
+    private final EmpresaRepository empresaRepository;
+    
     public BuscarempresaController(EmpresaRepository empresaRepository) {
         this.empresaRepository = empresaRepository;
     }
