@@ -9,6 +9,10 @@ import com.Integrador.ambientese.model.enums.Cargo;
 import com.Integrador.ambientese.model.enums.Genero;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -37,11 +41,19 @@ public class CadastrofuncionarioController {
         return modelAndView;
     } // Retorna o nome do arquivo HTML sem a extensão
 
-    @GetMapping("/buscar/funcionario")
-    public ResponseEntity<List<Funcionarios>> GetAll(){
-        List<Funcionarios>allFuncionarios = funcionariosRepository.findAll();
-        return ResponseEntity.ok(allFuncionarios);
-    }
+    @GetMapping("/listarFuncionario")
+    public ModelAndView cadastroEmperesa() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("html/listarFuncionario");
+        return modelAndView;
+     }
+
+    // @GetMapping("/buscar/funcionario")
+    // public ModelAndView listarFuncionarios() {
+    //     ModelAndView modelAndView = new ModelAndView();
+    //     modelAndView.setViewName("html/listarFuncionario");
+    //     return modelAndView;
+    // } // Retorna o nome do arquivo HTML sem a extensão
 
     @GetMapping("/buscarfuncionario/{idFuncionario}")
     public ResponseEntity<Funcionarios> GetById(@PathVariable long idFuncionario){
@@ -80,7 +92,22 @@ public class CadastrofuncionarioController {
         return ResponseEntity.ok("Dados salvos com sucesso!");
     }
 
+    @GetMapping("/funcionarios")
+    public Page<Funcionarios> getFuncionarios(@RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "10") int size,
+                                     @RequestParam(required = false) String sortBy,
+                                     @RequestParam(defaultValue = "asc") String sortOrder) {
+        Pageable pageable;
 
+        if (sortBy != null && !sortBy.isEmpty()) {
+            Sort sort = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+            pageable = PageRequest.of(page, size, sort);
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+
+        return funcionariosRepository.findAll(pageable);
+    }
 
     @PutMapping("/edit/{idFuncionario}")
     public Funcionarios atualizarFuncionarios(@RequestBody Funcionarios funcionariosAtualizados, @PathVariable long idFuncionario){
@@ -102,7 +129,7 @@ public class CadastrofuncionarioController {
        }
     }
 
-    @DeleteMapping("/delete/{idFuncionario}")
+    @DeleteMapping("/funcionario/delete/{idFuncionario}")
     public ResponseEntity<Void> deletarFuncionario(@PathVariable Long idFuncionario){
         funcionariosRepository.deleteById(idFuncionario);
         return ResponseEntity.noContent().build();
