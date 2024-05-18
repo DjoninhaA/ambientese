@@ -59,21 +59,30 @@
                 if (response.content.length > 0) {
                   // Renderiza o topRank com o primeiro item
                   renderTopRank(response.content[0]);
-                }
-                response.content.slice(1).forEach(function (empresa, index) {
-                  var porteText = porteLabels[empresa.porte] || 'Não especificado';
-                  var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
-                  tbody.append(`
-                        <tr>
-                            <td>${start + index}</td>
-                            <td>${empresa.cnpj}</td>
-                            <td>${empresa.razaoSocial}</td>
-                            <td>${porteText}</td>
-                            <td>${ramoText}</td>
-                            <td>${empresa.pontuacao}</td>
-                        </tr>
+
+                  response.content.slice(1).forEach(function (empresa, index) {
+                    var porteText = porteLabels[empresa.porte] || 'Não especificado';
+                    var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
+                    tbody.append(`
+                      <tr>
+                        <td>${start + index}</td>
+                        <td>${empresa.cnpj}</td>
+                        <td>${empresa.razaoSocial}</td>
+                        <td>${porteText}</td>
+                        <td>${ramoText}</td>
+                        <td>${empresa.pontuacao}</td>
+                      </tr>
                     `);
-                });
+                  });
+                } else {
+                  // Adiciona uma linha informando que não há itens
+                  tbody.append(`
+                  <tr>
+                    <td colspan="6" class="text-center">Não existem itens com os filtros aplicados.</td>
+                  </tr>
+                `);
+                  renderTopRank(null);
+                }
                 updatePagination(response.totalPages, page);
               },
               error: function (error) {
@@ -91,21 +100,31 @@
           }
 
           $('#searchButton').click(handleSearchClick);
-        function renderTopRank(empresa) {
-          var porteText = porteLabels[empresa.porte] || 'Não especificado';
-          var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
-          const topRankHtml = `
-              <div class="card-header">
-                ${empresa.razaoSocial}
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">1º LUGAR - ${empresa.pontuacao} pontos</h5>
-                <p class="card-text">Ramo: ${ramoText}</p>
-                <p class="card-text">Porte: ${porteText}</p>
-              </div>
-            `;
-          $('#topRankCard').html(topRankHtml);
-        }
+          function renderTopRank(empresa) {
+            let topRankHtml;
+            if (empresa) {
+              var porteText = porteLabels[empresa.porte] || 'Não especificado';
+              var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
+              topRankHtml = `
+                <div class="card-header">
+                  ${empresa.razaoSocial}
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">1º LUGAR - ${empresa.pontuacao} pontos</h5>
+                  <p class="card-text">Ramo: ${ramoText}</p>
+                  <p class="card-text">Porte: ${porteText}</p>
+                </div>
+              `;
+                      } else {
+                        topRankHtml = `
+                <div class="card-header text-center">Sem Resultados</div>
+                <div class="card-body">
+                  <p class="card-text">Não existem empresas com os filtros aplicados.</p>
+                </div>
+              `;
+            }
+            $('#topRankCard').html(topRankHtml);
+          }
 
         function updatePagination(totalPages, currentPage) {
           var pagination = $('.pagination');
