@@ -1,41 +1,59 @@
 package com.Integrador.ambientese.controller;
 
 
+import com.Integrador.ambientese.model.Empresa;
+import com.Integrador.ambientese.model.Endereco;
 import com.Integrador.ambientese.model.Funcionarios;
+import com.Integrador.ambientese.model.Usuario;
 import com.Integrador.ambientese.model.enums.Cargo;
+import com.Integrador.ambientese.model.enums.Genero;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
 import com.Integrador.ambientese.interfac.FuncionariosRepository;
+import com.Integrador.ambientese.interfac.UsuarioRepository;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
-
-
 
 @RestController
 public class CadastrofuncionarioController {
 
     @Autowired
     private FuncionariosRepository funcionariosRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository; 
 
-    @GetMapping("/cadastroFuncionario")
+    @GetMapping("/cadastro/funcionario")
     public ModelAndView cadastroFuncionario() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("html/cadastroFuncionario");
         return modelAndView;
     } // Retorna o nome do arquivo HTML sem a extensão
 
-    @GetMapping("/buscar/funcionario")
-    public ResponseEntity<List<Funcionarios>> GetAll(){
-        List<Funcionarios>allFuncionarios = funcionariosRepository.findAll();
-        return ResponseEntity.ok(allFuncionarios);
-    }
+    @GetMapping("/listarFuncionario")
+    public ModelAndView cadastroEmperesa() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("html/listarFuncionario");
+        return modelAndView;
+     }
+
+    // @GetMapping("/buscar/funcionario")
+    // public ModelAndView listarFuncionarios() {
+    //     ModelAndView modelAndView = new ModelAndView();
+    //     modelAndView.setViewName("html/listarFuncionario");
+    //     return modelAndView;
+    // } // Retorna o nome do arquivo HTML sem a extensão
 
     @GetMapping("/buscarfuncionario/{idFuncionario}")
     public ResponseEntity<Funcionarios> GetById(@PathVariable long idFuncionario){
@@ -43,50 +61,65 @@ public class CadastrofuncionarioController {
         return ResponseEntity.ok(funcionarios);
     }
 
-    @PostMapping("/cadastrar/funcionario")
-    public ResponseEntity<Funcionarios> postFuncionarios(@RequestBody Funcionarios funcionarios){
-        Funcionarios savedFuncionario = funcionariosRepository.save(funcionarios);
-        return ResponseEntity.ok(savedFuncionario);
-    }
-
-    @PostMapping("cadastroFuncionario")
+    @PostMapping("/cadastro/funcionario")
     public ResponseEntity<String> saveFuncionario(
-            @RequestParam("nome") String nome,
+            @RequestParam("nome") String name,
             @RequestParam("cpf") String cpf,
-            @RequestParam("dataNascimento") @DateTimeFormat(pattern = "yyyy-MM-dd") Date dataNascimento,
-            @RequestParam("cargo") String cargo,
+            @RequestParam("data_nascimento") Date dataNascimento,
             @RequestParam("email") String email,
-            //@RequestParam("login") String login,
-            //@RequestParam("senha") String senha,
-            @RequestParam("telefone") String telefone) {
-
+            @RequestParam("cargo") Cargo cargo,
+            @RequestParam("genero") Genero genero,
+            @RequestParam("login") String login,
+            @RequestParam("senha") String senha){
+    
         Funcionarios funcionario = new Funcionarios();
-        funcionario.setName(nome);
+        funcionario.setName(name);
         funcionario.setCpf(cpf);
-        funcionario.setDataNascimento(new java.sql.Date(dataNascimento.getTime()));
-        funcionario.setCargo(Cargo.valueOf(cargo.toUpperCase())); // Ajuste para enum
+        funcionario.setDataNascimento(dataNascimento);
         funcionario.setEmail(email);
-        //funcionario.setLogin(login);
-        //funcionario.setSenha(senha);
-        funcionario.setTelefone(telefone);
-
+        funcionario.setCargo(cargo);
+        funcionario.setGenero(genero);
+    
+        // Criar o objeto Endereco e configurar os dados
+        Usuario usuario = new Usuario();
+        usuario.setLogin(login);
+        usuario.setSenha(senha);
+    
+        // Salvar a empresa no repositório
         funcionariosRepository.save(funcionario);
-
+        usuarioRepository.save(usuario);
+    
         return ResponseEntity.ok("Dados salvos com sucesso!");
     }
 
+    @GetMapping("/funcionarios")
+    public Page<Funcionarios> getFuncionarios(@RequestParam(defaultValue = "0") int page,
+                                     @RequestParam(defaultValue = "10") int size,
+                                     @RequestParam(required = false) String sortBy,
+                                     @RequestParam(defaultValue = "asc") String sortOrder) {
+        Pageable pageable;
 
+        if (sortBy != null && !sortBy.isEmpty()) {
+            Sort sort = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+            pageable = PageRequest.of(page, size, sort);
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+
+        return funcionariosRepository.findAll(pageable);
+    }
 
     @PutMapping("/edit/{idFuncionario}")
     public Funcionarios atualizarFuncionarios(@RequestBody Funcionarios funcionariosAtualizados, @PathVariable long idFuncionario){
        try {
            Funcionarios funcionarioAtual = funcionariosRepository.findById(idFuncionario);
+           funcionarioAtual.setCargo(funcionariosAtualizados.getCargo());
            funcionarioAtual.setName(funcionariosAtualizados.getName());
            funcionarioAtual.setCpf(funcionariosAtualizados.getCpf());
            funcionarioAtual.setEmail(funcionariosAtualizados.getEmail());
-           funcionarioAtual.setTelefone(funcionariosAtualizados.getTelefone());
            funcionarioAtual.setDataNascimento(funcionariosAtualizados.getDataNascimento());
            funcionarioAtual.setCargo(funcionariosAtualizados.getCargo());
+           funcionarioAtual.setGenero(funcionariosAtualizados.getGenero());
 
            funcionariosRepository.save(funcionarioAtual);
 
@@ -96,7 +129,7 @@ public class CadastrofuncionarioController {
        }
     }
 
-    @DeleteMapping("/delete/{idFuncionario}")
+    @DeleteMapping("/funcionario/delete/{idFuncionario}")
     public ResponseEntity<Void> deletarFuncionario(@PathVariable Long idFuncionario){
         funcionariosRepository.deleteById(idFuncionario);
         return ResponseEntity.noContent().build();
