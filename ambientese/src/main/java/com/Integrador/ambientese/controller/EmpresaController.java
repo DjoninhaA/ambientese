@@ -26,6 +26,13 @@ public class EmpresaController {
     private EmpresaRepository empresaRepository;
 
     @GetMapping("/cadastroEmpresa")
+    public ModelAndView editarEmpresa() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("html/cadastroEmpresa");
+        return modelAndView;
+     }
+
+     @GetMapping("/editar/{idEmpresa}")
     public ModelAndView cadastroEmperesa() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("html/cadastroEmpresa");
@@ -43,6 +50,12 @@ public class EmpresaController {
     @GetMapping("/buscaEmpresa/{nome_fantasia}")
     public ResponseEntity<Empresa> GetByName(@PathVariable String nome_fantasia){
         Empresa empresa = empresaRepository.findByNomeFantasia(nome_fantasia);
+        return ResponseEntity.ok(empresa);
+    }
+
+    @GetMapping("/busca/{idEmpresa}")
+    public ResponseEntity<Empresa> GetById(@PathVariable Long idEmpresa){
+        Empresa empresa = empresaRepository.findByidEmpresa(idEmpresa);
         return ResponseEntity.ok(empresa);
     }
 

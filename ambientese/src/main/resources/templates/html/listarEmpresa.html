@@ -458,7 +458,6 @@
             $('#deleteEmployeeModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget); // Botão que acionou o modal
                 var id = button.data('id'); // Extrai informação do data-* atributos
-                console.log("ID da empresa: ", id);
                 window.empresaIdToDelete = id; // Armazena ID para ser usado na deleção
             });
         });

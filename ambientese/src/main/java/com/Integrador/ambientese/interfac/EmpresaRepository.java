@@ -8,4 +8,6 @@ import com.Integrador.ambientese.model.Empresa;
 @Repository
 public interface EmpresaRepository extends JpaRepository<Empresa, Long>, JpaSpecificationExecutor<Empresa> {
         Empresa findByNomeFantasia(String nomeFantasia);
+
+        Empresa findByidEmpresa(Long idEmpresa);
 }
