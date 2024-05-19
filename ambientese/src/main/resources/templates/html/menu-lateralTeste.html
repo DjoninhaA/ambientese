@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <script src="https://kit.fontawesome.com/568e2b14f2.js" crossorigin="anonymous"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            background-color: #f0f4f7; /* Cor de fundo suave */
+            background-color: #f0f4f7; 
         }
 
         /* Estilos da navbar */
         .navbar {
             display: flex;
             align-items: center;
-            background-color: #2864F6; /* Cor da navbar principal */
+            background-color: #2864F6;
             padding: 10px;
             color: white;
             z-index: 2; /* Define uma pilha de ordem para garantir que a navbar fique acima de outros elementos */
@@ -38,7 +39,7 @@
             position: fixed;
             top: 65px; /* Alinhar abaixo da navbar */
             left: 0;
-            background-color: #2864F6; /* Cor de fundo do menu lateral */
+            background-color: #2864F6;
             overflow-x: hidden;
             transition: 0.3s;
             z-index: 3; /* Define uma pilha de ordem para garantir que a aba lateral fique acima de outros elementos */
@@ -47,18 +48,22 @@
         .side-menu a {
             padding: 15px 20px;
             text-decoration: none;
-            font-size: 18px; /* Ajuste do tamanho da fonte */
-            color: #ffffff; /* Cor do texto baseada na navbar principal */
+            font-size: 18px;
+            color: #ffffff; 
             display: block;
             transition: 0.3s;
-            /* Fundo dos botões baseado na navbar principal */
             margin: 10px 10px;
-            border-radius: 5px; /* Bordas arredondadas dos botões */
+            border-radius: 5px; 
+        }
+
+        .side-menu a i {
+        margin-right: 10px; 
+        vertical-align: middle;
         }
 
         .side-menu a:hover {
-            background-color: #487DF7; /* Cor do fundo ao passar o mouse baseada na navbar principal */
-            color: white; /* Cor do texto ao passar o mouse */
+            background-color: #487DF7; 
+            color: white;
             border: 1px solid rgba(255, 255, 255, 0.26);
         }
 
@@ -69,9 +74,9 @@
             right: 20px;
             padding: 15px 20px;
             text-align: center;
-            background-color: #2864F6; /* Cor do botão de sair */
-            color: white; /* Cor do texto do botão de sair */
-            border-radius: 5px; /* Bordas arredondadas do botão de sair */
+            background-color: #2864F6; 
+            color: white; 
+            border-radius: 5px; 
             transition: background-color 0.3s;
         }
 
@@ -89,11 +94,11 @@
     </div>
     
     <div id="sideMenu" class="side-menu">
-        <a href="#">Empresas</a>
-        <a href="#">Funcionários</a>
-        <a href="#">Ranking</a>
-        <a href="#">Avaliar</a>
-        <a href="#" class="logout-btn">Sair</a> <!-- Botão de sair -->
+        <a href="#"><i class="fa-solid fa-building"></i>Empresas</a>
+        <a href="#"><i class="fa-solid fa-user"></i>Funcionários</a>
+        <a href="#"><i class="fa-solid fa-ranking-star"></i>Ranking</a>
+        <a href="#"><i class="fa-solid fa-comment"></i>Avaliar</a>
+        <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>Sair</a> 
     </div>
 
     <script>

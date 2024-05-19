@@ -13,6 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/568e2b14f2.js" crossorigin="anonymous"></script>
     <style>
         body {
             color: #101828;
@@ -320,9 +321,90 @@
         .modal form label {
             font-weight: normal;
         }
+
+        /* Estilos da navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #2864F6;
+            padding: 10px;
+            color: white;
+            border-radius: 0px !important;
+            z-index: 2; /* Define uma pilha de ordem para garantir que a navbar fique acima de outros elementos */
+        }
+
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+            margin-right: 20px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .side-menu {
+            height:92%;
+            width: 0;
+            position: fixed;
+            top: 65px; /* Alinhar abaixo da navbar */
+            left: 0;
+            background-color: #2864F6;
+            overflow-x: hidden;
+            transition: 0.3s;
+            z-index: 3; /* Define uma pilha de ordem para garantir que a aba lateral fique acima de outros elementos */
+        }
+
+        .side-menu a {
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ffffff; 
+            display: block;
+            transition: 0.3s;
+            margin: 10px 10px;
+            border-radius: 5px; 
+        }
+
+        .side-menu a i {
+        margin-right: 10px; 
+        vertical-align: middle;
+        }
+
+        .side-menu a:hover {
+            background-color: #487DF7; 
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.26);
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            text-align: center;
+            background-color: #2864F6; 
+            color: white; 
+            border-radius: 5px; 
+            transition: background-color 0.3s;
+        }
+
     </style>
     <script>
+        //JS NAVBAR
+        function toggleMenu() {
+            var menu = document.getElementById("sideMenu");
+            if (menu.style.width === "250px") {
+                menu.style.width = "0";
+            } else {
+                menu.style.width = "250px";
+            }
+        }
 
+        //FIM JS NAVBAR
+        
         const porteLabels = {
             Microempresa: 'Microempresa',
             PequenoPorte: 'Empresa de Pequeno Porte (EPP)',
@@ -459,6 +541,23 @@
 </head>
 
 <body>
+    <div class="navbar">
+        <div class="menu-btn" onclick="toggleMenu()">
+            &#9776; <!-- Ícone de menu (três linhas horizontais) -->
+        </div>
+        <div class="logo">
+            <img src="logo.png" alt="Logo da Empresa">
+        </div>
+    </div>
+    
+    <div id="sideMenu" class="side-menu">
+        <a href="#"><i class="fa-solid fa-building"></i>Empresas</a>
+        <a href="#"><i class="fa-solid fa-user"></i>Funcionários</a>
+        <a href="#"><i class="fa-solid fa-ranking-star"></i>Ranking</a>
+        <a href="#"><i class="fa-solid fa-comment"></i>Avaliar</a>
+        <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>Sair</a> 
+    </div>
+
 <div class="container">
     <div class="table-responsive">
         <div class="table-wrapper">
