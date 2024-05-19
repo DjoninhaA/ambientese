@@ -330,7 +330,7 @@
                     type: 'DELETE',
                     success: function(result) {
                         $('#deleteEmployeeModal').modal('hide'); // Fecha o modal
-                        loadFuncionarios(0); // Recarrega a página ou atualiza a tabela de forma dinâmica
+                        loadFuncionarios(0);
                     },
                     error: function(result) {
                         alert("Erro ao deletar o funcionario. " + result.responseText);
@@ -338,15 +338,21 @@
                 });
             };
     
-            function loadFuncionarios(page) {
+            function loadFuncionarios(page, filters = {}) {
+                let url = `/buscarFuncionario?page=${page}&size=10`;
+
+                if (filters.nome) url += `&nome=${encodeURIComponent(filters.nome)}`;
                 $.ajax({
-                    url: '/funcionarios?page=' + page + '&size=10', // Endpoint com suporte a paginação
+                    url: url,
                     type: 'GET',
                     success: function (response) {
                         var tbody = $('#tableFuncionarios tbody');
-                        tbody.empty(); // Limpa a tabela antes de adicionar novos dados
-                        response.content.forEach(function (funcionarios) { // Ajuste baseado na estrutura da resposta
-                            tbody.append(`
+                        tbody.empty();
+                        if (response.content.length === 0) {
+                            tbody.append('<tr><td colspan="7" class="text-center">Nenhum registro encontrado.</td></tr>');
+                        } else {// Limpa a tabela antes de adicionar novos dados
+                            response.content.forEach(function (funcionarios) { // Ajuste baseado na estrutura da resposta
+                                tbody.append(`
                         <tr>
                             <td>${funcionarios.idFuncionario}</td>
                             <td>${funcionarios.name}</td>
@@ -363,20 +369,31 @@
                             </td>
                         </tr>
                     `);
-                            console.log(funcionarios.name)
-                        });
+                                console.log(funcionarios.name)
+                            });
+                        }
                         updatePagination(response.totalPages, page); // Atualiza os controles de paginação
                         updateEntriesText(response.size, response.totalElements, page); // Função para atualizar controles de paginação
                     }
                 });
             }
-    
-    
-    
+
+            $('#searchButton').click(function() {
+                var nome = $('#nome').val();
+                console.log(nome)
+                loadFuncionarios(0, {nome: nome});
+            });
+
+
             function updateEntriesText(pageSize, totalEntries, currentPage) {
                 var startEntry = currentPage * pageSize + 1;
                 var endEntry = startEntry + pageSize - 1;
-                endEntry = (endEntry > totalEntries) ? totalEntries : endEntry;
+                if (totalEntries === 0) {
+                    startEntry = 0;
+                    endEntry = 0;
+                } else {
+                    endEntry = (endEntry > totalEntries) ? totalEntries : endEntry;
+                }
                 var text = `Mostrando ${startEntry} a ${endEntry} de ${totalEntries} entradas`;
                 $('.hint-text').text(text);
             }
@@ -448,19 +465,19 @@
                     </div>
                     <div class="col-xs-7">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="searchInput"
+                            <input type="text" class="form-control"  id="nome"
                                    placeholder="Pesquisar funcionarios">
+
+                            <button type="button" id="searchButton" class="btn btn-primary mb-4 w-100">
+                                Buscar
+                            </button>
                         </div>
                     </div>
                     <div class="col-xs-">
                         <a href="/cadastro/funcionario" class="btn btn-novo-registro"><i
                                 class="material-icons">&#xE147;</i> <span>Novo registro</span></a>
-
-                        <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i
-                                class="material-icons">&#xE15C;</i> <span>Deletar</span></a>
                     </div>
                 </div>
-
 
                 <table class="table table-striped table-hover" id="tableFuncionarios">
                     <thead>
@@ -469,6 +486,7 @@
                         <th>Nome</th>
                         <th>Cargo</th>
                         <th>E-mail</th>
+                        <th>Ações</th>
                     </tr>
                     </thead>
                     <tbody></tbody>
@@ -517,6 +535,7 @@
                                 <textarea class="email" required></textarea>
                             </div>
                         </div>
+                    </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
                         <input type="submit" class="btn btn-success btn-novo-registro" value="Adicionar">

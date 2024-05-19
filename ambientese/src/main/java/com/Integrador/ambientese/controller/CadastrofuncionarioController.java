@@ -1,6 +1,7 @@
 package com.Integrador.ambientese.controller;
 
 
+import com.Integrador.ambientese.interfac.EmpresaRepository;
 import com.Integrador.ambientese.model.Empresa;
 import com.Integrador.ambientese.model.Endereco;
 import com.Integrador.ambientese.model.Funcionarios;
@@ -8,11 +9,16 @@ import com.Integrador.ambientese.model.Usuario;
 import com.Integrador.ambientese.model.enums.Cargo;
 import com.Integrador.ambientese.model.enums.Genero;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +30,7 @@ import com.Integrador.ambientese.interfac.FuncionariosRepository;
 import com.Integrador.ambientese.interfac.UsuarioRepository;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -32,7 +39,11 @@ public class CadastrofuncionarioController {
     @Autowired
     private FuncionariosRepository funcionariosRepository;
     @Autowired
-    private UsuarioRepository usuarioRepository; 
+    private UsuarioRepository usuarioRepository;
+
+    public CadastrofuncionarioController(FuncionariosRepository funcionariosRepository) {
+        this.funcionariosRepository = funcionariosRepository;
+    }
 
     @GetMapping("/cadastro/funcionario")
     public ModelAndView cadastroFuncionario() {
@@ -48,12 +59,40 @@ public class CadastrofuncionarioController {
         return modelAndView;
      }
 
-    // @GetMapping("/buscar/funcionario")
-    // public ModelAndView listarFuncionarios() {
-    //     ModelAndView modelAndView = new ModelAndView();
-    //     modelAndView.setViewName("html/listarFuncionario");
-    //     return modelAndView;
-    // } // Retorna o nome do arquivo HTML sem a extensão
+    @GetMapping("/buscarFuncionario")
+    public Page<Funcionarios> getFuncionario(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(defaultValue = "asc") String sortOrder,
+            @RequestParam(required = false) String nome) {
+
+        Pageable pageable;
+
+        if (sortBy != null && !sortBy.isEmpty()) {
+            Sort sort = sortOrder.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+            pageable = PageRequest.of(page, size, sort);
+        } else {
+            pageable = PageRequest.of(page, size);
+        }
+
+        // Criando um objeto Specification para adicionar condições de filtro dinâmico
+        Specification<Funcionarios> spec = new Specification<Funcionarios>() {
+            @Override
+            public Predicate toPredicate(Root<Funcionarios> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<>();
+
+                if (nome != null && !nome.isEmpty()) {
+                    predicates.add(cb.like(cb.lower(root.get("name")), "%" + nome.toLowerCase() + "%"));
+                }
+
+                return cb.and(predicates.toArray(new Predicate[0]));
+            }
+        };
+
+        return funcionariosRepository.findAll(spec, pageable);
+    }
+
 
     @GetMapping("/buscarfuncionario/{idFuncionario}")
     public ResponseEntity<Funcionarios> GetById(@PathVariable long idFuncionario){

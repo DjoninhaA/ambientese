@@ -406,7 +406,12 @@
             function updateEntriesText(pageSize, totalEntries, currentPage) {
                 var startEntry = currentPage * pageSize + 1;
                 var endEntry = startEntry + pageSize - 1;
-                endEntry = (endEntry > totalEntries) ? totalEntries : endEntry;
+                if (totalEntries === 0) {
+                    startEntry = 0;
+                    endEntry = 0;
+                } else {
+                    endEntry = (endEntry > totalEntries) ? totalEntries : endEntry;
+                }
                 var text = `Mostrando ${startEntry} a ${endEntry} de ${totalEntries} entradas`;
                 $('.hint-text').text(text);
             }
