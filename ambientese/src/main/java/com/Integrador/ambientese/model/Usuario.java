@@ -10,43 +10,21 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idUsuario;
-	
 	@Column(name = "login", nullable = false)
 	private String login;
 	@Column(name = "senha", nullable = false)
 	private String senha;
-	// @Column(name = "isAdmin", nullable = false)
-	// private int isAdmin;
-	
-	// public long getIdUsuario() {
-		// 	return idUsuario;
-		// }
-		
-		// public void setIdUsuario(long idUsuario) {
-			// 	this.idUsuario = idUsuario;
-			// }
-			
-			@Override
-			public int hashCode() {
-				final int prime = 31;
-				int result = 1;
-				result = prime * result + (int) (idUsuario ^ (idUsuario >>> 32));
-				return result;
-			}
-		
-			@Override
-			public boolean equals(Object obj) {
-				if (this == obj)
-					return true;
-				if (obj == null)
-					return false;
-				if (getClass() != obj.getClass())
-					return false;
-				Usuario other = (Usuario) obj;
-				if (idUsuario != other.idUsuario)
-					return false;
-				return true;
-			}
+	@Column(name = "isAdmin", nullable = false)
+	private int isAdmin;
+
+	public long getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(long idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
 	public String getLogin() {
 		return login;
 	}
@@ -63,4 +41,24 @@ public class Usuario {
 		this.senha = senha;
 	}
 
+	public int getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(int isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Usuario usuario = (Usuario) o;
+		return idUsuario == usuario.idUsuario && isAdmin == usuario.isAdmin && Objects.equals(login, usuario.login) && Objects.equals(senha, usuario.senha);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(idUsuario, login, senha, isAdmin);
+	}
 }

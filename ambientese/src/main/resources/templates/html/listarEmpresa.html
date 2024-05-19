@@ -322,23 +322,6 @@
         }
     </style>
     <script>
-
-        const porteLabels = {
-            Microempresa: 'Microempresa',
-            PequenoPorte: 'Empresa de Pequeno Porte (EPP)',
-            IVMedioPorte: 'Grupo IV – Empresa de Médio Porte',
-            IIIMedioPorte: 'Grupo III – Empresa de Médio Porte',
-            IIGrandePorte : 'Grupo II – Empresa de Grande Porte',
-            IGrandePorte: 'Grupo I – Empresa de Grande Porte'
-        };
-
-        const ramoLabels = {
-        Tecnologico: 'Tecnológico',
-            Varejo: 'Varejo',
-            Saude: 'Saúde',
-            ContrucaoCivil: 'Construção Civil'
-        }
-
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
 
@@ -356,52 +339,42 @@
                 });
             };
 
-            function loadEmpresas(page, filters = {}) {
-                let url = `/empresas?page=${page}&size=10`;
-
-                if (filters.nome) url += `&nome=${encodeURIComponent(filters.nome)}`;
+            function loadEmpresas(page) {
                 $.ajax({
-                    url: url,
+                    url: '/empresas?page=' + page + '&size=10', // Endpoint com suporte a paginação
                     type: 'GET',
-                    success: function(response) {
+                    success: function (response) {
                         var tbody = $('#tableEmpresas tbody');
-                        tbody.empty();
-                        if (response.content.length === 0) {
-                            tbody.append('<tr><td colspan="7" class="text-center">Nenhum registro encontrado.</td></tr>');
-                        } else {
-                            response.content.forEach(function(empresa) {
-                                var porteText = porteLabels[empresa.porte] || 'Não especificado';
-                                var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
-                                tbody.append(`
-                            <tr>
-                                <td>${empresa.idEmpresa}</td>
-                                <td>${empresa.razaoSocial}</td>
-                                <td>${empresa.email}</td>
-                                <td>${ramoText}</td>
-                                <td>${empresa.cnpj}</td>
-                                <td>${porteText}</td>
-                                <td>
-                                    <a href="/editar/${empresa.idEmpresa}" class="edit" data-toggle="tooltip" title="Editar">
-                                        <i class="material-icons">&#xE254;</i>
-                                    </a>
-                                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" data-id="${empresa.idEmpresa}" data-target="#deleteEmployeeModal">
-                                        <i class="material-icons" data-toggle="tooltip" title="Deletar">&#xE872;</i>
-                                    </a>
-                                </td>
-                            </tr>
-                        `);
-                            });
-                        }
+                        tbody.empty(); // Limpa a tabela antes de adicionar novos dados
+                        response.content.forEach(function (empresa) { // Ajuste baseado na estrutura da resposta
+                            tbody.append(`
+                        <tr>
+                            <td>${empresa.idEmpresa}</td>
+                            <td>${empresa.razaoSocial}</td>
+                            <td>${empresa.email}</td>
+                            <td>${empresa.ramo}</td>
+                            <td>${empresa.cnpj}</td>
+                            <td>${empresa.porte}</td>
+                            <td>
+                                <a href="/editar/${empresa.idEmpresa}" class="edit" data-toggle="tooltip" title="Editar">
+                                    <i class="material-icons">&#xE254;</i>
+                                </a>
+                              <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" data-id="${empresa.idEmpresa}" data-target="#deleteEmployeeModal">
+                                <i class="material-icons" data-toggle="tooltip" title="Deletar">&#xE872;</i>
+                              </a>
+
+                            </td>
+                        </tr>
+                    `);
+                            console.log(empresa.idEmpresa)
+                        });
                         updatePagination(response.totalPages, page); // Atualiza os controles de paginação
                         updateEntriesText(response.size, response.totalElements, page); // Função para atualizar controles de paginação
                     }
                 });
             }
 
-            $('#searchButton').click(function() {
-                var nome = $('#nome').val();
-                loadEmpresas(0, {nome: nome});
-            });
+
 
             function updateEntriesText(pageSize, totalEntries, currentPage) {
                 var startEntry = currentPage * pageSize + 1;
@@ -477,12 +450,8 @@
                     </div>
                     <div class="col-xs-7">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="nome"
+                            <input type="text" class="form-control" id="searchInput"
                                    placeholder="Pesquisar empresas">
-
-                            <button type="button" id="searchButton" class="btn btn-primary mb-4 w-100">
-                                Buscar
-                            </button>
                         </div>
                     </div>
                     <div class="col-xs-">

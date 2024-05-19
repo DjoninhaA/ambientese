@@ -61,27 +61,18 @@
             <input type="text" class="form-control" id="inscricao_social" placeholder="Inscrição Social da empresa">
         </div>
         <div class="col-md-4">
-            <label for="ramo" class="form-label">Ramo</label>
-            <select id="ramo" class="form-select" name="ramo">
-                <option value="" selected>Selecione o ramo da empresa</option>
-                <option value="0">Alimentício</option>
-                <option value="1">Tecnológico</option>
-                <option value="2">Varejo</option>
-                <option value="3">Saúde</option>
-                <option value="4">Construção civil</option>
-            </select>
+            <label for="Ramo" class="form-label">Ramo</label>
+            <input type="text" class="form-control" id="Ramo" placeholder="Escolha o ramo da empresa">
         </div>
 
         <div class="col-md-4">
             <label for="porte" class="form-label">Porte</label>
-            <select id="porte" class="form-select" name="porte">
-                <option value="" selected>Selecione o porte da empresa</option>
-                <option value="0">Microempresa</option>
-                <option value="1">Empresa de Pequeno Porte (EPP)</option>
-                <option value="2">Grupo IV – Empresa de Médio Porte</option>
-                <option value="3">Grupo III – Empresa de Médio Porte</option>
-                <option value="4">Grupo II – Empresa de Grande Porte</option>
-                <option value="5">Grupo I – Empresa de Grande Porte</option>
+            <select id="porte" class="form-select">
+                <option selected="">Selecione o porte da empresa</option>
+                <option>Microempresa</option>
+                <option>Empresa de Pequeno Porte</option>
+                <option>Empresa de médio porte</option>
+                <option>Grandes empresas</option>
             </select>
         </div>
         <div class="col-4">
@@ -149,7 +140,7 @@ $(document).ready(function() {
         formData.append('nome_solicitante', $('#nome_solicitante').val());
         formData.append('telefone_solicitante', $('#telefone_solicitante').val());
         formData.append('inscricao_social', $('#inscricao_social').val());
-        formData.append('ramo', $('#ramo').val());
+        formData.append('ramo', $('#Ramo').val());
         formData.append('porte', $('#porte').val());
         formData.append('logo', $('#logo')[0].files[0]);
         formData.append('cep', $('#cep').val());
