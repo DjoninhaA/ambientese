@@ -28,12 +28,8 @@
         border-radius: 15px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.219);
     }
-    .form-control::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-    }
-
-    .form-control {
-        -moz-appearance: textfield;
+    #isAdmin{
+        top: 50%;
     }
 </style>
 
@@ -43,19 +39,28 @@
 <div class = "container-forms">
     <form class="row g-3">
         <div class="col-md-12"><p> <b>Informações pessoais</b></p></div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <label class="form-label">Nome</label>
-            <input type="text" class="form-control" id="name" placeholder="Nome completo">
+            <input type="text" class="form-control" id="nome" placeholder="Nome completo">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <label class="form-label">CPF</label>
-            <input type="number"  class="form-control" id="cpf" placeholder="000.000.000-00">
+            <input type="number" class="form-control" id="cpf" placeholder="000.000.000-00">
         </div>
-        <div class="col-6">
+        <div class="col-4">
             <label class="form-label">Data de Nascimento</label>
-            <input type="date" class="form-control" id="dataNascimento" placeholder="00/00/0000">
+            <input type="date" class="form-control" id="data" placeholder="00/00/0000">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <label class="form-label">Gênero</label>
+            <select id="genero" class="form-select">
+                <option selected="">Gênero</option>
+                <option>Feminino</option>
+                <option>Masculino</option>
+                <option>Outro</option>
+            </select>
+        </div>
+        <div class="col-md-4">
             <label class="form-label">Cargo</label>
             <select id="cargo" class="form-select">
                 <option selected="">Cargo</option>
@@ -66,77 +71,67 @@
 
 
         <div class="col-md-12"><p> <b>Contato</b></p></div>
-        <div class="col-6">
-            <label class="form-label">Telefone</label>
-            <input type="number" class="form-control" id="telefone" placeholder="(00)0 0000-0000">
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
             <label  class="form-label">E-mail</label>
             <input type="text" class="form-control" id="email" placeholder="E-mail">
         </div>
 
 
-<!--        <div class="col-md-12"><p> <b>Acesso</b></p></div>-->
-<!--        <div class="col-md-6">-->
-<!--            <label class="form-label">Login</label>-->
-<!--            <input type="text" class="form-control" id="login" placeholder="Login">-->
-<!--        </div>-->
-<!--        <div class="col-md-6">-->
-<!--            <label class="form-label">Senha</label>-->
-<!--            <input type="password" class="form-control" id="senha" placeholder="*******">-->
-<!--        </div>-->
-
+        <div class="col-md-12"><p> <b>Acesso</b></p></div>
+        <div class="col-md-4">
+            <label class="form-label">Login</label>
+            <input type="text" class="form-control" id="login" placeholder="Login">
+        </div>
+        <div class="col-md-4">
+            <label class="form-label">Senha</label>
+            <input type="password" class="form-control" id="senha" placeholder="*******">
+        </div>
 
         <div class="col-12">
             <button type="submit" class="btn btn-outline-secondary me-1">Cancelar</button>
-
             <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 
         </div>
+</div>
 
 </form>
 
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('.btn-salvar').on('click', function(event) {
-            event.preventDefault();
+$(document).ready(function() {
+    $('.btn-salvar').on('click', function(event) {
+        event.preventDefault();
 
-            // Capturando os dados do formulário
-            var formData = new FormData();
-            formData.append('nome', $('#name').val());
-            formData.append('cpf', $('#cpf').val());
-            formData.append('dataNascimento', $('#dataNascimento').val());
-            formData.append('cargo', $('#cargo').val());
-            formData.append('email', $('#email').val());
-            formData.append('telefone', $('#telefone').val());
-            //formData.append('login', $('#login').val());
-            //formData.append('senha', $('#senha').val());
+        // Capturando os dados do formulário
+        var formData = new FormData();
+        formData.append('nome', $('#nome').val());
+        formData.append('cpf', $('#cpf').val());
+        formData.append('data_nascimento', $('#data').val());
+        formData.append('genero', $('#genero').val());
+        formData.append('cargo', $('#cargo').val());
+        formData.append('email', $('#email').val());
+        formData.append('login', $('#login').val());
+        formData.append('senha', $('#senha').val());
 
-            // Enviando os dados via AJAX
-            $.ajax({
-                url: 'http://localhost:8080/cadastroFuncionario',
-                type: 'POST',
-                data: formData,
-                contentType: false,
-                processData: false,
-                success: function(response) {
-                    alert('Dados salvos com sucesso!');
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    alert('Erro ao salvar os dados: ' + textStatus);
-                }
-            });
+        // Enviando os dados via AJAX
+        $.ajax({
+            url: 'http://localhost:8080/cadastro/funcionario',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                alert('Dados salvos com sucesso!');
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Erro ao salvar os dados: ' + textStatus);
+            }
         });
     });
+});
 </script>
-
-
-
-
-
-
 </body>
 
 </html>

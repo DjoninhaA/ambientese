@@ -10,7 +10,6 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <!--    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
 
@@ -26,53 +25,106 @@
     crossorigin="anonymous"
   />
     <script>
-      $(document).ready(function () {
-        function loadEmpresas(page, sortBy = 'pontuacao', sortOrder = 'desc') {
-          $.ajax({
-            url: `/empresas?page=${page}&size=13&sortBy=${sortBy}&sortOrder=${sortOrder}`, // Endpoint com suporte a paginação
-            type: 'GET',
-            success: function (response) {
-              var tbody = $('#tableEmpresas tbody');
-              tbody.empty();
-              let start = page * 13 + 2;
+      const porteLabels = {
+        Microempresa: 'Microempresa',
+        PequenoPorte: 'Empresa de Pequeno Porte (EPP)',
+        IVMedioPorte: 'Grupo IV – Empresa de Médio Porte',
+        IIIMedioPorte: 'Grupo III – Empresa de Médio Porte',
+        IIGrandePorte : 'Grupo II – Empresa de Grande Porte',
+        IGrandePorte: 'Grupo I – Empresa de Grande Porte'
+      };
 
-              if (response.content.length > 0) {
-                // Renderiza o topRank com o primeiro item
-                renderTopRank(response.content[0]);
+      const ramoLabels = {
+        Tecnologico: 'Tecnológico',
+        Varejo: 'Varejo',
+        Saude: 'Saúde',
+        ContrucaoCivil: 'Construção Civil'
+      }
+
+        $(document).ready(function () {
+          function loadEmpresas(page, sortBy = 'pontuacao', sortOrder = 'desc', filters = {}) {
+            let url = `/empresas?page=${page}&size=13&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+            // Adicionando filtros à URL
+            if (filters.ramo) url += `&ramo=${filters.ramo}`;
+            if (filters.porte) url += `&porte=${filters.porte}`;
+            if (filters.nome) url += `&nome=${encodeURIComponent(filters.nome)}`;
+            $.ajax({
+              url: url,
+              type: 'GET',
+              success: function (response) {
+                var tbody = $('#tableEmpresas tbody');
+                tbody.empty();
+                let start = page * 13 + 2;
+
+                if (response.content.length > 0) {
+                  // Renderiza o topRank com o primeiro item
+                  renderTopRank(response.content[0]);
+
+                  response.content.slice(1).forEach(function (empresa, index) {
+                    var porteText = porteLabels[empresa.porte] || 'Não especificado';
+                    var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
+                    tbody.append(`
+                      <tr>
+                        <td>${start + index}</td>
+                        <td>${empresa.cnpj}</td>
+                        <td>${empresa.razaoSocial}</td>
+                        <td>${porteText}</td>
+                        <td>${ramoText}</td>
+                        <td>${empresa.pontuacao}</td>
+                      </tr>
+                    `);
+                  });
+                } else {
+                  // Adiciona uma linha informando que não há itens
+                  tbody.append(`
+                  <tr>
+                    <td colspan="6" class="text-center">Não existem itens com os filtros aplicados.</td>
+                  </tr>
+                `);
+                  renderTopRank(null);
+                }
+                updatePagination(response.totalPages, page);
+              },
+              error: function (error) {
+                console.error('Erro ao buscar empresas:', error);
               }
-              response.content.slice(1).forEach(function (empresa, index) {
-                tbody.append(`
-            <tr>
-              <td>${start + index}</td>
-              <td>${empresa.cnpj}</td>
-              <td>${empresa.razaoSocial}</td>
-              <td>${empresa.porte}</td>
-              <td>${empresa.ramo}</td>
-              <td>${empresa.pontuacao}</td>
-            </tr>
-          `);
-              });
-              updatePagination(response.totalPages, page);
-            },
-            error: function (error) {
-              console.error('Erro ao buscar empresas:', error);
-            }
-          });
-        }
+            });
+          }
+          function handleSearchClick() {
+            const ramo = $('#ramo').val();
+            const porte = $('#porte').val();
+            const nome = $('#nome').val();
 
-        function renderTopRank(empresa) {
-          const topRankHtml = `
-      <div class="card-header">
-        ${empresa.razaoSocial}
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">1º LUGAR - ${empresa.pontuacao} pontos</h5>
-        <p class="card-text">Ramo: ${empresa.ramo}</p>
-        <p class="card-text">Porte: ${empresa.porte}</p>
-      </div>
-    `;
-          $('#topRankCard').html(topRankHtml);
-        }
+            const filters = { ramo, porte, nome };
+            loadEmpresas(0, 'pontuacao', 'desc', filters);
+          }
+
+          $('#searchButton').click(handleSearchClick);
+          function renderTopRank(empresa) {
+            let topRankHtml;
+            if (empresa) {
+              var porteText = porteLabels[empresa.porte] || 'Não especificado';
+              var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
+              topRankHtml = `
+                <div class="card-header">
+                  ${empresa.razaoSocial}
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title">1º LUGAR - ${empresa.pontuacao} pontos</h5>
+                  <p class="card-text">Ramo: ${ramoText}</p>
+                  <p class="card-text">Porte: ${porteText}</p>
+                </div>
+              `;
+                      } else {
+                        topRankHtml = `
+                <div class="card-header text-center">Sem Resultados</div>
+                <div class="card-body">
+                  <p class="card-text">Não existem empresas com os filtros aplicados.</p>
+                </div>
+              `;
+            }
+            $('#topRankCard').html(topRankHtml);
+          }
 
         function updatePagination(totalPages, currentPage) {
           var pagination = $('.pagination');
@@ -165,7 +217,6 @@
         border-radius: 8px;
       }
       .btn {
-        border: 2px solid #00548d;
         border-radius: 8px;
       }
       .nav-pills {
@@ -301,7 +352,7 @@
                 />
               </svg>
             </button>
-            <img
+            <img onclick="window.location.href='/home';"
               src="/images/ambientetext.svg"
               alt="Logo da Empresa"
               width="120"
@@ -349,7 +400,7 @@
                       />
                     </svg>
 
-                    <a href="/empresa" class="nav-link text-truncate">
+                    <a href="/buscar" class="nav-link text-truncate">
                       <i class="fs-5 bi-grid"></i
                       ><span class="ms-1 d-none d-sm-inline">Empresas</span>
                     </a>
@@ -369,7 +420,7 @@
                         d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"
                       />
                     </svg>
-                    <a href="#" class="nav-link text-truncate">
+                    <a href="/listarFuncionario" class="nav-link text-truncate">
                       <i class="fs-5 bi-grid"></i
                       ><span class="ms-1 d-none d-sm-inline">Funcionários</span>
                     </a>
@@ -392,7 +443,7 @@
                         d="M4.085 1H3.5A1.5 1.5 0 0 0 2 2.5v12A1.5 1.5 0 0 0 3.5 16h9a1.5 1.5 0 0 0 1.5-1.5v-12A1.5 1.5 0 0 0 12.5 1h-.585q.084.236.085.5V2a1.5 1.5 0 0 1-1.5 1.5h-5A1.5 1.5 0 0 1 4 2v-.5q.001-.264.085-.5M10 7a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0zm-6 4a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0zm4-3a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0V9a1 1 0 0 1 1-1"
                       />
                     </svg>
-                    <a href="#" class="nav-link text-truncate">
+                    <a href="/ranking" class="nav-link text-truncate">
                       <i class="fs-5 bi-grid"></i
                       ><span class="ms-1 d-none d-sm-inline">Ranking</span>
                     </a>
@@ -461,32 +512,38 @@
           <div class="col-md-4">
             <div class="card mb-4" id="topRankCard"></div>
 
-            <div>
-              <select class="custom-select mb-2 select-style">
-                <option selected>Ramo da Empresa</option>
-                <option value="1">Tecnologia</option>
-                <option value="2">Alimentício</option>
-                <option value="3">Varejo</option>
-              </select>
 
-              <select class="custom-select mb-2 select-style">
-                <option selected>Porte da Empresa</option>
-                <option value="1">Pequeno</option>
-                <option value="2">Médio</option>
-                <option value="3">Grande</option>
-              </select>
+            <select class="custom-select mb-2 select-style" id="ramo" name="ramo">
+              <option value="" selected>Selecione o ramo da empresa</option>
+              <option value="Alimenticio">Alimentício</option>
+              <option value="Tecnologico">Tecnológico</option>
+              <option value="Varejo">Varejo</option>
+              <option value="Saude">Saúde</option>
+              <option value="ContrucaoCivil">Construção civil</option>
+            </select>
+
+            <select class="custom-select mb-2 select-style" id="porte" name="porte">
+              <option value="" selected>Selecione o porte da empresa</option>
+              <option value="Microempresa">Microempresa</option>
+              <option value="PequenoPorte">Empresa de Pequeno Porte (EPP)</option>
+              <option value="IVMedioPorte">Grupo IV – Empresa de Médio Porte</option>
+              <option value="IIIMedioPorte">Grupo III – Empresa de Médio Porte</option>
+              <option value="IIGrandePorte">Grupo II – Empresa de Grande Porte</option>
+              <option value="IGrandePorte">Grupo I – Empresa de Grande Porte</option>
+            </select>
 
               <input
+                      id="nome"
                 type="text"
                 class="form-control mb-4 select-style"
                 placeholder="Nome da Empresa"
                 aria-label="Nome da Empresa"
               />
 
-              <button type="button" class="btn btn-primary mb-4 w-100">
-                Buscar
-              </button>
-            </div>
+            <button type="button" id="searchButton" class="btn btn-primary mb-4 w-100">
+              Buscar
+            </button>
+
           </div>
 
           <div class="col-md-8">
