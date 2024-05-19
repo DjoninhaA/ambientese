@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambientese</title>
+    <link rel="icon" type="image/x-icon" href="/images/fav-Icon/favIcon.png" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #eeeeff;
+            min-height: 100vh;
+            padding-right: 0 !important;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #0077c8;
+            padding: 10px;
+            color: white;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+            margin-right: 20px;
+        }
+
+        .logo {
+            flex-grow: 1; /* Permite que o espaço restante seja preenchido pela logo */
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .side-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 60px;
+            left: 0;
+            background-color: #eff6fb;
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+        .side-menu a {
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #0077c8;
+            display: block;
+            transition: 0.3s;
+            background-color: #cfe6f7;
+            margin: 10px 10px;
+            border-radius: 5px;
+        }
+
+        .side-menu a:hover {
+            background-color: #005a93;
+            color: white;
+        }
+
+        .home-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: calc(100vh - 80px);
+            max-width: 100%;
+            width: 100%;
+            margin-top: 80px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 20px auto;
+        }
+
+        .options .option1,
+        .options .option2,
+        .options .option3 {
+            width: calc((100% - 20px) / 3);
+            display: flex;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 5px;
+            border: 1px solid #d5d5d5;
+        }
+
+        .options .option1 img,
+        .options .option2 img,
+        .options .option3 img {
+            margin-right: 20px;
+            width: 50px;
+        }
+
+        .icon-menu {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-left: 1rem;
+            height: 4rem;
+            color: white;
+        }
+
+        .ms-1 {
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .item-list {
+            background: #0077c8;
+            margin-bottom: 0.5rem;
+            width: 100%;
+            border-radius: 0.750rem;
+        }
+
+        .sign-out {
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            border-radius: 20px;
+            height: 100%;
+            width: 60%;
+            margin-left: 3.5rem;
+        }
+
+        .sign-out:hover {
+            box-shadow: 2.5px 2.5px rgba(0, 0, 0, 0.635);
+        }
+
+        .space-list {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+        }
+
+        .nav-pills {
+            height: 100%;
+        }
+
+        .sair {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="menu-btn" onclick="toggleMenu()">
+            &#9776;
+        </div>
+        <div class="logo">
+            <img src="logo.png" alt="Logo da Empresa">
+        </div>
+    </div>
+
+    <div id="sideMenu" class="side-menu">
+        <a href="/buscar">Empresas</a>
+        <a href="/listarFuncionario">Funcionários</a>
+        <a href="/ranking">Ranking</a>
+        <a href="#">Teste</a>
+    </div>
+
+    <div class="home-container">
+        <div class="imagem-usuario">
+            <img src="/images/eu.png" alt="Perfil" width="100" height="100">
+        </div>
+
+        <div class="title-home">
+            <h1 style="text-align: center">Bem vindo, Usuário</h1>
+            <p style="text-align: center; font-size: 20px">
+                Conheça as opções que você pode realizar:
+            </p>
+        </div>
+
+        <div class="options">
+            <div style="cursor: pointer" class="option1" onclick="window.location='/cadastroEmpresa'">
+                <img src="/images/ic_round-add-business.png" alt="Empresas" />
+                <div class="title-option">
+                    <p style="font-weight: bold; font-size: 20px">
+                        Cadastrar empresas
+                      </p>
+                      <p style="font-weight: lighter; font-size: 16px">
+                          Aqui você pode cadastrar as empresas que serão atendidas
+                      </p>
+                  </div>
+              </div>
+  
+              <div style="cursor: pointer" class="option2" onclick="window.location='/cadastro/funcionario'">
+                  <img src="/images/fa6-solid_user-plus.png" alt="Funcionários" />
+                  <div class="title-option">
+                      <p style="font-weight: bold; font-size: 20px;">
+                        Cadastrar funcionário
+                    </p>
+                    <p style="font-weight: lighter; font-size: 16px">
+                        Aqui você pode cadastrar os funcionários que utilizarão o
+                        sistema
+                    </p>
+                </div>
+            </div>
+  
+            <div style="cursor: pointer" class="option3" onclick="window.location='/ranking'">
+                <img src="/images/solar_ranking-outline.png" alt="Ranking" />
+                <div class="title-option">
+                    <p style="font-weight: bold; font-size: 20px">
+                        Visualizar ranking
+                    </p>
+                    <p style="font-weight: lighter; font-size: 16px">
+                        Aqui você pode visualizar o ranking com a pontuação das empresas
+                        atendidas
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+    <script>
+        function toggleMenu() {
+            var sideMenu = document.getElementById("sideMenu");
+            if (sideMenu.style.width === "250px") {
+                sideMenu.style.width = "0";
+            } else {
+                sideMenu.style.width = "250px";
+            }
+        }
+    </script>
+  </body>
+  </html>
+  

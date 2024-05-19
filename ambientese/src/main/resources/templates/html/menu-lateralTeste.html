@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f4f7; /* Cor de fundo suave */
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #0077c8; /* Cor da navbar principal */
+            padding: 10px;
+            color: white;
+        }
+
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+            margin-right: 20px;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .side-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 60px; /* Alinhar abaixo da navbar */
+            left: 0;
+            background-color: #eff6fb; /* Cor de fundo do menu lateral */
+            overflow-x: hidden;
+            transition: 0.5s;
+        }
+
+        .side-menu a {
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 18px; /* Ajuste do tamanho da fonte */
+            color: #0077c8; /* Cor do texto baseada na navbar principal */
+            display: block;
+            transition: 0.3s;
+            background-color: #cfe6f7; /* Fundo dos botões baseado na navbar principal */
+            margin: 10px 10px;
+            border-radius: 5px; /* Bordas arredondadas dos botões */
+        }
+
+        .side-menu a:hover {
+            background-color: #005a93; /* Cor do fundo ao passar o mouse baseada na navbar principal */
+            color: white; /* Cor do texto ao passar o mouse */
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="menu-btn" onclick="toggleMenu()">
+            &#9776; <!-- Ícone de menu (três linhas horizontais) -->
+        </div>
+        <div class="logo">
+            <img src="logo.png" alt="Logo da Empresa">
+        </div>
+    </div>
+    
+    <div id="sideMenu" class="side-menu">
+        <a href="#">Empresas</a>
+        <a href="#">Funcionários</a>
+        <a href="#">Ranking</a>
+        <a href="#">Avaliar</a>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            var menu = document.getElementById("sideMenu");
+            if (menu.style.width === "250px") {
+                menu.style.width = "0";
+            } else {
+                menu.style.width = "250px";
+            }
+        }
+    </script>
+</body>
+</html>
