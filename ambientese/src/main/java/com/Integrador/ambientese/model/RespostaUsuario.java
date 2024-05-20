@@ -1,5 +1,7 @@
 package com.Integrador.ambientese.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +13,12 @@ public class RespostaUsuario {
 	private int idRespostaUsuario;
 	@Column(name = "Resposta", nullable = false)
 	private String resposta;
+
+	@OneToOne
+	private Formulario formulario;
+
+	@ManyToOne
+	private Perguntas perguntas;
 	
 
 	@Override
