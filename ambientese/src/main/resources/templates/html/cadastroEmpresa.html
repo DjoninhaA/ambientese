@@ -200,19 +200,6 @@
                     alert('Erro ao buscar os dados: ' + textStatus);
                 }
             }); 
-                $.ajax({
-                    url:`http://localhost:8080/editar/${idEmpresa}`,
-                    type: 'PUT',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function(response) {
-                        alert('Dados salvos com sucesso!');
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        alert('Erro ao salvar os dados: ' + textStatus);
-                    }
-                });
         }
     
         $('.btn-salvar').on('click', function(event) {
@@ -263,21 +250,42 @@
         formData.append('email', $('#email').val());
         formData.append('telefone_empresa', $('#telefone_empresa').val());
 
-                    
-        // Enviando os dados via AJAX
-        $.ajax({
-            url: 'http://localhost:8080/cadastroEmpresa',
-            type: 'POST',
-            data: formData,
-            contentType: false,
+
+        if(!idEmpresa){
+            $.ajax({
+                url: 'http://localhost:8080/cadastroEmpresa',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    alert('Dados salvos com sucesso!');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Erro ao salvar os dados: ' + textStatus);
+                }
+            });
+
+        }
+        
+        else{console.log("AQUI!!")
+            $.ajax({
+            url:`http://localhost:8080/editar/${idEmpresa}`,
+            type: 'PUT',
+            data: JSON.stringify(formData), // Certifique-se de que formData seja um objeto JSON válido
+            contentType: 'application/json', // Defina o Content-Type como application/json
             processData: false,
             success: function(response) {
                 alert('Dados salvos com sucesso!');
             },
             error: function(jqXHR, textStatus, errorThrown) {
+                console.log(response)
                 alert('Erro ao salvar os dados: ' + textStatus);
             }
         });
+        }
+        
+                    
     });
 });
 </script>

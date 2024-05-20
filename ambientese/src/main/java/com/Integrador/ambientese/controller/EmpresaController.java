@@ -151,52 +151,43 @@ public class EmpresaController {
     
 
     @PutMapping("/editar/{idEmpresa}")
-    public ResponseEntity<Empresa> atualizarEmpresa(
-            @PathVariable long idEmpresa,
-            @RequestParam("razao_social") String razaoSocial,
-            @RequestParam("nome_fantasia") String nomeFantasia,
-            @RequestParam("cnpj") Long cnpj,
-            @RequestParam("nome_solicitante") String nomeSolicitante,
-            @RequestParam("telefone_solicitante") String telefoneSolicitante,
-            @RequestParam("inscricao_social") String inscricaoSocial,
-            @RequestParam("ramo") int ramoNum,
-            @RequestParam("porte") int porteNum,
-            @RequestParam("email") String email,
-            @RequestParam("telefone_empresa") Long telefoneEmpresa,
-            @RequestBody Endereco enderecoAtualizado) {
-                System.out.println("ID DA EMPRESA" + idEmpresa);
+public ResponseEntity<Empresa> atualizarEmpresa(
+        @PathVariable long idEmpresa,
+        @RequestBody Empresa empresaAtualizada) {
 
-        return empresaRepository.findById(idEmpresa)
-                .map(empresa -> {
-                    empresa.setEmail(email);
-                    empresa.setRazaoSocial(razaoSocial);
-                    empresa.setCnpj(cnpj);
-                    empresa.setNomeSolicitante(nomeSolicitante);
-                    empresa.setTelefoneSolicitante(telefoneSolicitante);
-                    empresa.setInscricaoSocial(inscricaoSocial);
-                    empresa.setRamo(convertIntToRamo(ramoNum));
-                    empresa.setPorte(convertIntToPorte(porteNum));
-                    empresa.setTelefoneEmpresa(telefoneEmpresa);
+    return empresaRepository.findById(idEmpresa)
+            .map(empresa -> {
+                empresa.setRazaoSocial(empresaAtualizada.getRazaoSocial());
+                empresa.setNomeFantasia(empresaAtualizada.getNomeFantasia());
+                empresa.setCnpj(empresaAtualizada.getCnpj());
+                empresa.setNomeSolicitante(empresaAtualizada.getNomeSolicitante());
+                empresa.setTelefoneSolicitante(empresaAtualizada.getTelefoneSolicitante());
+                empresa.setInscricaoSocial(empresaAtualizada.getInscricaoSocial());
+                empresa.setRamo(empresaAtualizada.getRamo());
+                empresa.setPorte(empresaAtualizada.getPorte());
+                empresa.setEmail(empresaAtualizada.getEmail());
+                empresa.setTelefoneEmpresa(empresaAtualizada.getTelefoneEmpresa());
 
-                    Endereco enderecoEmpresa = empresa.getEndereco();
-                    if (enderecoEmpresa == null) {
-                        enderecoEmpresa = new Endereco();
-                    }
+                Endereco enderecoAtualizado = empresaAtualizada.getEndereco();
+                Endereco enderecoEmpresa = empresa.getEndereco();
 
-                    // Atualizar os campos do endereço
-                    enderecoEmpresa.setCep(enderecoAtualizado.getCep());
-                    enderecoEmpresa.setNumero(enderecoAtualizado.getNumero());
-                    enderecoEmpresa.setCidade(enderecoAtualizado.getCidade());
-                    enderecoEmpresa.setUF(enderecoAtualizado.getUF());
-                    enderecoEmpresa.setPais(enderecoAtualizado.getPais());
+                if (enderecoEmpresa == null) {
+                    enderecoEmpresa = new Endereco();
+                }
 
-                    empresa.setEndereco(enderecoEmpresa);
+                enderecoEmpresa.setCep(enderecoAtualizado.getCep());
+                enderecoEmpresa.setNumero(enderecoAtualizado.getNumero());
+                enderecoEmpresa.setCidade(enderecoAtualizado.getCidade());
+                enderecoEmpresa.setUF(enderecoAtualizado.getUF());
+                enderecoEmpresa.setPais(enderecoAtualizado.getPais());
+                empresa.setEndereco(enderecoEmpresa);
 
-                    Empresa empresaSalva = empresaRepository.save(empresa);
-                    return ResponseEntity.ok(empresaSalva);
-                })
-                .orElseThrow(() -> new RuntimeException("Empresa não encontrada com o ID: " + idEmpresa));
-    }
+                Empresa empresaSalva = empresaRepository.save(empresa);
+                return ResponseEntity.ok(empresaSalva);
+            })
+            .orElseThrow(() -> new RuntimeException("Empresa não encontrada com o ID: " + idEmpresa));
+}
+
 
     
 
