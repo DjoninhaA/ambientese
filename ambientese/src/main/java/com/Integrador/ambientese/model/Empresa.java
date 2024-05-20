@@ -18,7 +18,7 @@ import lombok.Setter;
 @Entity
 public class Empresa {
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idEmpresa;
 	@Column(name = "razao_social", nullable = false)
     private String razaoSocial;
@@ -45,7 +45,14 @@ public class Empresa {
     @Column(name = "pontuacao", nullable = true)
     private Float pontuacao;
 
-    @Embedded
+    /*          FK           */
+    @OneToOne(cascade = CascadeType.ALL)
     private Endereco endereco;
+    @OneToOne
+    private Formulario formulario;
 
+    // public Empresa(){ // Quando uma empresa for instanciada será vinculado o id de um endereço;
+    //     Endereco endereco = new Endereco();
+    //     fk_Endereco = (endereco.getId());
+    // }
 }
