@@ -137,71 +137,108 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
+    $(document).ready(function() {
 
-    function getIdFromUrl() {
-        const pathname = window.location.pathname; // Pega o pathname completo
-        const parts = pathname.split('/'); // Divide o pathname em partes
-        const id = parts[2]; // Captura o ID que está na terceira posição
-        return id;
-    }
+        function getIdFromUrl() {
+            const pathname = window.location.pathname;
+            const parts = pathname.split('/');
+            const id = parts[2];
+            return id;
+        }
+        
+        const idEmpresa = getIdFromUrl();
+        console.log("ID do Empresa:", idEmpresa);
+
+        let porteLabels = {
+            'Microempresa': 0,
+            'PequenoPorte': 1,
+            'IVMedioPorte': 2,
+            'IIIMedioPorte': 3,
+            'IIGrandePorte': 4,
+            'IGrandePorte': 5
+        };
+        
+        let ramoLabels = {
+            'Alimentício': 0,
+            'Tecnológico': 1,
+            'Varejo': 2,
+            'Saúde': 3,
+            'Construção civil': 4
+        };
     
-    const idEmpresa = getIdFromUrl();
-    console.log("ID do Empresa:", idEmpresa);
-
-    const porteLabels = {
-        'Microempresa': 0,
-        'PequenoPorte': 1,
-        'IVMedioPorte': 2,
-        'IIIMedioPorte': 3,
-        'IIGrandePorte': 4,
-        'IGrandePorte': 5
-    };
+        if (idEmpresa) {
+            console.log("DEU CERTO");
     
-    const ramoLabels = {
-        'Alimentício' : 0,
-        'Tecnológico':  1,
-        'Varejo' : 2,
-        'Saúde' : 3,
-        'Construção civil' : 4
-    };
-    const reversePorteLabels = Object.fromEntries(
-    Object.entries(porteLabels).map(([key, value]) => [value, key])
-);
+            var url = `http://localhost:8080/busca/${idEmpresa}`;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function(response) {
+                    console.log("Resposta do servidor:", response);
     
-
-    if(idEmpresa){
-        console.log("DEU CERTO")
-
-        var url = `http://localhost:8080/busca/${idEmpresa}`;
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function(response) {
-                $('#razao_social').val(response.razaoSocial);
-                $('#nome_fantasia').val(response.nomeFantasia);
-                $('#cnpj').val(response.cnpj);
-                $('#nome_solicitante').val(response.nomeSolicitante);
-                $('#telefone_solicitante').val(response.telefoneSolicitante);
-                $('#inscricao_social').val(response.inscricaoSocial);
-                $('#ramo').val(Object.keys(ramoLabels).find(key => ramoLabels[key] === response.ramo));
-                $('#porte').val(reversePorteLabels[response.porte]);
-                $('#cep').val(response.endereco.cep);
-                $('#endereco').val(response.endereco.endereco); // Adicionando o campo "endereco" no JSON
-                $('#numero').val(response.endereco.numero);
-                $('#cidade').val(response.endereco.cidade);
-                $('#estado').val(response.endereco.uf);
-                $('#pais').val(response.endereco.pais);
-                $('#email').val(response.email);
-                $('#telefone_empresa').val(response.telefoneEmpresa);
-                
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert('Erro ao salvar os dados: ' + textStatus);
-            }
+                    $('#razao_social').val(response.razaoSocial);
+                    $('#nome_fantasia').val(response.nomeFantasia);
+                    $('#cnpj').val(response.cnpj);
+                    $('#nome_solicitante').val(response.nomeSolicitante);
+                    $('#telefone_solicitante').val(response.telefoneSolicitante);
+                    $('#inscricao_social').val(response.inscricaoSocial);
+                    const ramoIndex = ramoLabels[response.ramo];
+                    const porteIndex = porteLabels[response.porte];
+                    $('#ramo').val(ramoIndex);
+                    $('#porte').val(porteIndex);
+                    $('#cep').val(response.endereco.cep);
+                    $('#endereco').val(response.endereco.endereco); 
+                    $('#numero').val(response.endereco.numero);
+                    $('#cidade').val(response.endereco.cidade);
+                    $('#estado').val(response.endereco.uf);
+                    $('#pais').val(response.endereco.pais);
+                    $('#email').val(response.email);
+                    $('#telefone_empresa').val(response.telefoneEmpresa);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Erro ao buscar os dados:', textStatus);
+                    alert('Erro ao buscar os dados: ' + textStatus);
+                }
+            }); 
+                $.ajax({
+                    url:`http://localhost:8080/editar/${idEmpresa}`,
+                    type: 'PUT',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(response) {
+                        alert('Dados salvos com sucesso!');
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        alert('Erro ao salvar os dados: ' + textStatus);
+                    }
+                });
+        }
+    
+        $('.btn-salvar').on('click', function(event) {
+            event.preventDefault();
+    
+            var formData = new FormData();
+            formData.append('razao_social', $('#razao_social').val());
+            formData.append('nome_fantasia', $('#nome_fantasia').val());
+            formData.append('cnpj', $('#cnpj').val());
+            formData.append('nome_solicitante', $('#nome_solicitante').val());
+            formData.append('telefone_solicitante', $('#telefone_solicitante').val());
+            formData.append('inscricao_social', $('#inscricao_social').val());
+            formData.append('ramo', $('#ramo').val());
+            formData.append('porte', $('#porte').val());
+            formData.append('logo', $('#logo')[0].files[0]);
+            formData.append('cep', $('#cep').val());
+            formData.append('endereco', $('#endereco').val());
+            formData.append('numero', $('#numero').val());
+            formData.append('cidade', $('#cidade').val());
+            formData.append('estado', $('#estado').val());
+            formData.append('pais', $('#pais').val());
+            formData.append('email', $('#email').val());
+            formData.append('telefone_empresa', $('#telefone_empresa').val());
+            
         });
-
-    }
+    
 
     $('.btn-salvar').on('click', function(event) {
         event.preventDefault();
@@ -226,6 +263,7 @@ $(document).ready(function() {
         formData.append('email', $('#email').val());
         formData.append('telefone_empresa', $('#telefone_empresa').val());
 
+                    
         // Enviando os dados via AJAX
         $.ajax({
             url: 'http://localhost:8080/cadastroEmpresa',
