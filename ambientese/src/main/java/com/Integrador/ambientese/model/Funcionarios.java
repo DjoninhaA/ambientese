@@ -18,6 +18,9 @@ public class Funcionarios {
     private String cpf;
     @Column(name = "email")
     private String email;
+
+    @Column(name = "telefone")
+    private String telefone;
     @Column(name = "data_nascimento")
     private Date dataNascimento;
     @Column(name = "Cargo")
@@ -76,6 +79,13 @@ public class Funcionarios {
     public void setEmail(String email) {
         this.email = email;
     }
+    public String getTelefone() {
+        return telefone;
+    }
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
     public Date getDataNascimento() {
         return dataNascimento;
     }

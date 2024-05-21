@@ -171,6 +171,12 @@
             <input type="text" class="form-control" id="email" placeholder="E-mail">
         </div>
 
+        <div class="col-md-4">
+            <label  class="form-label">Telefone</label>
+            <input type="number" class="form-control" id="telefone" placeholder="(00) 0 0000-0000">
+        </div>
+
+
 
         <div class="col-md-12"><p> <b>Acesso</b></p></div>
         <div class="col-md-4">
@@ -187,9 +193,11 @@
             <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 
         </div>
+
+    </form>
 </div>
 
-</form>
+
 
 </div>
 
@@ -218,6 +226,7 @@ $(document).ready(function() {
         formData.append('genero', $('#genero').val());
         formData.append('cargo', $('#cargo').val());
         formData.append('email', $('#email').val());
+        formData.append('telefone', $('#telefone').val());
         formData.append('login', $('#login').val());
         formData.append('senha', $('#senha').val());
 
