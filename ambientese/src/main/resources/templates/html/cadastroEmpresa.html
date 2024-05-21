@@ -62,26 +62,26 @@
         </div>
         <div class="col-md-4">
             <label for="ramo" class="form-label">Ramo</label>
-            <select id="ramo" class="form-select" name="ramo">
-                <option value="" selected>Selecione o ramo da empresa</option>
-                <option value="0">Alimentício</option>
-                <option value="1">Tecnológico</option>
-                <option value="2">Varejo</option>
-                <option value="3">Saúde</option>
-                <option value="4">Construção civil</option>
-            </select>
+            <select class="form-select" id="ramo" name="ramo">
+              <option value="" selected>Selecione o ramo da empresa</option>
+              <option value="Alimenticio">Alimentício</option>
+              <option value="Tecnologico">Tecnológico</option>
+              <option value="Varejo">Varejo</option>
+              <option value="Saude">Saúde</option>
+              <option value="ContrucaoCivil">Construção civil</option>
+              </select>
         </div>
 
         <div class="col-md-4">
             <label for="porte" class="form-label">Porte</label>
             <select id="porte" class="form-select" name="porte">
                 <option value="" selected>Selecione o porte da empresa</option>
-                <option value="0">Microempresa</option>
-                <option value="1">Empresa de Pequeno Porte (EPP)</option>
-                <option value="2">Grupo IV – Empresa de Médio Porte</option>
-                <option value="3">Grupo III – Empresa de Médio Porte</option>
-                <option value="4">Grupo II – Empresa de Grande Porte</option>
-                <option value="5">Grupo I – Empresa de Grande Porte</option>
+                <option value="Microempresa">Microempresa</option>
+                <option value="PequenoPorte">Empresa de Pequeno Porte (EPP)</option>
+                <option value="IVMedioPorte">Grupo IV – Empresa de Médio Porte</option>
+                <option value="IIIMedioPorte">Grupo III – Empresa de Médio Porte</option>
+                <option value="IIGrandePorte">Grupo II – Empresa de Grande Porte</option>
+                <option value="IGrandePorte">Grupo I – Empresa de Grande Porte</option>
             </select>
         </div>
         <div class="col-4">
@@ -150,20 +150,20 @@
         console.log("ID do Empresa:", idEmpresa);
 
         let porteLabels = {
-            'Microempresa': 0,
-            'PequenoPorte': 1,
-            'IVMedioPorte': 2,
-            'IIIMedioPorte': 3,
-            'IIGrandePorte': 4,
-            'IGrandePorte': 5
+            'Microempresa': 'Microempresa',
+            'PequenoPorte': 'PequenoPorte',
+            'IVMedioPorte': 'IVMedioPorte' ,
+            'IIIMedioPorte': 'IIIMedioPorte',
+            'IIGrandePorte': 'IIGrandePorte',
+            'IGrandePorte': 'IGrandePorte'
         };
         
         let ramoLabels = {
-            'Alimentício': 0,
-            'Tecnológico': 1,
-            'Varejo': 2,
-            'Saúde': 3,
-            'Construção civil': 4
+            'Alimentício': 'Alimentício',
+            'Tecnológico': 'Tecnológico',
+            'Varejo': 'Varejo',
+            'Saúde': 'Saúde',
+            'Construção civil': 'Construção civil'
         };
     
         if (idEmpresa) {
@@ -272,8 +272,8 @@
             $.ajax({
             url:`http://localhost:8080/editar/${idEmpresa}`,
             type: 'PUT',
-            data: JSON.stringify(formData), // Certifique-se de que formData seja um objeto JSON válido
-            contentType: 'application/json', // Defina o Content-Type como application/json
+            data: formData, // Certifique-se de que formData seja um objeto JSON válido
+            contentType: false, // Defina o Content-Type como application/json
             processData: false,
             success: function(response) {
                 alert('Dados salvos com sucesso!');

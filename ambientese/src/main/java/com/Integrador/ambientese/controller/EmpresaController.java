@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -59,43 +60,6 @@ public class EmpresaController {
         return ResponseEntity.ok(empresa);
     }
 
-    Porte porte;
-    private Porte convertIntToPorte(int porteNum) {
-        switch(porteNum) {
-            case 0:
-                return Porte.Microempresa;
-            case 1:
-                return Porte.PequenoPorte;
-            case 2:
-                return Porte.IVMedioPorte;
-            case 3:
-                return Porte.IIIMedioPorte;
-            case 4:
-                return Porte.IIGrandePorte;
-            case 5:
-                return Porte.IGrandePorte;
-            default:
-                throw new IllegalArgumentException("Porte inválido: " + porteNum);
-        }
-    }
-    Ramo ramo;
-    private Ramo convertIntToRamo(int ramoNum) {
-        switch(ramoNum) {
-            case 0:
-                return Ramo.Alimenticio;
-            case 1:
-                return Ramo.Tecnologico;
-            case 2:
-                return Ramo.Varejo;
-            case 3:
-                return Ramo.Saude;
-            case 4:
-                return Ramo.ContrucaoCivil;
-            default:
-                throw new IllegalArgumentException("Ramo inválido: " + ramoNum);
-        }
-    }
-
     @PostMapping("cadastroEmpresa")
     public ResponseEntity<String> saveEmpresa(
             @RequestParam("razao_social") String razaoSocial,
@@ -104,9 +68,9 @@ public class EmpresaController {
             @RequestParam("nome_solicitante") String nomeSolicitante,
             @RequestParam("telefone_solicitante") String telefoneSolicitante,
             @RequestParam("inscricao_social") String inscricaoSocial,
-            @RequestParam("ramo") int ramoNum,
-            @RequestParam("porte") int porteNum,
-            @RequestParam("logo") MultipartFile logo,
+            @RequestParam("ramo") String ramo,
+            @RequestParam("porte") String porte,
+            //@RequestParam("logo") MultipartFile logo,
             @RequestParam("cep") String cep,
             @RequestParam("endereco") String endereco,
             @RequestParam("numero") Integer numero,
@@ -115,10 +79,6 @@ public class EmpresaController {
             @RequestParam("pais") String pais,
             @RequestParam("email") String email,
             @RequestParam("telefone_empresa") Long telefoneEmpresa) {
-
-
-        Porte porte = convertIntToPorte(porteNum);
-        Ramo ramo = convertIntToRamo(ramoNum);
     
         Empresa empresa = new Empresa();
         empresa.setRazaoSocial(razaoSocial);
@@ -151,42 +111,56 @@ public class EmpresaController {
     
 
     @PutMapping("/editar/{idEmpresa}")
-public ResponseEntity<Empresa> atualizarEmpresa(
+    public ResponseEntity<String> atualizarEmpresa(
         @PathVariable long idEmpresa,
-        @RequestBody Empresa empresaAtualizada) {
+        @RequestParam("razao_social") String razaoSocial,
+        @RequestParam("nome_fantasia") String nomeFantasia,
+        @RequestParam("cnpj") Long cnpj,
+        @RequestParam("nome_solicitante") String nomeSolicitante,
+        @RequestParam("telefone_solicitante") String telefoneSolicitante,
+        @RequestParam("inscricao_social") String inscricaoSocial,
+        @RequestParam("ramo") String ramo,
+        @RequestParam("porte") String porte,
+        //@RequestPart("logo") MultipartFile logo,
+        @RequestParam("cep") String cep,
+        @RequestParam("endereco") String endereco,
+        @RequestParam("numero") Integer numero,
+        @RequestParam("cidade") String cidade,
+        @RequestParam("estado") String estado,
+        @RequestParam("pais") String pais,
+        @RequestParam("email") String email,
+        @RequestParam("telefone_empresa") Long telefoneEmpresa) {
 
     return empresaRepository.findById(idEmpresa)
             .map(empresa -> {
-                empresa.setRazaoSocial(empresaAtualizada.getRazaoSocial());
-                empresa.setNomeFantasia(empresaAtualizada.getNomeFantasia());
-                empresa.setCnpj(empresaAtualizada.getCnpj());
-                empresa.setNomeSolicitante(empresaAtualizada.getNomeSolicitante());
-                empresa.setTelefoneSolicitante(empresaAtualizada.getTelefoneSolicitante());
-                empresa.setInscricaoSocial(empresaAtualizada.getInscricaoSocial());
-                empresa.setRamo(empresaAtualizada.getRamo());
-                empresa.setPorte(empresaAtualizada.getPorte());
-                empresa.setEmail(empresaAtualizada.getEmail());
-                empresa.setTelefoneEmpresa(empresaAtualizada.getTelefoneEmpresa());
+                empresa.setRazaoSocial(razaoSocial);
+                empresa.setNomeFantasia(nomeFantasia);
+                empresa.setCnpj(cnpj);
+                empresa.setNomeSolicitante(nomeSolicitante);
+                empresa.setTelefoneSolicitante(telefoneSolicitante);
+                empresa.setInscricaoSocial(inscricaoSocial);
+                empresa.setRamo(ramo);
+                empresa.setPorte(porte);
+                empresa.setEmail(email);
+                empresa.setTelefoneEmpresa(telefoneEmpresa);
 
-                Endereco enderecoAtualizado = empresaAtualizada.getEndereco();
                 Endereco enderecoEmpresa = empresa.getEndereco();
-
                 if (enderecoEmpresa == null) {
                     enderecoEmpresa = new Endereco();
                 }
-
-                enderecoEmpresa.setCep(enderecoAtualizado.getCep());
-                enderecoEmpresa.setNumero(enderecoAtualizado.getNumero());
-                enderecoEmpresa.setCidade(enderecoAtualizado.getCidade());
-                enderecoEmpresa.setUF(enderecoAtualizado.getUF());
-                enderecoEmpresa.setPais(enderecoAtualizado.getPais());
+                enderecoEmpresa.setCep(String.valueOf(cep));
+                enderecoEmpresa.setNumero(numero);
+                enderecoEmpresa.setCidade(cidade);
+                enderecoEmpresa.setUF(estado);
+                enderecoEmpresa.setPais(pais);
                 empresa.setEndereco(enderecoEmpresa);
 
-                Empresa empresaSalva = empresaRepository.save(empresa);
-                return ResponseEntity.ok(empresaSalva);
+                empresaRepository.save(empresa);
+                return ResponseEntity.ok("Empresa atualizada com sucesso!");
             })
-            .orElseThrow(() -> new RuntimeException("Empresa não encontrada com o ID: " + idEmpresa));
+            .orElse(ResponseEntity.notFound().build());
 }
+
 
 
     

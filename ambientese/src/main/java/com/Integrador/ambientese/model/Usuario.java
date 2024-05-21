@@ -15,17 +15,26 @@ public class Usuario {
 	private String login;
 	@Column(name = "senha", nullable = false)
 	private String senha;
-	// @Column(name = "isAdmin", nullable = false)
-	// private int isAdmin;
 	
-	// public long getIdUsuario() {
-		// 	return idUsuario;
-		// }
+	@OneToOne
+	private Funcionarios funcionario;
+	
+	public long getIdUsuario() {
+			return idUsuario;
+		}
 		
-		// public void setIdUsuario(long idUsuario) {
-			// 	this.idUsuario = idUsuario;
-			// }
+		public void setIdUsuario(long idUsuario) {
+				this.idUsuario = idUsuario;
+			}
 			
+			public Funcionarios getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionarios funcionario) {
+		this.funcionario = funcionario;
+	}
+
 			@Override
 			public int hashCode() {
 				final int prime = 31;
