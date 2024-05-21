@@ -115,10 +115,10 @@ public class CadastrofuncionarioController {
     public Funcionarios atualizarFuncionarios(@RequestBody Funcionarios funcionariosAtualizados, @PathVariable long idFuncionario){
        try {
            Funcionarios funcionarioAtual = funcionariosRepository.findById(idFuncionario);
-           funcionarioAtual.setCargo(funcionariosAtualizados.getCargo());
            funcionarioAtual.setName(funcionariosAtualizados.getName());
            funcionarioAtual.setCpf(funcionariosAtualizados.getCpf());
            funcionarioAtual.setEmail(funcionariosAtualizados.getEmail());
+           funcionarioAtual.setTelefone(funcionariosAtualizados.getTelefone());
            funcionarioAtual.setDataNascimento(funcionariosAtualizados.getDataNascimento());
            funcionarioAtual.setCargo(funcionariosAtualizados.getCargo());
            funcionarioAtual.setGenero(funcionariosAtualizados.getGenero());
