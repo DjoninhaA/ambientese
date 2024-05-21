@@ -284,6 +284,7 @@
             background-color: #2864F6; 
             padding: 10px;
             color: white;
+            justify-content: normal;
             z-index: 2; /* Define uma pilha de ordem para garantir que a navbar fique acima de outros elementos */
         }
 
@@ -295,8 +296,11 @@
         }
 
         .logo img {
-            height: 40px;
+          height: 25px;
         }
+      .logo{
+        cursor: pointer;
+      }
 
         .side-menu {
             height:92%;
@@ -369,18 +373,20 @@
         <div class="menu-btn" onclick="toggleMenu()">
             &#9776; <!-- Ícone de menu (três linhas horizontais) -->
         </div>
-        <div class="logo">
-            <img src="logo.png" alt="Logo da Empresa">
+        <div class="logo" href="/home">
+          <a href="/home">
+            <img src="../images/ambientetext.svg" alt="Logo da Empresa">
+          </a>
         </div>
       </div>
-    
-      <div id="sideMenu" class="side-menu">
-          <a href="#"><i class="fa-solid fa-building"></i>Empresas</a>
-          <a href="#"><i class="fa-solid fa-user"></i>Funcionários</a>
-          <a href="#"><i class="fa-solid fa-ranking-star"></i>Ranking</a>
-          <a href="#"><i class="fa-solid fa-comment"></i>Avaliar</a>
-          <a href="#" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>Sair</a> <!-- Botão de sair -->
-      </div>
+
+    <div id="sideMenu" class="side-menu">
+      <a href="/buscar"><i class="fa-solid fa-building"></i>Empresas</a>
+      <a href="/listarFuncionario"><i class="fa-solid fa-user"></i>Funcionários</a>
+      <a href="/ranking"><i class="fa-solid fa-ranking-star"></i>Ranking</a>
+      <a href="#"><i class="fa-solid fa-comment"></i>Avaliar</a>
+      <a href="/auth" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
+    </div>
       
 
 
