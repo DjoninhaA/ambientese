@@ -84,6 +84,8 @@ public class CadastrofuncionarioController {
         Usuario usuario = new Usuario();
         usuario.setLogin(login);
         usuario.setSenha(senha);
+        
+        usuario.setFuncionario(funcionario);
     
         // Salvar a empresa no repositório
         funcionariosRepository.save(funcionario);

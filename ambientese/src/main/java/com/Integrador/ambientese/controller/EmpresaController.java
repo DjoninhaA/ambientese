@@ -26,6 +26,13 @@ public class EmpresaController {
     private EmpresaRepository empresaRepository;
 
     @GetMapping("/cadastroEmpresa")
+    public ModelAndView editarEmpresa() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("html/cadastroEmpresa");
+        return modelAndView;
+     }
+
+     @GetMapping("/editar/{idEmpresa}")
     public ModelAndView cadastroEmperesa() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("html/cadastroEmpresa");
@@ -43,6 +50,12 @@ public class EmpresaController {
     @GetMapping("/buscaEmpresa/{nome_fantasia}")
     public ResponseEntity<Empresa> GetByName(@PathVariable String nome_fantasia){
         Empresa empresa = empresaRepository.findByNomeFantasia(nome_fantasia);
+        return ResponseEntity.ok(empresa);
+    }
+
+    @GetMapping("/busca/{idEmpresa}")
+    public ResponseEntity<Empresa> GetById(@PathVariable Long idEmpresa){
+        Empresa empresa = empresaRepository.findByidEmpresa(idEmpresa);
         return ResponseEntity.ok(empresa);
     }
 
@@ -137,42 +150,42 @@ public class EmpresaController {
     }
     
 
-    @PutMapping("/editar/{idEmpresa}")
-    public ResponseEntity<Empresa> atualizarEmpresa(
-            @PathVariable long idEmpresa, 
-            @RequestBody Empresa empresaAtualizada) {
+    // @PutMapping("/editar/{idEmpresa}")
+    // public ResponseEntity<Empresa> atualizarEmpresa(
+    //         @PathVariable long idEmpresa, 
+    //         @RequestBody Empresa empresaAtualizada) {
     
-        return empresaRepository.findById(idEmpresa)
-                .map(empresa -> {
-                    empresa.setEmail(empresaAtualizada.getEmail());
-                    empresa.setRazaoSocial(empresaAtualizada.getRazaoSocial());
-                    empresa.setCnpj(empresaAtualizada.getCnpj());
-                    empresa.setNomeSolicitante(empresaAtualizada.getNomeSolicitante());
-                    empresa.setTelefoneSolicitante(empresaAtualizada.getTelefoneSolicitante());
-                    empresa.setInscricaoSocial(empresaAtualizada.getInscricaoSocial());
-                    empresa.setRamo(empresaAtualizada.getRamo());
-                    empresa.setPorte(empresaAtualizada.getPorte());
-                    empresa.setTelefoneEmpresa(empresaAtualizada.getTelefoneEmpresa());
+    //     return empresaRepository.findById(idEmpresa)
+    //             .map(empresa -> {
+    //                 empresa.setEmail(empresaAtualizada.getEmail());
+    //                 empresa.setRazaoSocial(empresaAtualizada.getRazaoSocial());
+    //                 empresa.setCnpj(empresaAtualizada.getCnpj());
+    //                 empresa.setNomeSolicitante(empresaAtualizada.getNomeSolicitante());
+    //                 empresa.setTelefoneSolicitante(empresaAtualizada.getTelefoneSolicitante());
+    //                 empresa.setInscricaoSocial(empresaAtualizada.getInscricaoSocial());
+    //                 empresa.setRamo(empresaAtualizada.getRamo());
+    //                 empresa.setPorte(empresaAtualizada.getPorte());
+    //                 empresa.setTelefoneEmpresa(empresaAtualizada.getTelefoneEmpresa());
     
-                    Endereco enderecoAtualizado = empresaAtualizada.getEndereco();
-                    Endereco enderecoEmpresa = empresa.getEndereco();
+    //                 Endereco enderecoAtualizado = empresaAtualizada.getEndereco();
+    //                 Endereco enderecoEmpresa = empresa.getEndereco();
     
-                    if (enderecoEmpresa == null) {
-                        enderecoEmpresa = new Endereco();
-                    }
+    //                 if (enderecoEmpresa == null) {
+    //                     enderecoEmpresa = new Endereco();
+    //                 }
     
-                    enderecoEmpresa.setCep(enderecoAtualizado.getCep());
-                    enderecoEmpresa.setNumero(enderecoAtualizado.getNumero());
-                    enderecoEmpresa.setCidade(enderecoAtualizado.getCidade());
-                    enderecoEmpresa.setUF(enderecoAtualizado.getUF());
-                    enderecoEmpresa.setPais(enderecoAtualizado.getPais());
-                    empresa.setEndereco(enderecoEmpresa);
+    //                 enderecoEmpresa.setCep(enderecoAtualizado.getCep());
+    //                 enderecoEmpresa.setNumero(enderecoAtualizado.getNumero());
+    //                 enderecoEmpresa.setCidade(enderecoAtualizado.getCidade());
+    //                 enderecoEmpresa.setUF(enderecoAtualizado.getUF());
+    //                 enderecoEmpresa.setPais(enderecoAtualizado.getPais());
+    //                 empresa.setEndereco(enderecoEmpresa);
     
-                    Empresa empresaSalva = empresaRepository.save(empresa);
-                    return ResponseEntity.ok(empresaSalva);
-                })
-                .orElseThrow(() -> new RuntimeException("Empresa não encontrada com o ID: " + idEmpresa));
-    }
+    //                 Empresa empresaSalva = empresaRepository.save(empresa);
+    //                 return ResponseEntity.ok(empresaSalva);
+    //             })
+    //             .orElseThrow(() -> new RuntimeException("Empresa não encontrada com o ID: " + idEmpresa));
+    // }
     
 
     @DeleteMapping("/deletar/{idEmpresa}")
