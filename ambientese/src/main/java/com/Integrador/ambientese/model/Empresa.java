@@ -32,12 +32,10 @@ public class Empresa {
     private String telefoneSolicitante;
     @Column(name = "inscricao_social", nullable = true)
     private String inscricaoSocial;
-    @Enumerated(EnumType.STRING)
     @Column(name = "ramo", nullable = false)
-    private Ramo ramo;
-    @Enumerated(EnumType.STRING)
+    private String ramo;
     @Column(name = "porte", nullable = false)
-    private Porte porte;
+    private String porte;
     @Column(name = "email", columnDefinition = "varchar(100) default 'email'", nullable = false)
     private String email;
     @Column(name = "telefone_empresa",columnDefinition = "varchar(20) default 'telefone'", nullable = false)
