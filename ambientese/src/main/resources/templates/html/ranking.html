@@ -25,39 +25,14 @@
   />
     <script>
 
-
-
-
-
-
-
-
-      
-<<<<<<< ambientese/src/main/resources/templates/html/ranking.html
-
-      //JS NAVBAR
       function toggleMenu() {
-            var menu = document.getElementById("sideMenu");
-            if (menu.style.width === "250px") {
-                menu.style.width = "0";
-            } else {
-                menu.style.width = "250px";
-            }
+        var menu = document.getElementById("sideMenu");
+        if (menu.style.width === "250px") {
+            menu.style.width = "0";
+        } else {
+            menu.style.width = "250px";
         }
-      //FIM JS NAVBAR
-
-
-
-      $(document).ready(function () {
-        function loadEmpresas(page, sortBy = 'pontuacao', sortOrder = 'desc') {
-          $.ajax({
-            url: `/empresas?page=${page}&size=13&sortBy=${sortBy}&sortOrder=${sortOrder}`, // Endpoint com suporte a paginação
-            type: 'GET',
-            success: function (response) {
-              var tbody = $('#tableEmpresas tbody');
-              tbody.empty();
-              let start = page * 13 + 2;
-=======
+    }      
       const porteLabels = {
         Microempresa: 'Microempresa',
         PequenoPorte: 'Empresa de Pequeno Porte (EPP)',
@@ -66,7 +41,6 @@
         IIGrandePorte : 'Grupo II – Empresa de Grande Porte',
         IGrandePorte: 'Grupo I – Empresa de Grande Porte'
       };
->>>>>>> ambientese/src/main/resources/templates/html/ranking.html
 
       const ramoLabels = {
         Tecnologico: 'Tecnológico',
