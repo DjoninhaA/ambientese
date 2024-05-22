@@ -5,7 +5,12 @@ import java.sql.Date;
 
 import com.Integrador.ambientese.model.enums.Cargo;
 import com.Integrador.ambientese.model.enums.Genero;
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
 @Entity
 @Table(name = "Funcionarios")
 public class Funcionarios {
@@ -48,44 +53,6 @@ public class Funcionarios {
         return false;
         return true;
     }
-    
-    public Genero getGenero() {
-        return genero;
-    }
-    public void setGenero(Genero genero) {
-        this.genero = genero;
-    }
-    public long getIdFuncionario() {
-        return idFuncionario;
-    }
-    public void setIdFuncionario(long idFuncionario) {
-        this.idFuncionario = idFuncionario;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public String getCpf() {
-        return cpf;
-    }
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-    public String getEmail() {
-        return email;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public String getTelefone() {
-        return telefone;
-    }
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
-
     public Date getDataNascimento() {
         return dataNascimento;
     }
@@ -98,7 +65,7 @@ public class Funcionarios {
     public void setCargo(Cargo cargo) {
         this.cargo = cargo;
     }
-    
-    
+
+
 
 }

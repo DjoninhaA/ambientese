@@ -41,12 +41,12 @@ public class CadastrofuncionarioController {
         return modelAndView;
     } // Retorna o nome do arquivo HTML sem a extensão
 
-    @GetMapping("/listarFuncionario")
-    public ModelAndView cadastroEmperesa() {
+    @GetMapping("/edit/{idFuncionarios}")
+    public ModelAndView editarFuncionario() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("html/listarFuncionario");
+        modelAndView.setViewName("html/cadastroFuncionario");
         return modelAndView;
-     }
+    }
 
     // @GetMapping("/buscar/funcionario")
     // public ModelAndView listarFuncionarios() {
@@ -54,6 +54,14 @@ public class CadastrofuncionarioController {
     //     modelAndView.setViewName("html/listarFuncionario");
     //     return modelAndView;
     // } // Retorna o nome do arquivo HTML sem a extensão
+
+    @GetMapping("/listarFuncionario")
+    public ModelAndView cadastroEmperesa() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("html/listarFuncionario");
+        return modelAndView;
+     }
+
 
     @GetMapping("/buscarfuncionario/{idFuncionario}")
     public ResponseEntity<Funcionarios> GetById(@PathVariable long idFuncionario){
@@ -112,24 +120,34 @@ public class CadastrofuncionarioController {
     }
 
     @PutMapping("/edit/{idFuncionario}")
-    public Funcionarios atualizarFuncionarios(@RequestBody Funcionarios funcionariosAtualizados, @PathVariable long idFuncionario){
-       try {
-           Funcionarios funcionarioAtual = funcionariosRepository.findById(idFuncionario);
-           funcionarioAtual.setName(funcionariosAtualizados.getName());
-           funcionarioAtual.setCpf(funcionariosAtualizados.getCpf());
-           funcionarioAtual.setEmail(funcionariosAtualizados.getEmail());
-           funcionarioAtual.setTelefone(funcionariosAtualizados.getTelefone());
-           funcionarioAtual.setDataNascimento(funcionariosAtualizados.getDataNascimento());
-           funcionarioAtual.setCargo(funcionariosAtualizados.getCargo());
-           funcionarioAtual.setGenero(funcionariosAtualizados.getGenero());
+    public ResponseEntity<String> atualizarFuncionario(
+            @PathVariable long idFuncionario,
+            @RequestParam("nome") String name,
+            @RequestParam("cpf") String cpf,
+            @RequestParam("email") String email,
+            @RequestParam("telefone") String telefone,
+            @RequestParam("data_nascimento") Date dataNascimento,
+            @RequestParam("cargo") Cargo cargo,
+            @RequestParam("genero") Genero genero) {
 
-           funcionariosRepository.save(funcionarioAtual);
+        return funcionariosRepository.findById(idFuncionario)
+                .map(funcionarios -> {
+                    funcionarios.setName(name);
+                    funcionarios.setCpf(cpf);
+                    funcionarios.setEmail(email);
+                    funcionarios.setTelefone(telefone);
+                    funcionarios.setDataNascimento(dataNascimento);
+                    funcionarios.setCargo(cargo);
+                    funcionarios.setGenero(genero);
 
-           return funcionarioAtual;
-       } catch (Exception e){
-           throw new RuntimeException("Funcionario não encontrado com o ID: " + idFuncionario);
-       }
+
+                    funcionariosRepository.save(funcionarios);
+                    return ResponseEntity.ok("Funcionario atualizada com sucesso!");
+                })
+                .orElse(ResponseEntity.notFound().build());
+
     }
+
 
     @DeleteMapping("/funcionario/delete/{idFuncionario}")
     public ResponseEntity<Void> deletarFuncionario(@PathVariable Long idFuncionario){
