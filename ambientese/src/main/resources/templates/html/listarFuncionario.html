@@ -217,8 +217,6 @@
 
         }
 
-
-
         /* Custom checkbox */
         .custom-checkbox {
             position: relative;
@@ -409,13 +407,28 @@
                 menu.style.width = "250px";
             }
         }
+
         //FIM JS NAVBAR
+
+        const generoLabels = {
+            Feminino: 'Feminino',
+            Masculino: 'Masculino',
+            Outro: 'Outro'
+        };
+
+        const cargoLabels = {
+            Consultor: 'Consultor',
+            Adiministrador: 'Adiministrador'
+        };
+
 
 
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
-    
-            window.deleteEmpresa = function (id) {
+
+
+            //deletar
+            window.deleteFuncionario = function (id) {
                 $.ajax({
                     url: '/funcionario/delete/' + id,
                     type: 'DELETE',
@@ -436,15 +449,19 @@
                     success: function (response) {
                         var tbody = $('#tableFuncionarios tbody');
                         tbody.empty(); // Limpa a tabela antes de adicionar novos dados
+
                         response.content.forEach(function (funcionarios) { // Ajuste baseado na estrutura da resposta
+                            var generoText = generoLabels[funcionarios.genero] || 'Não especificado';
+                            var cargoText = cargoLabels[funcionarios.cargo] || 'Não especificado';
                             tbody.append(`
                         <tr>
                             <td>${funcionarios.idFuncionario}</td>
                             <td>${funcionarios.name}</td>
-                            <td>${funcionarios.cargo}</td>
+                            <td>${cargoText}</td>
+                            <td>${generoText}</td>
                             <td>${funcionarios.email}</td>
                             <td>
-                                <a href="/editar/${funcionarios.idFuncionario}" class="edit" data-toggle="tooltip" title="Editar">
+                                <a href="/edit/${funcionarios.idFuncionario}" class="edit" data-toggle="tooltip" title="Editar">
                                     <i class="material-icons">&#xE254;</i>
                                 </a>
                               <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" data-id="${funcionarios.idFuncionario}" data-target="#deleteEmployeeModal">
@@ -566,7 +583,7 @@
                         </div>
                     </div>
                     <div class="col-xs-">
-                        <a href="/cadastro/funcionario" class="btn btn-novo-registro"><i
+                        <a href="/cadastrofuncionario" class="btn btn-novo-registro"><i
                                 class="material-icons">&#xE147;</i> <span>Novo registro</span></a>
 
                     </div>
@@ -632,6 +649,7 @@
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
                         <input type="submit" class="btn btn-success btn-novo-registro" value="Adicionar">
+                    </div>
                     </div>
                 </form>
             </div>

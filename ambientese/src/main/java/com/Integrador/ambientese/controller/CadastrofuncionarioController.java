@@ -1,6 +1,6 @@
 package com.Integrador.ambientese.controller;
 
-
+import  java.util.*;
 import com.Integrador.ambientese.model.Empresa;
 import com.Integrador.ambientese.model.Endereco;
 import com.Integrador.ambientese.model.Funcionarios;
@@ -9,10 +9,12 @@ import com.Integrador.ambientese.model.enums.Cargo;
 import com.Integrador.ambientese.model.enums.Genero;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -34,19 +36,19 @@ public class CadastrofuncionarioController {
     @Autowired
     private UsuarioRepository usuarioRepository; 
 
-    @GetMapping("/cadastro/funcionario")
+    @GetMapping("/cadastrofuncionario")
     public ModelAndView cadastroFuncionario() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("html/cadastroFuncionario");
         return modelAndView;
     } // Retorna o nome do arquivo HTML sem a extensão
 
-    @GetMapping("/listarFuncionario")
-    public ModelAndView cadastroEmperesa() {
+    @GetMapping("/edit/{idFuncionarios}")
+    public ModelAndView editarFuncionario() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("html/listarFuncionario");
+        modelAndView.setViewName("html/cadastroFuncionario");
         return modelAndView;
-     }
+    }
 
     // @GetMapping("/buscar/funcionario")
     // public ModelAndView listarFuncionarios() {
@@ -55,18 +57,27 @@ public class CadastrofuncionarioController {
     //     return modelAndView;
     // } // Retorna o nome do arquivo HTML sem a extensão
 
+    @GetMapping("/listarFuncionario")
+    public ModelAndView cadastroEmperesa() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("html/listarFuncionario");
+        return modelAndView;
+     }
+
+
     @GetMapping("/buscarfuncionario/{idFuncionario}")
-    public ResponseEntity<Funcionarios> GetById(@PathVariable long idFuncionario){
-        Funcionarios funcionarios = funcionariosRepository.findById(idFuncionario);
+    public ResponseEntity<Funcionarios> GetById(@PathVariable Long idFuncionario){
+        Funcionarios funcionarios = funcionariosRepository.findByIdFuncionario(idFuncionario);
         return ResponseEntity.ok(funcionarios);
     }
 
-    @PostMapping("/cadastro/funcionario")
+    @PostMapping("/cadastroFuncionario")
     public ResponseEntity<String> saveFuncionario(
             @RequestParam("nome") String name,
             @RequestParam("cpf") String cpf,
             @RequestParam("data_nascimento") Date dataNascimento,
             @RequestParam("email") String email,
+            @RequestParam("telefone") String telefone,
             @RequestParam("cargo") Cargo cargo,
             @RequestParam("genero") Genero genero,
             @RequestParam("login") String login,
@@ -77,6 +88,7 @@ public class CadastrofuncionarioController {
         funcionario.setCpf(cpf);
         funcionario.setDataNascimento(dataNascimento);
         funcionario.setEmail(email);
+        funcionario.setTelefone(telefone);
         funcionario.setCargo(cargo);
         funcionario.setGenero(genero);
     
@@ -112,24 +124,34 @@ public class CadastrofuncionarioController {
     }
 
     @PutMapping("/edit/{idFuncionario}")
-    public Funcionarios atualizarFuncionarios(@RequestBody Funcionarios funcionariosAtualizados, @PathVariable long idFuncionario){
-       try {
-           Funcionarios funcionarioAtual = funcionariosRepository.findById(idFuncionario);
-           funcionarioAtual.setName(funcionariosAtualizados.getName());
-           funcionarioAtual.setCpf(funcionariosAtualizados.getCpf());
-           funcionarioAtual.setEmail(funcionariosAtualizados.getEmail());
-           funcionarioAtual.setTelefone(funcionariosAtualizados.getTelefone());
-           funcionarioAtual.setDataNascimento(funcionariosAtualizados.getDataNascimento());
-           funcionarioAtual.setCargo(funcionariosAtualizados.getCargo());
-           funcionarioAtual.setGenero(funcionariosAtualizados.getGenero());
+    public ResponseEntity<String> atualizarFuncionario(
+            @PathVariable Long idFuncionario,
+            @RequestParam("nome") String name,
+            @RequestParam("cpf") String cpf,
+            @RequestParam("email") String email,
+            @RequestParam("telefone") String telefone,
+            @RequestParam("data_nascimento") Date dataNascimento,
+            @RequestParam("cargo") Cargo cargo,
+            @RequestParam("genero") Genero genero) {
 
-           funcionariosRepository.save(funcionarioAtual);
+        return funcionariosRepository.findById(idFuncionario)
+                .map(funcionarios -> {
+                    funcionarios.setName(name);
+                    funcionarios.setCpf(cpf);
+                    funcionarios.setEmail(email);
+                    funcionarios.setTelefone(telefone);
+                    funcionarios.setDataNascimento(dataNascimento);
+                    funcionarios.setCargo(cargo);
+                    funcionarios.setGenero(genero);
 
-           return funcionarioAtual;
-       } catch (Exception e){
-           throw new RuntimeException("Funcionario não encontrado com o ID: " + idFuncionario);
-       }
+
+                    funcionariosRepository.save(funcionarios);
+                    return ResponseEntity.ok("Funcionario atualizada com sucesso!");
+                })
+                .orElse(ResponseEntity.notFound().build());
+
     }
+
 
     @DeleteMapping("/funcionario/delete/{idFuncionario}")
     public ResponseEntity<Void> deletarFuncionario(@PathVariable Long idFuncionario){
