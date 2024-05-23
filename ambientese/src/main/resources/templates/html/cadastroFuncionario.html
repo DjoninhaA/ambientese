@@ -256,7 +256,10 @@ $(document).ready(function() {
                 console.log("Resposta do servidor:", response);
                 $('#nome').val(response.name);
                 $('#cpf').val(response.cpf);
-                $('#data_nascimento').val(response.dataNascimento);
+
+                var partesData = response.dataNascimento.split("-");
+                var dataISO = partesData[0] + '-' + partesData[1] + '-' + partesData[2];
+                $('#data').val(dataISO); 
                 $('#genero').val(response.genero);
                 $('#cargo').val(response.cargo);
                 $('#email').val(response.email);
@@ -289,7 +292,7 @@ $(document).ready(function() {
         // Enviando os dados via AJAX
         if(!idFuncionario) {
             $.ajax({
-                url: 'http://localhost:8080/cadastrofuncionario',
+                url: 'http://localhost:8080/cadastroFuncionario',
                 type: 'POST',
                 data: formData,
                 contentType: false,
