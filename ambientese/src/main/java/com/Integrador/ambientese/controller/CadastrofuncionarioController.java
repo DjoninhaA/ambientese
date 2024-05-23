@@ -8,6 +8,10 @@ import com.Integrador.ambientese.model.Usuario;
 import com.Integrador.ambientese.model.enums.Cargo;
 import com.Integrador.ambientese.model.enums.Genero;
 
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.data.domain.Page;
@@ -15,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -110,6 +115,7 @@ public class CadastrofuncionarioController {
     public Page<Funcionarios> getFuncionarios(@RequestParam(defaultValue = "0") int page,
                                      @RequestParam(defaultValue = "10") int size,
                                      @RequestParam(required = false) String sortBy,
+                                     @RequestParam(required = false) String name,
                                      @RequestParam(defaultValue = "asc") String sortOrder) {
         Pageable pageable;
 
@@ -119,8 +125,20 @@ public class CadastrofuncionarioController {
         } else {
             pageable = PageRequest.of(page, size);
         }
+        Specification<Funcionarios> spec = new Specification<Funcionarios>() {
+            @Override
+            public Predicate toPredicate(Root<Funcionarios> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+                List<Predicate> predicates = new ArrayList<>();
 
-        return funcionariosRepository.findAll(pageable);
+                if (name != null && !name.isEmpty()) {
+                    predicates.add(cb.like(cb.lower(root.get("name")), "%" + name.toLowerCase() + "%"));
+                }
+
+                return cb.and(predicates.toArray(new Predicate[0]));
+            }
+        };
+
+        return funcionariosRepository.findAll(spec, pageable);
     }
 
     @PutMapping("/edit/{idFuncionario}")
@@ -154,9 +172,13 @@ public class CadastrofuncionarioController {
 
 
     @DeleteMapping("/funcionario/delete/{idFuncionario}")
-    public ResponseEntity<Void> deletarFuncionario(@PathVariable Long idFuncionario){
-        funcionariosRepository.deleteById(idFuncionario);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deletarFuncionario(@PathVariable Long idFuncionario) {
+        try {
+            funcionariosRepository.deleteById(idFuncionario);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 

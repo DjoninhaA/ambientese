@@ -442,9 +442,14 @@
                 });
             };
     
-            function loadFuncionarios(page) {
+            function loadFuncionarios(page, filters = {}) {
+
+                let url = `/funcionarios?page=${page}&size=10`;
+
+                if (filters.name) url += `&name=${encodeURIComponent(filters.name)}`;
+
                 $.ajax({
-                    url: '/funcionarios?page=' + page + '&size=10', // Endpoint com suporte a paginação
+                    url: url, // Endpoint com suporte a paginação
                     type: 'GET',
                     success: function (response) {
                         var tbody = $('#tableFuncionarios tbody');
@@ -478,8 +483,11 @@
                     }
                 });
             }
-    
-    
+
+            $('#searchButton').click(function() {
+                var name = $('#name').val();
+                loadFuncionarios(0, {name: name});
+            });
     
             function updateEntriesText(pageSize, totalEntries, currentPage) {
                 var startEntry = currentPage * pageSize + 1;
@@ -488,11 +496,11 @@
                 var text = `Mostrando ${startEntry} a ${endEntry} de ${totalEntries} entradas`;
                 $('.hint-text').text(text);
             }
-    
+
             function updatePagination(totalPages, currentPage) {
                 var pagination = $('.pagination');
                 pagination.empty(); // Limpa a paginação existente antes de adicionar novos links
-    
+
                 // Botão "Anterior"
                 var prevClassName = currentPage > 0 ? '' : 'disabled';
                 var prevLink = $(`<li class="page-item ${prevClassName}"><a href="#" class="page-link">Anterior</a></li>`);
@@ -503,20 +511,28 @@
                     }
                 });
                 pagination.append(prevLink);
-    
-                // Números de página
-                for (let i = 0; i < totalPages; i++) {
+
+                // Números de página com limite de 5 opções visíveis
+                var startPage = Math.max(0, currentPage - 2); // Garante que o número inicial seja pelo menos 0
+                var endPage = Math.min(startPage + 4, totalPages - 1); // Garante que o número final não seja maior que o total de páginas
+
+                // Ajusta o startPage se o endPage atingiu o limite e ainda há espaço para ajustar para trás
+                if (endPage - startPage < 4) {
+                    startPage = Math.max(0, endPage - 4);
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
                     var className = i === currentPage ? 'active' : '';
                     var link = $('<li class="page-item ' + className + '"><a href="#" class="page-link">' + (i + 1) + '</a></li>');
-                    link.click((function(page) { // IIFE para capturar o valor correto de 'i' dentro do loop
+                    link.click((function(page) {
                         return function(event) {
-                            event.preventDefault(); // Prevenir o comportamento padrão do link
+                            event.preventDefault();
                             loadFuncionarios(page);
                         };
                     })(i));
                     pagination.append(link);
                 }
-    
+
                 // Botão "Próximo"
                 var nextClassName = currentPage < totalPages - 1 ? '' : 'disabled';
                 var nextLink = $(`<li class="page-item ${nextClassName}"><a href="#" class="page-link">Próximo</a></li>`);
@@ -578,9 +594,14 @@
                     </div>
                     <div class="col-xs-7">
                         <div class="input-group">
-                            <input type="text" class="form-control" id="searchInput"
+                            <input type="text" class="form-control" id="name"
                                    placeholder="Pesquisar funcionarios">
+
+                            <button type="button" id="searchButton" class="btn btn-primary mb-4 w-100">
+                                Buscar
+                            </button>
                         </div>
+
                     </div>
                     <div class="col-xs-">
                         <a href="/cadastrofuncionario" class="btn btn-novo-registro"><i
@@ -596,6 +617,7 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Cargo</th>
+                        <th>Genero</th>
                         <th>E-mail</th>
                         <th>Ações</th>
                     </tr>
