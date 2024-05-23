@@ -2,17 +2,22 @@ package com.Integrador.ambientese.model;
 
 import jakarta.persistence.*;
 import java.sql.Date;
+import java.util.Optional;
 
 import com.Integrador.ambientese.model.enums.Cargo;
 import com.Integrador.ambientese.model.enums.Genero;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.ResponseEntity;
 
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name = "Funcionarios")
+//@Table(name = "Funcionarios")
 public class Funcionarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,39 +38,26 @@ public class Funcionarios {
     @Column(name = "genero")
     private Genero genero;
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (idFuncionario ^ (idFuncionario >>> 32));
-        return result;
-    }
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-        return true;
-        if (obj == null)
-        return false;
-        if (getClass() != obj.getClass())
-        return false;
-        Funcionarios other = (Funcionarios) obj;
-        if (idFuncionario != other.idFuncionario)
-        return false;
-        return true;
-    }
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-    public Cargo getCargo() {
-        return cargo;
-    }
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
-    }
-
+//    @Override
+//    public int hashCode() {
+//        final int prime = 31;
+//        int result = 1;
+//        result = prime * result + (int) (idFuncionario ^ (idFuncionario >>> 32));
+//        return result;
+//    }
+//    @Override
+//    public boolean equals(Object obj) {
+//        if (this == obj)
+//        return true;
+//        if (obj == null)
+//        return false;
+//        if (getClass() != obj.getClass())
+//        return false;
+//        Funcionarios other = (Funcionarios) obj;
+//        if (idFuncionario != other.idFuncionario)
+//        return false;
+//        return true;
+//    }
 
 
 }

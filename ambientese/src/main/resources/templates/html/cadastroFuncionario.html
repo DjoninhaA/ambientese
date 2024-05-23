@@ -186,15 +186,17 @@
         </div>
 
 
-
+        <div id="esconder">
         <div class="col-md-12"><p> <b>Acesso</b></p></div>
-        <div class="col-md-4">
+        <div class="col-md-4" >
             <label class="form-label">Login</label>
             <input type="text" class="form-control" id="login" placeholder="Login">
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" >
             <label class="form-label">Senha</label>
             <input type="password" class="form-control" id="senha" placeholder="*******">
+        </div>
+
         </div>
 
         <div class="col-12">
@@ -202,6 +204,7 @@
             <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
 
         </div>
+
 
     </form>
 </div>
@@ -224,6 +227,44 @@
     //fim js navbar
     
 $(document).ready(function() {
+    function getIdFromUrl() {
+        const pathname = window.location.pathname;
+        const parts = pathname.split('/');
+        const id = parts[2];
+        return id;
+    }
+
+    const idFuncionario = getIdFromUrl();
+    console.log("ID do Funcionario:", idFuncionario);
+
+
+    if (idFuncionario) {
+        document.getElementById('esconder').style.display = 'none';
+        console.log("DEU CERTO");
+
+        var url = `http://localhost:8080/buscarfuncionario/${idFuncionario}`;
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function(response) {
+                console.log("Resposta do servidor:", response);
+                $('#nome').val(response.name);
+                $('#cpf').val(response.cpf);
+                $('#data_nascimento').val(response.dataNascimento);
+                $('#genero').val(response.genero);
+                $('#cargo').val(response.cargo);
+                $('#email').val(response.email);
+                $('#telefone').val(response.telefone);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Erro ao buscar os dados:', textStatus);
+                alert('Erro ao buscar os dados: ' + textStatus);
+            }
+        });
+    }
+
+
+
     $('.btn-salvar').on('click', function(event) {
         event.preventDefault();
 
@@ -240,19 +281,36 @@ $(document).ready(function() {
         formData.append('senha', $('#senha').val());
 
         // Enviando os dados via AJAX
-        $.ajax({
-            url: 'http://localhost:8080/cadastro/funcionario',
-            type: 'POST',
-            data: formData,
-            contentType: false,
-            processData: false,
-            success: function(response) {
-                alert('Dados salvos com sucesso!');
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                alert('Erro ao salvar os dados: ' + textStatus);
-            }
-        });
+        if(!idFuncionario) {
+            $.ajax({
+                url: 'http://localhost:8080/cadastrofuncionario',
+                type: 'POST',
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    alert('Dados salvos com sucesso!');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    alert('Erro ao salvar os dados: ' + textStatus);
+                }
+            });
+        } else{console.log("AQUI!!")
+            $.ajax({
+                url:`http://localhost:8080/edit/${idFuncionario}`,
+                type: 'PUT',
+                data: formData, // Certifique-se de que formData seja um objeto JSON válido
+                contentType: false, // Defina o Content-Type como application/json
+                processData: false,
+                success: function(response) {
+                    alert('Dados salvos com sucesso!');
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log(response)
+                    alert('Erro ao salvar os dados: ' + textStatus);
+                }
+            });
+        }
     });
 });
 </script>
