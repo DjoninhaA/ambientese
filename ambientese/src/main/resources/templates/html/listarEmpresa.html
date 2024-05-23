@@ -516,13 +516,21 @@
                 });
                 pagination.append(prevLink);
 
-                // Números de página
-                for (let i = 0; i < totalPages; i++) {
+                // Números de página com limite de 5 opções visíveis
+                var startPage = Math.max(0, currentPage - 2); // Garante que o número inicial seja pelo menos 0
+                var endPage = Math.min(startPage + 4, totalPages - 1); // Garante que o número final não seja maior que o total de páginas
+
+                // Ajusta o startPage se o endPage atingiu o limite e ainda há espaço para ajustar para trás
+                if (endPage - startPage < 4) {
+                    startPage = Math.max(0, endPage - 4);
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
                     var className = i === currentPage ? 'active' : '';
                     var link = $('<li class="page-item ' + className + '"><a href="#" class="page-link">' + (i + 1) + '</a></li>');
-                    link.click((function(page) { // IIFE para capturar o valor correto de 'i' dentro do loop
+                    link.click((function(page) {
                         return function(event) {
-                            event.preventDefault(); // Prevenir o comportamento padrão do link
+                            event.preventDefault();
                             loadEmpresas(page);
                         };
                     })(i));
@@ -540,6 +548,7 @@
                 });
                 pagination.append(nextLink);
             }
+
 
 
             // Carregar a primeira página de empresas quando a página é carregada
