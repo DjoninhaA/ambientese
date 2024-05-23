@@ -153,7 +153,10 @@
         </div>
         <div class="col-4">
             <label class="form-label">CNPJ</label>
-            <input type="number" class="form-control" id="cnpj" placeholder="CNPJ da empresa">
+            <input type="number" class="form-control" id="cnpj" placeholder="CNPJ da empresa" 
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            type = "number"
+            maxlength = "14">
         </div>
         <div class="col-md-4">
             <label class="form-label">Nome do solicitante</label>
@@ -161,11 +164,17 @@
         </div>
         <div class="col-md-4">
             <label class="form-label">Telefone do solicitante</label>
-            <input type="number" class="form-control" id="telefone_solicitante" placeholder="Digite o telefone do solicitante">
+            <input type="number" class="form-control" id="telefone_solicitante" placeholder="Digite o telefone do solicitante"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            type = "number"
+            maxlength = "11">
         </div>
         <div class="col-4">
             <label class="form-label">Inscrição Social</label>
-            <input type="text" class="form-control" id="inscricao_social" placeholder="Inscrição Social da empresa">
+            <input type="text" class="form-control" id="inscricao_social" placeholder="Inscrição Social da empresa"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            type = "number"
+            maxlength = "11">
         </div>
         <div class="col-md-4">
             <label for="ramo" class="form-label">Ramo</label>
@@ -198,7 +207,10 @@
         <div class="col-md-12"><p> <b>Endereço</b></p></div>
         <div class="col-md-4">
             <label class="form-label">CEP</label>
-            <input type="number" class="form-control" id="cep" placeholder="000.000.000.00">
+            <input type="number" class="form-control" id="cep" placeholder="00.000-000" 
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            type = "number"
+            maxlength = "8">
         </div>
         <div class="col-md-4">
             <label class="form-label">Endereço</label>
@@ -227,7 +239,10 @@
         </div>
         <div class="col-4">
             <label class="form-label">Telefone da Empresa</label>
-            <input type="number" class="form-control" id="telefone_empresa" placeholder="Telefone da empresa">
+            <input type="number" class="form-control" id="telefone_empresa" placeholder="Telefone da empresa"
+            oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
+            type = "number"
+            maxlength = "11">
         </div>
 
         <div class="col-12">
@@ -256,7 +271,7 @@
     }
 
     //fim js navbar
-    
+
 $(document).ready(function() {
 
         function getIdFromUrl() {
