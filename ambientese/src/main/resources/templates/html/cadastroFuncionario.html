@@ -207,9 +207,8 @@
         </div>
 
         <div class="col-12">
-            <button type="submit" class="btn btn-outline-secondary me-1">Cancelar</button>
-            <button type="submit" class="btn btn-primary btn-salvar">Salvar</button>
-
+            <button onclick="redirectToHome()" class="btn btn-outline-secondary me-1">Cancelar</button>
+            <button class="btn btn-primary btn-salvar">Salvar</button>
         </div>
 
 
@@ -222,6 +221,10 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+    <!-- function redirectToHome() {
+        window.location.href = './home.html';
+    } -->
+
     //js navbar
     function toggleMenu() {
             var menu = document.getElementById("sideMenu");
