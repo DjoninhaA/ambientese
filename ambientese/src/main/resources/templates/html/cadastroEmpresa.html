@@ -391,6 +391,7 @@ $(document).ready(function() {
                 processData: false,
                 success: function(response) {
                     alert('Dados salvos com sucesso!');
+                    window.location = './buscar'
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     alert('Erro ao salvar os dados: ' + textStatus);
