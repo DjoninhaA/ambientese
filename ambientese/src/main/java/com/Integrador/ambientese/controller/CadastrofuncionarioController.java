@@ -46,7 +46,7 @@ public class CadastrofuncionarioController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("html/cadastroFuncionario");
         return modelAndView;
-    } // Retorna o nome do arquivo HTML sem a extensão
+    }
 
     @GetMapping("/edit/{idFuncionarios}")
     public ModelAndView editarFuncionario() {
@@ -54,13 +54,6 @@ public class CadastrofuncionarioController {
         modelAndView.setViewName("html/cadastroFuncionario");
         return modelAndView;
     }
-
-    // @GetMapping("/buscar/funcionario")
-    // public ModelAndView listarFuncionarios() {
-    //     ModelAndView modelAndView = new ModelAndView();
-    //     modelAndView.setViewName("html/listarFuncionario");
-    //     return modelAndView;
-    // } // Retorna o nome do arquivo HTML sem a extensão
 
     @GetMapping("/listarFuncionario")
     public ModelAndView cadastroEmperesa() {
@@ -174,15 +167,13 @@ public class CadastrofuncionarioController {
     @DeleteMapping("/funcionario/delete/{idFuncionario}")
     public ResponseEntity<?> deletarFuncionario(@PathVariable Long idFuncionario) {
         try {
-            funcionariosRepository.deleteById(idFuncionario);
+            System.out.println("ENtrou");
+            funcionariosRepository.deleteById(idFuncionario);   
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
     }
-
-
-
 }
 
 
