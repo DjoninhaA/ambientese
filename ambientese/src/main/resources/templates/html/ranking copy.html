@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking de Empresas</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body, html {
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+        }
+
+        .wrapper {
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
+            margin: 20px;
+        }
+
+        .container {
+            display: flex;
+            width: 100rem;
+            height: 600px;
+            
+        }
+
+        .sidebar {
+            width: 30%;
+            padding: 20px;
+            background-color: #fafafa;
+            border-right: 1px solid #ddd;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .top-company {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .top-company-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 3px solid #4CAF50;
+        }
+
+        .filters {
+            margin-top: 20px;
+        }
+
+        .filters h3 {
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .filters label {
+            display: block;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s;
+        }
+
+        .filters input:focus,
+        .filters select:focus {
+            background-color: #fff;
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .ranking-list {
+            width: 70%;
+            padding: 20px;
+        }
+
+        .ranking-list h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .ranking-list ul {
+            list-style: none;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .ranking-list li {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            color: #555;
+            transition: background-color 0.3s;
+        }
+
+        .ranking-list li:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="container">
+            <aside class="sidebar">
+                <div class="top-company">
+                    <img src="empresa1.jpg" alt="Empresa 1" class="top-company-img">
+                    <h2>Empresa 1</h2>
+                    <p>Ramo: Tecnologia</p>
+                    <p>Posição no ranking geral: 1º</p>
+                    <p>Pontuação: 98.5</p>
+                </div>
+                <div class="filters">
+                    <h3>Filtros</h3>
+                    <label for="search">Buscar por nome:</label>
+                    <input type="text" id="search" placeholder="Digite o nome da empresa">
+                    
+                    <label for="size">Porte:</label>
+                    <select id="size">
+                        <option value="">Todos</option>
+                        <option value="pequeno">Pequeno</option>
+                        <option value="medio">Médio</option>
+                        <option value="grande">Grande</option>
+                    </select>
+
+                    <label for="industry">Ramo:</label>
+                    <select id="industry">
+                        <option value="">Todos</option>
+                        <option value="tecnologia">Tecnologia</option>
+                        <option value="financeiro">Financeiro</option>
+                        <option value="saude">Saúde</option>
+                        <option value="educacao">Educação</option>
+                    </select>
+                </div>
+            </aside>
+            <main class="ranking-list">
+                <h1>Ranking de Empresas</h1>
+                <ul id="ranking">
+                    <li>1. Empresa 1 - 98.5</li>
+                    <li>2. Empresa 2 - 95.0</li>
+                    <li>3. Empresa 3 - 92.3</li>
+                    <li>4. Empresa 4 - 90.1</li>
+                    <li>5. Empresas 5 - 88.7</li>
+                    <!-- adicionar Mais empresas -->
+                </ul>
+            </main>
+        </div>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const searchInput = document.getElementById('search');
+            const sizeSelect = document.getElementById('size');
+            const industrySelect = document.getElementById('industry');
+            const rankingList = document.getElementById('ranking');
+
+            const companies = [
+                { name: 'Empresa 1', score: 98.5, size: 'grande', industry: 'tecnologia' },
+                { name: 'Empresa 2', score: 95.0, size: 'medio', industry: 'financeiro' },
+                { name: 'Empresa 3', score: 92.3, size: 'grande', industry: 'saude' },
+                { name: 'Empresa 4', score: 90.1, size: 'pequeno', industry: 'educacao' },
+                { name: 'Empresa 5', score: 88.7, size: 'medio', industry: 'tecnologia' },
+                // Mais empresas
+            ];
+
+            function filterCompanies() {
+                const searchValue = searchInput.value.toLowerCase();
+                const sizeValue = sizeSelect.value;
+                const industryValue = industrySelect.value;
+
+                const filteredCompanies = companies.filter(company => {
+                    return (
+                        company.name.toLowerCase().includes(searchValue) &&
+                        (sizeValue === '' || company.size === sizeValue) &&
+                        (industryValue === '' || company.industry === industryValue)
+                    );
+                });
+
+                renderCompanies(filteredCompanies);
+            }
+
+            function renderCompanies(companies) {
+                rankingList.innerHTML = '';
+                companies.forEach((company, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${index + 1}. ${company.name} - ${company.score}`;
+                    rankingList.appendChild(li);
+                });
+            }
+
+            searchInput.addEventListener('input', filterCompanies);
+            sizeSelect.addEventListener('change', filterCompanies);
+            industrySelect.addEventListener('change', filterCompanies);
+
+            renderCompanies(companies);
+        });
+    </script>
+</body>
+</html>
