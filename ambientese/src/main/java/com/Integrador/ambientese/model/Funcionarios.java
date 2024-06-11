@@ -38,6 +38,9 @@ public class Funcionarios {
     @Column(name = "genero")
     private Genero genero;
 
+    @OneToOne(cascade = CascadeType.REMOVE)
+	private Usuario usuario;
+
 //    @Override
 //    public int hashCode() {
 //        final int prime = 31;

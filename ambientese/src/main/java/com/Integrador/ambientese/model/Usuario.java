@@ -18,10 +18,8 @@ public class Usuario {
 	@Column(name = "senha", nullable = false)
 	private String senha;
 	
-	@OneToOne(cascade = CascadeType.REMOVE)
-	private Funcionarios funcionario;
 	
-	public long getIdUsuario() {
+	/*public long getIdUsuario() {
 			return idUsuario;
 		}
 		
@@ -58,6 +56,7 @@ public class Usuario {
 					return false;
 				return true;
 			}
+		*/
 	public String getLogin() {
 		return login;
 	}

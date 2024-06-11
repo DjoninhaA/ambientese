@@ -426,7 +426,6 @@
         $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
 
-
             //deletar
             window.deleteFuncionario = function (id) {
                 $.ajax({
@@ -441,7 +440,7 @@
                     }
                 });
             };
-    
+            
             function loadFuncionarios(page, filters = {}) {
 
                 let url = `/funcionarios?page=${page}&size=10`;
@@ -473,22 +472,23 @@
                                 <i class="material-icons" data-toggle="tooltip" title="Deletar">&#xE872;</i>
                               </a>
     
-                            </td>
-                        </tr>
-                    `);
-                            console.log(funcionarios.name)
-                        });
-                        updatePagination(response.totalPages, page); // Atualiza os controles de paginação
-                        updateEntriesText(response.size, response.totalElements, page); // Função para atualizar controles de paginação
-                    }
+                              </td>
+                              </tr>
+                              `);
+                              console.log(funcionarios.name)
+                            });
+                            updatePagination(response.totalPages, page); // Atualiza os controles de paginação
+                            updateEntriesText(response.size, response.totalElements, page); // Função para atualizar controles de paginação
+                        }
+                    });
+                }
+                
+                $('#searchButton').click(function() {
+                    var name = $('#name').val();
+                    loadFuncionarios(0, {name: name});
                 });
-            }
-
-            $('#searchButton').click(function() {
-                var name = $('#name').val();
-                loadFuncionarios(0, {name: name});
-            });
-    
+                
+            
             function updateEntriesText(pageSize, totalEntries, currentPage) {
                 var startEntry = currentPage * pageSize + 1;
                 var endEntry = startEntry + pageSize - 1;
@@ -716,7 +716,7 @@
             <div class="modal-content">
                 <form>
                     <div class="modal-header">
-                        <h4 class="modal-title">Deletar Empresa</h4>
+                        <h4 class="modal-title">Deletar Funcionário</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
@@ -725,7 +725,7 @@
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
-                        <input type="submit" class="btn btn-danger" value="Deletar">
+                        <input type="button" class="btn btn-danger" value="Deletar" onclick="deleteFuncionario(window.funcionarioIdToDelete)">
                     </div>
                 </form>
             </div>

@@ -95,11 +95,11 @@ public class CadastrofuncionarioController {
         usuario.setLogin(login);
         usuario.setSenha(senha);
         
-        usuario.setFuncionario(funcionario);
+        funcionario.setUsuario(usuario);
     
         // Salvar a empresa no repositório
-        funcionariosRepository.save(funcionario);
         usuarioRepository.save(usuario);
+        funcionariosRepository.save(funcionario);
     
         return ResponseEntity.ok("Dados salvos com sucesso!");
     }
@@ -163,17 +163,10 @@ public class CadastrofuncionarioController {
 
     }
 
-
     @DeleteMapping("/funcionario/delete/{idFuncionario}")
-    public ResponseEntity<?> deletarFuncionario(@PathVariable Long idFuncionario) {
-        try {
-            System.out.println("ENtrou");
-            funcionariosRepository.deleteById(idFuncionario);   
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+        public void deletarFuncionario(@PathVariable Long idFuncionario){
+            funcionariosRepository.deleteById(idFuncionario);
         }
-    }
 }
 
 
