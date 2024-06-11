@@ -33,14 +33,14 @@ public class EmpresaController {
         return modelAndView;
      }
 
-     @GetMapping("/editar/{idEmpresa}")
+     @GetMapping("/editarEmpresa/{idEmpresa}")
     public ModelAndView cadastroEmperesa() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("html/cadastroEmpresa");
         return modelAndView;
      }
 
-     @GetMapping("/buscar")
+     @GetMapping("/listarEmpresa")
      public ModelAndView getEmpresas() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("html/listarEmpresa");
