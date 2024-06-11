@@ -3,6 +3,8 @@ package com.Integrador.ambientese.model;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+
+import org.hibernate.annotations.Cascade;
 @Entity
 @Table(name = "usuario")
 public class Usuario {
@@ -16,10 +18,8 @@ public class Usuario {
 	@Column(name = "senha", nullable = false)
 	private String senha;
 	
-	@OneToOne
-	private Funcionarios funcionario;
 	
-	public long getIdUsuario() {
+	/*public long getIdUsuario() {
 			return idUsuario;
 		}
 		
@@ -56,6 +56,7 @@ public class Usuario {
 					return false;
 				return true;
 			}
+		*/
 	public String getLogin() {
 		return login;
 	}
