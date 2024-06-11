@@ -138,7 +138,7 @@
     </div>
 
     <div id="sideMenu" class="side-menu">
-        <a href="/buscar"><i class="fa-solid fa-building"></i>Empresas</a>
+        <a href="/listarEmpresa"><i class="fa-solid fa-building"></i>Empresas</a>
         <a href="/listarFuncionario"><i class="fa-solid fa-user"></i>Funcionários</a>
         <a href="/ranking"><i class="fa-solid fa-ranking-star"></i>Ranking</a>
         <a href="#"><i class="fa-solid fa-comment"></i>Avaliar</a>
@@ -307,7 +307,7 @@ $(document).ready(function() {
             });
         } else{console.log("AQUI!!")
             $.ajax({
-                url:`http://localhost:8080/edit/${idFuncionario}`,
+                url:`http://localhost:8080/editarFuncionario/${idFuncionario}`,
                 type: 'PUT',
                 data: formData, // Certifique-se de que formData seja um objeto JSON válido
                 contentType: false, // Defina o Content-Type como application/json

@@ -41,14 +41,14 @@ public class CadastrofuncionarioController {
     @Autowired
     private UsuarioRepository usuarioRepository; 
 
-    @GetMapping("/cadastrofuncionario")
+    @GetMapping("/cadastroFuncionario")
     public ModelAndView cadastroFuncionario() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("html/cadastroFuncionario");
         return modelAndView;
     } // Retorna o nome do arquivo HTML sem a extensão
 
-    @GetMapping("/edit/{idFuncionarios}")
+    @GetMapping("/editarFuncionario/{idFuncionarios}")
     public ModelAndView editarFuncionario() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("html/cadastroFuncionario");
