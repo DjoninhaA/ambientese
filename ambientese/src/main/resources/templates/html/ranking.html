@@ -71,12 +71,12 @@
                   // Renderiza o topRank com o primeiro item
                   renderTopRank(response.content[0]);
 
-                  response.content.slice(1).forEach(function (empresa, index) {
+                  response.content.slice(0).forEach(function (empresa, index) {
                     var porteText = porteLabels[empresa.porte] || 'Não especificado';
                     var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
                     tbody.append(`
                       <tr>
-                        <td>${start + index}</td>
+                        <td>${index+1}</td>
                         <td>${empresa.cnpj}</td>
                         <td>${empresa.razaoSocial}</td>
                         <td>${porteText}</td>
@@ -121,7 +121,8 @@
                   ${empresa.razaoSocial}
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title">1º LUGAR - ${empresa.pontuacao} pontos</h5>
+                  <p class="card-title">1º LUGAR</p>
+                  <p class="card-score mb-2 text-muted">${empresa.pontuacao} pontos</p>
                   <p class="card-text">Ramo: ${ramoText}</p>
                   <p class="card-text">Porte: ${porteText}</p>
                 </div>
@@ -188,8 +189,19 @@
             font-family: poppins !important;
       }
 
+      th{
+        font-weight: 500;
+        color: #818181 !important;
+      }
+
       .card {
         border-radius: 15px;
+      }
+
+      .card-title{
+        color: #0077C8;
+        font-weight: 700;
+        font-size: 25px;
       }
       .table.bordered-table {
         border-collapse: separate;
@@ -206,14 +218,14 @@
       .card-header:first-child {
         border-radius: 15px 15px 0px 0px;
       }
-
+      /* MUDA A COR DAS LINHAS NA TABELA
       .table.bordered-table tbody tr:nth-child(odd) {
         background-color: #ffffff;
       }
 
       .table.bordered-table tbody tr:nth-child(even) {
         background-color: rgba(0, 119, 200, 0.24);
-      }
+      } */
 
       .table td,
       .table th {
@@ -401,6 +413,10 @@
             transition: background-color 0.3s;
         }
       /* FIM DO ESTILO NAVBAR */
+      .card-body p{
+        align-content: center;
+        align-items: center;
+      }
 
     </style>
   </head>
@@ -483,11 +499,10 @@
 
           </div>
 
-          <div class="col-md-8">
-            <table class="table table-striped bordered-table" id="tableEmpresas">
-
+          <div class="col-md-8" style="background-color: white; border-radius: 15px !important;">
+            <table class="table bordered-table" id="tableEmpresas">
                 <thead>
-                <tr>
+                <tr class="tablerow">
                   <th>Posição</th>
                   <th>CNPJ</th>
                   <th>Razão Social</th>
