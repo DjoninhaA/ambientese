@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ranking</title>
     <link rel="icon" type="image/x-icon" href="/images/fav-Icon/favIcon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -69,12 +71,12 @@
                   // Renderiza o topRank com o primeiro item
                   renderTopRank(response.content[0]);
 
-                  response.content.slice(1).forEach(function (empresa, index) {
+                  response.content.slice(0).forEach(function (empresa, index) {
                     var porteText = porteLabels[empresa.porte] || 'Não especificado';
                     var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
                     tbody.append(`
                       <tr>
-                        <td>${start + index}</td>
+                        <td>${index+1}</td>
                         <td>${empresa.cnpj}</td>
                         <td>${empresa.razaoSocial}</td>
                         <td>${porteText}</td>
@@ -119,7 +121,8 @@
                   ${empresa.razaoSocial}
                 </div>
                 <div class="card-body">
-                  <h5 class="card-title">1º LUGAR - ${empresa.pontuacao} pontos</h5>
+                  <p class="card-title">1º LUGAR</p>
+                  <p class="card-score mb-2 text-muted">${empresa.pontuacao} pontos</p>
                   <p class="card-text">Ramo: ${ramoText}</p>
                   <p class="card-text">Porte: ${porteText}</p>
                 </div>
@@ -182,8 +185,23 @@
     </script>
 
     <style>
+      *{
+            font-family: poppins !important;
+      }
+
+      th{
+        font-weight: 500;
+        color: #818181 !important;
+      }
+
       .card {
         border-radius: 15px;
+      }
+
+      .card-title{
+        color: #0077C8;
+        font-weight: 700;
+        font-size: 25px;
       }
       .table.bordered-table {
         border-collapse: separate;
@@ -200,14 +218,14 @@
       .card-header:first-child {
         border-radius: 15px 15px 0px 0px;
       }
-
+      /* MUDA A COR DAS LINHAS NA TABELA
       .table.bordered-table tbody tr:nth-child(odd) {
         background-color: #ffffff;
       }
 
       .table.bordered-table tbody tr:nth-child(even) {
         background-color: rgba(0, 119, 200, 0.24);
-      }
+      } */
 
       .table td,
       .table th {
@@ -224,7 +242,7 @@
       body {
         font-family: Arial, sans-serif;
         margin: 0;
-        background-color: #eeeeff;
+        background-color: #e7e5e4;
         min-height: 100vh;
         padding-right: 0 !important;
       }
@@ -395,6 +413,10 @@
             transition: background-color 0.3s;
         }
       /* FIM DO ESTILO NAVBAR */
+      .card-body p{
+        align-content: center;
+        align-items: center;
+      }
 
     </style>
   </head>
@@ -477,11 +499,10 @@
 
           </div>
 
-          <div class="col-md-8">
-            <table class="table table-striped bordered-table" id="tableEmpresas">
-
+          <div class="col-md-8" style="background-color: white; border-radius: 15px !important;">
+            <table class="table bordered-table" id="tableEmpresas">
                 <thead>
-                <tr>
+                <tr class="tablerow">
                   <th>Posição</th>
                   <th>CNPJ</th>
                   <th>Razão Social</th>

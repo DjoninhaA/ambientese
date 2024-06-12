@@ -16,8 +16,86 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        background-color: #ede6f6;
+        background-color: #e7e5e4;
       }
+      
+      /* ESTILO NAVBAR */
+      .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: normal;
+            background-color: #0077C8;
+            padding: 10px;
+            color: white;
+            z-index: 2; /* Define uma pilha de ordem para garantir que a navbar fique acima de outros elementos */
+            top: 0;
+            position: sticky;
+        }
+
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+            margin-right: 20px;
+        }
+
+
+        .logo{
+          cursor: pointer;
+        }
+        .logo img {
+            height: 25px;
+        }
+
+        .side-menu {
+            height:92%;
+            width: 0;
+            position: fixed;
+            top: 65px; /* Alinhar abaixo da navbar */
+            left: 0;
+            background-color: #0077C8;
+            overflow-x: hidden;
+            transition: 0.3s;
+            white-space: nowrap;
+            z-index: 3; /* Define uma pilha de ordem para garantir que a aba lateral fique acima de outros elementos */
+        }
+
+        .side-menu a {
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ffffff;
+            display: block;
+            transition: 0.3s;
+            margin: 10px 10px;
+            border-radius: 5px;
+        }
+
+        .side-menu a i {
+        margin-right: 10px; 
+        vertical-align: middle;
+        }
+
+        .side-menu a:hover {
+            background-color: #487DF7;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.26);
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            text-align: center;
+            background-color: #2864F6;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        /* FIM DO ESTILO NAVBAR */
       form {
         display: flex;
         flex-direction: column;
@@ -76,22 +154,35 @@
         cursor: pointer;
       }
       
-      img {
-        margin-top: 13px;
-        height: 200px;
-        width: 50vw;
-        object-fit: fill;
-        object-position: center;
-        border-radius: 10px;
-      }
 
       
     </style>
   </head>
   <body>
+    <!-- NAVBAR -->
+    
+    <div class="navbar">
+      <div class="menu-btn" onclick="toggleMenu()">
+          &#9776; <!-- Ícone de menu (três linhas horizontais) -->
+      </div>
+      <div class="logo">
+        <a href="/home">
+          <img src="../images/ambientetext.svg" alt="Logo da Empresa">
+        </a>
+      </div>
+    </div>
+
+    <div id="sideMenu" class="side-menu">
+      <a href="/buscar"><i class="fa-solid fa-building"></i>Empresas</a>
+      <a href="/listarFuncionario"><i class="fa-solid fa-user"></i>Funcionários</a>
+      <a href="/ranking"><i class="fa-solid fa-ranking-star"></i>Ranking</a>
+      <a href="/formulario"><i class="fa-solid fa-comment"></i>Avaliar</a>
+      <a href="/auth" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
+    </div>
+
+    <!-- FIM NAVBAR  -->
     <form id="formEmpresa" action="###" method="POST"> 
       
-      <img src="../static/images/eu.png" alt="Ambientese">
       <div class="form-header">
           <h1>Formulário Ambientese</h1>
           <hr>
