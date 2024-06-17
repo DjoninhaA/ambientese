@@ -6,24 +6,92 @@
     <title>Relatorio</title>
 </head>
     <style>
-        .tudo {
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 800px;
-            width: 80%;
-            background-color: red;
+            height: 100vh;
+            margin: 0;
+           }
 
-        }
+       .tudo {
+        background-color: blueviolet;
+        display: flex;
+        width: 80%;
+        height: 500px;
+        justify-content: center;
+       } 
 
+       .coluna1{
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        padding: 20px;
+        gap: 15px;
         
+       }
+
+       .coluna2 {
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+       }
+
+
+       .comp1, .comp2 {
+        border: 2px solid black;
+        border-radius: 20px;
+        flex: 1; /* Faz com que os componentes ocupem todo o espaço verticalmente */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: blue;
+       }
+
     </style>
 <body>
     <div class="tudo">
-            <span class="logo">1</span>
-            <span class="percentual">2</span>
-            <span class="ranking">3</span>
+        <div class="coluna1">
+          <div class="comp1">
+            <span class="logo">
+                <img src="../../static/images/logo _removebg.png" alt="logo_semfundo">
+                <h3>Nome Empresa</h3>
+                <p>Ramo</p>
+                <p>porte</p>
+            </span>
+          </div>
+          <div class="comp1">
+            <span class="ranking">2</span>
+          </div>
+        </div>
+        <div class="coluna2">
+          <div class="comp2">
+            <span class="porcentagem">3</span>
+          </div>
+          <div class="comp2">
             <span class="selo">4</span>
-    </div>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+      
+      <script>
+        //componente teste
+
+        function component(logo, conteudo) {
+            return
+             `
+              <div class="componente">
+                <img src="${logo}" alt="Logotipo">
+                <p>${conteudo}</p>
+              </div>
+            `;
+          }
+      </script>
 </body>
 </html>
