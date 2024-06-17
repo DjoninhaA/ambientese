@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d1659da1-603b-47e8-9106-0f0dcdd5ccba" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/ambientese/src/main/java/com/Integrador/ambientese/controller/CadastrofuncionarioController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ambientese/src/main/java/com/Integrador/ambientese/controller/CadastrofuncionarioController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ambientese/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ambientese/src/main/resources/application.properties" afterDir="false" />
-    </list>
+    <list default="true" id="d1659da1-603b-47e8-9106-0f0dcdd5ccba" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,9 +43,9 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "develop",
+    "git-widget-placeholder": "feat/telaRelatorio",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/djonathan/Documentos/faculdade/redme-test/ambientese",
+    "last_opened_file_path": "/home/djonathan/Documentos/faculdade/redme-test",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -83,6 +80,7 @@
       <workItem from="1714010957953" duration="749000" />
       <workItem from="1714512358866" duration="183000" />
       <workItem from="1718229563311" duration="20000" />
+      <workItem from="1718633658641" duration="8000" />
     </task>
     <servers />
   </component>
