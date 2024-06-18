@@ -17,22 +17,48 @@
        .tudo {
         background-color: blueviolet;
         display: flex;
-        width: 80%;
-        height: 500px;
+        width: 70%;
         justify-content: center;
        } 
 
-       .coluna1{
+       .coluna1 {
         display: flex;
         flex-direction: column;
-        width: 30%;
+        width: 30vh;
+        height: 50vh;
         padding: 20px;
         gap: 15px;
-        
-       }
+        overflow: hidden;
+        flex: none;
+        align-items: stretch; /* Ajustar flexbox */
+      }
+      
+      .coluna1 img {
+        max-height: 100px;
+        max-width: 100%; /* Limitar largura da imagem */
+      }
+
+      .coluna1 div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .text {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .coluna1 p {
+        max-lines: 3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0; /* Remover margens do texto */
+      }
 
        .coluna2 {
-        width: 70%;
+        width: 100vh;
+        height: 50vh;
         display: flex;
         flex-direction: column;
         padding: 20px;
@@ -56,10 +82,14 @@
         <div class="coluna1">
           <div class="comp1">
             <span class="logo">
+              <div>
                 <img src="../../static/images/logo _removebg.png" alt="logo_semfundo">
+              </div>
+              <div class="text">
                 <h3>Nome Empresa</h3>
                 <p>Ramo</p>
                 <p>porte</p>
+              </div>
             </span>
           </div>
           <div class="comp1">
