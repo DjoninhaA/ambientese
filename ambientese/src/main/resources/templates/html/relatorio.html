@@ -15,18 +15,21 @@
            }
 
        .tudo {
-        background-color: blueviolet;
         display: flex;
-        width: 70%;
+        width: 60%;
+        height: 60%;
         justify-content: center;
+        border: 2px solid black;
+        border-radius: 20px;
        } 
 
        .coluna1 {
         display: flex;
         flex-direction: column;
-        width: 30vh;
-        height: 50vh;
+        width: 25vh;
+        height: 45vh;
         padding: 20px;
+        margin-top: 60px;
         gap: 15px;
         overflow: hidden;
         flex: none;
@@ -57,11 +60,12 @@
       }
 
        .coluna2 {
-        width: 100vh;
-        height: 50vh;
+        width: 50vh;
+        height: 45vh;
         display: flex;
         flex-direction: column;
         padding: 20px;
+        margin-top: 60px;
         gap: 15px;
        }
 
@@ -75,6 +79,42 @@
         align-items: center;
         background-color: blue;
        }
+
+       /*graficos*/
+       .porcentagem {
+        align-items: center;
+        justify-content: space-around;
+        display: flex;
+        width: 200px;
+       }
+
+
+       /*selo*/
+
+       .logoSelo{
+        align-items: center;
+        justify-content: center;
+        display: flex;
+       }
+
+       .textoSelo h2{
+        font-size: 30px;
+        text-align: center;
+       }
+       .textoSelo p{
+        font-size: 25px;
+        text-align: center;
+        margin-top: -20px;
+       }
+
+       .buttons {
+        align-items: center;
+        justify-content: space-around;
+        display: flex;
+        border-radius: 50px;
+       }
+
+
 
     </style>
 <body>
@@ -93,15 +133,40 @@
             </span>
           </div>
           <div class="comp1">
-            <span class="ranking">2</span>
+            <span class="ranking">
+              <div>
+                <img src="../../static/images/trofeu.svg" alt="">
+              </div>
+              <div class="text">
+                <h3>Ranking Geral {data}</h3>
+                <p>No mesmo ramo {data}</p>
+                <p>No mesmo porte {data}</p>
+              </div>
+            </span>
           </div>
         </div>
         <div class="coluna2">
           <div class="comp2">
-            <span class="porcentagem">3</span>
+            <span class="porcentagem">
+              <p>1</p>
+              <p>2</p>
+              <p>3</p>
+            </span>
           </div>
           <div class="comp2">
-            <span class="selo">4</span>
+            <span class="selo">
+              <div class="logoSelo">
+                <img src="../../static/images/selo.svg" alt="">
+              </div>
+              <div class="textoSelo">
+                <h2>Selo Aprovado!</h2>
+                <p>Amigo do Meio Ambiente</p>
+              </div>
+              <div class="buttons">
+                <button>Exportar</button>
+                <button>Respostas</button>
+              </div>
+            </span>
           </div>
         </div>
       </div>
