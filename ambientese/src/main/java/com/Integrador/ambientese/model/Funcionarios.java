@@ -22,23 +22,23 @@ public class Funcionarios {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idFuncionario;
-    @Column(name = "nome")
+    @Column(name = "nome", nullable = false)
     private String name;
-    @Column(name = "cpf")
+    @Column(name = "cpf", nullable = false)
     private String cpf;
-    @Column(name = "email")
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "telefone")
     private String telefone;
-    @Column(name = "data_nascimento")
+    @Column(name = "data_nascimento", nullable = false)
     private Date dataNascimento;
-    @Column(name = "Cargo")
+    @Column(name = "Cargo", nullable = false)
     private Cargo cargo;
     @Column(name = "genero")
     private Genero genero;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
+    @OneToOne(cascade = CascadeType.REMOVE, optional = false)
 	private Usuario usuario;
 
 //    @Override
