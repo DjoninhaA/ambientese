@@ -1,48 +1,61 @@
 package com.Integrador.ambientese.model;
 
+import java.sql.Date;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "Formulario")
+@Table(name = "RespostaUsuario")
 public class Formulario {
-    @Id
+    
+	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long idFormulario;
-    @Column(name = "DataResposta", nullable = false)
-    private String dataResposta;
+	private int idFormulario;
+	@Column(name = "qtd_conformes", nullable = false)
+	private String qtdConforme;
+	@Column(name = "data_preenchimento", nullable = false)
+	private Date dataPreenchimento;
 
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + (int) (idFormulario ^ (idFormulario >>> 32));
-        return result;
-    }
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        Formulario other = (Formulario) obj;
-        if (idFormulario != other.idFormulario)
-            return false;
-        return true;
-    }
+	@OneToOne(optional = false)
+	private Empresa empresa;
 
-    public long getIdFormulario() {
-        return idFormulario;
-    }
-    public void setIdFormulario(long idFormulario) {
-        this.idFormulario = idFormulario;
-    }
-    public String getDataResposta() {
-        return dataResposta;
-    }
-    public void setDataResposta(String dataResposta) {
-        this.dataResposta = dataResposta;
-    }
+	@ManyToOne(optional = false)
+	private Perguntas perguntas;
+	
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idFormulario;
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Formulario other = (Formulario) obj;
+		if (idFormulario != other.idFormulario)
+			return false;
+		return true;
+	}
+	
+	public long getIdFormulario() {
+		return idFormulario;
+	}
+	public void setIdFormulario(int idRespostaUsuario) {
+		this.idFormulario = idRespostaUsuario;
+	}
+	public String getQtdConforme() {
+		return qtdConforme;
+	}
+	public void setQtdConforme(String resposta) {
+		this.qtdConforme = resposta;
+	}
+	
 }

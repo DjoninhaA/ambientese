@@ -1,8 +1,6 @@
 package com.Integrador.ambientese.model;
 
 
-import com.Integrador.ambientese.model.enums.Porte;
-import com.Integrador.ambientese.model.enums.Ramo;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,13 +40,12 @@ public class Empresa {
     private long telefoneEmpresa;
     @Column(name = "pontuacao", nullable = true)
     private Float pontuacao;
+    @Column(name = "logo", nullable = true)
+    private String logo;
 
     /*          FK           */
     @OneToOne(cascade = CascadeType.ALL, optional = false)
     private Endereco endereco;
-
-    @OneToOne(cascade = CascadeType.ALL, optional = true)
-    private Formulario formulario;
 
     // public Empresa(){ // Quando uma empresa for instanciada será vinculado o id de um endereço;
     //     Endereco endereco = new Endereco();
