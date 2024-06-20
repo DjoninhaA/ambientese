@@ -14,11 +14,11 @@ public class Perguntas {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idPergunta;
-    @Column(name = "cod_pergunta")
+    @Column(name = "cod_pergunta", nullable = false)
     private int codPergunta;
-    @Column(name = "desc_pergunta")
+    @Column(name = "desc_pergunta", nullable = false)
     private String descricaoPergunta;
-    @Column(name = "ramo_pergunta")
+    @Column(name = "ramo_pergunta", nullable = false)
     private Ramo ramo;
 
     public long getIdPergunta() {

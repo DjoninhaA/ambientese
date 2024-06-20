@@ -22,7 +22,7 @@ public class Empresa {
     private long idEmpresa;
 	@Column(name = "razao_social", nullable = false)
     private String razaoSocial;
-    @Column(name = "nome_fantasia", nullable = true)
+    @Column(name = "nome_fantasia", nullable = false)
     private String nomeFantasia;
     @Column(name = "cnpj", nullable = false)
     private long cnpj;
@@ -44,9 +44,10 @@ public class Empresa {
     private Float pontuacao;
 
     /*          FK           */
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, optional = false)
     private Endereco endereco;
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.ALL, optional = true)
     private Formulario formulario;
 
     // public Empresa(){ // Quando uma empresa for instanciada será vinculado o id de um endereço;

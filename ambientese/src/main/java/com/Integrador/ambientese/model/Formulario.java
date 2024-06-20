@@ -8,7 +8,7 @@ public class Formulario {
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long idFormulario;
-    @Column(name = "DataResposta")
+    @Column(name = "DataResposta", nullable = false)
     private String dataResposta;
 
     @Override

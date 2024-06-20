@@ -14,10 +14,10 @@ public class RespostaUsuario {
 	@Column(name = "Resposta", nullable = false)
 	private String resposta;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.REMOVE, optional = false)
 	private Formulario formulario;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	private Perguntas perguntas;
 	
 
