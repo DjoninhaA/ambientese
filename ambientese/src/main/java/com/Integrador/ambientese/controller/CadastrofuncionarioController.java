@@ -62,7 +62,6 @@ public class CadastrofuncionarioController {
         return modelAndView;
      }
 
-
     @GetMapping("/buscarfuncionario/{idFuncionario}")
     public ResponseEntity<Funcionarios> GetById(@PathVariable Long idFuncionario){
         Funcionarios funcionarios = funcionariosRepository.findByIdFuncionario(idFuncionario);

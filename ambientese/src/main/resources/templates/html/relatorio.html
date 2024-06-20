@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatorio</title>
+</head>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+           }
+
+       .tudo {
+        display: flex;
+        width: 60%;
+        height: 60%;
+        justify-content: center;
+        border: 2px solid black;
+        border-radius: 20px;
+       } 
+
+       .coluna1 {
+        display: flex;
+        flex-direction: column;
+        width: 25vh;
+        height: 45vh;
+        padding: 20px;
+        margin-top: 60px;
+        gap: 15px;
+        overflow: hidden;
+        flex: none;
+        align-items: stretch; /* Ajustar flexbox */
+      }
+      
+      .coluna1 img {
+        max-height: 100px;
+        max-width: 100%; /* Limitar largura da imagem */
+      }
+
+      .coluna1 div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .text {
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .coluna1 p {
+        max-lines: 3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0; /* Remover margens do texto */
+      }
+
+       .coluna2 {
+        width: 50vh;
+        height: 45vh;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        margin-top: 60px;
+        gap: 15px;
+       }
+
+
+       .comp1, .comp2 {
+        border: 2px solid black;
+        border-radius: 20px;
+        flex: 1; /* Faz com que os componentes ocupem todo o espaço verticalmente */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: blue;
+       }
+
+       /*graficos*/
+       .porcentagem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;        
+       }
+       .graphs{
+        display: flex;
+        justify-content: space-between;
+        width: 200px;
+
+       }
+       .graphs p {
+        align-items: center;
+        background-color: red;
+        text-align: center;
+        align-items: center;
+        border-radius: 50%;
+        font-size: ;
+
+       }
+
+
+       /*selo*/
+
+       .logoSelo{
+        align-items: center;
+        justify-content: center;
+        display: flex;
+       }
+
+       .textoSelo h2{
+        font-size: 30px;
+        text-align: center;
+       }
+       .textoSelo p{
+        font-size: 25px;
+        text-align: center;
+        margin-top: -20px;
+       }
+
+       .buttons {
+        align-items: center;
+        justify-content: space-around;
+        display: flex;
+        border-radius: 50px;
+       }
+
+
+
+    </style>
+<body>
+    <div class="tudo">
+        <div class="coluna1">
+          <div class="comp1">
+            <span class="logo">
+              <div>
+                <img src="../../static/images/logo _removebg.png" alt="logo_semfundo">
+              </div>
+              <div class="text">
+                <h3>Nome Empresa</h3>
+                <p>Ramo</p>
+                <p>porte</p>
+              </div>
+            </span>
+          </div>
+          <div class="comp1">
+            <span class="ranking">
+              <div>
+                <img src="../../static/images/trofeu.svg" alt="">
+              </div>
+              <div class="text">
+                <h3>Ranking Geral {data}</h3>
+                <p>No mesmo ramo {data}</p>
+                <p>No mesmo porte {data}</p>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div class="coluna2">
+          <div class="comp2">
+            <span class="porcentagem">
+              <div class="graphs">
+                <p>1</p>
+                <p>2</p>
+                <p>3</p>
+            </div>
+            </span>
+          </div>
+          <div class="comp2">
+            <span class="selo">
+              <div class="logoSelo">
+                <img src="../../static/images/selo.svg" alt="">
+              </div>
+              <div class="textoSelo">
+                <h2>Selo Aprovado!</h2>
+                <p>Amigo do Meio Ambiente</p>
+              </div>
+              <div class="buttons">
+                <button>Exportar</button>
+                <button>Respostas</button>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      
+      
+      
+      
+      
+      <script>
+        //componente teste
+
+        function component(logo, conteudo) {
+            return
+             `
+              <div class="componente">
+                <img src="${logo}" alt="Logotipo">
+                <p>${conteudo}</p>
+              </div>
+            `;
+          }
+      </script>
+</body>
+</html>
