@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatorio</title>
-</head>
     <style>
       body {
         margin: 0;
@@ -32,7 +31,6 @@
         color: white;
         margin-right: 20px;
     }
-
 
     .return{
       cursor: pointer;
@@ -200,13 +198,19 @@
         }
         
         #progressBar {
-            height: 25px;
-            width: 0;
-            background-color: #4caf50;
-            border-radius: 25px;
-            transition: width 0.5s;
+          height: 25px;
+          width: 0;
+          background-color: #4caf50;
+          border-radius: 25px;
+          transition: width 0.5s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          color: white;
+          font-weight: bold;
         }
-
+        
 
 
        .logoEmpresa{
@@ -261,6 +265,7 @@
 
 
     </style>
+</head>
 <body>
   <!-- NAVBAR -->
     
@@ -318,7 +323,7 @@
                   <div id="resultContainer" style="display: none;">
                       <h2>Resultado</h2>
                       <div id="progressContainer">
-                          <div id="progressBar"></div>
+                          <div id="progressBar"><span id="progressText"></span></div>
                       </div>
                       <p id="scoreText"></p>
                   </div>
@@ -336,8 +341,8 @@
                 <p>Amigo do Meio Ambiente</p>
               </div> 
               <div class="buttons">
-                <button class="btn">
-                    <img src="../../static/images/download.svg" alt=""
+                <button class="btn" onclick="generateCertificate()">
+                    <img src="../../static/images/download.svg" alt="Exportar"
                     >Exportar</button>
               </div>
             </span>
@@ -345,25 +350,50 @@
         </div>
       </div>
     </div>
-      
-      
-      
-      
-      
-      <script>
-        
-        function updateProgressBar(score, totalQuestions) {
-    const percentage = (score / totalQuestions) * 100;
 
-    document.getElementById('resultContainer').style.display = 'block';
-    document.getElementById('progressBar').style.width = `${percentage}%`;
-    document.getElementById('scoreText').innerText = `Sua Empresa Está Conforme em ${score} dos ${totalQuestions} topicos `;
-}
-
-// Exemplo de como usar a função
-const score = 15; // Pontuação de exemplo
-const totalQuestions = 20; // Número total de perguntas
-updateProgressBar(score, totalQuestions);
-      </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+      function updateProgressBar(score, totalQuestions) {
+        const percentage = (score / totalQuestions) * 100;
+    
+        document.getElementById('resultContainer').style.display = 'block';
+        document.getElementById('progressBar').style.width = `${percentage}%`;
+        document.getElementById('progressText').innerText = `${percentage.toFixed(1)}%`;
+        document.getElementById('scoreText').innerText = `Sua Empresa Está Conforme em ${score} dos ${totalQuestions} tópicos.`;
+      }
+    
+      // Exemplo de como usar a função
+      const score = 15; // Pontuação de exemplo
+      const totalQuestions = 20; // Número total de perguntas
+      updateProgressBar(score, totalQuestions);
+    
+      function generateCertificate() {
+        const { jsPDF } = window.jspdf;
+    
+        // Criar um documento jsPDF em formato paisagem
+        const doc = new jsPDF({
+          orientation: 'landscape'
+        });
+    
+        const companyName = "Nome Empresa"; // Você pode obter isso dinamicamente
+        const percentage = (score / totalQuestions) * 100;
+    
+        doc.setFontSize(22);
+        doc.text('Certificado de Conformidade', 20, 30);
+    
+        doc.setFontSize(16);
+        doc.text(`Certificamos que a empresa ${companyName} está conforme em`, 20, 50);
+        doc.text(`${score} dos ${totalQuestions} tópicos avaliados.`, 20, 60);
+        doc.text(`Isso representa uma conformidade de ${percentage.toFixed(2)}%.`, 20, 70);
+    
+        doc.setFontSize(12);
+        doc.text('Parabéns pela conquista do selo "Amigo do Meio Ambiente"!', 20, 90);
+    
+        // Opcional: adicionar logo
+        doc.addImage('../../static/images/logo _removebg.png', 'PNG', 20, 100, 50, 50);
+    
+        doc.save('certificado.pdf');
+      }
+    </script>
 </body>
 </html>
