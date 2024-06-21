@@ -6,21 +6,107 @@
     <title>Relatorio</title>
 </head>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-           }
+      body {
+        margin: 0;
+        padding-right: 0;
+        background-color: #e7e5e4;
+      }
+
+     /* ESTILO NAVBAR */
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: normal;
+        background-color: #0077C8;
+        padding: 10px;
+        height: 100%;
+        color: white;
+        z-index: 2; /* Define uma pilha de ordem para garantir que a navbar fique acima de outros elementos */
+        top: 0;
+        position: sticky;
+    }
+
+    .menu-btn {
+        font-size: 30px;
+        cursor: pointer;
+        color: white;
+        margin-right: 20px;
+    }
+
+
+    .return{
+      cursor: pointer;
+    }
+    .return img {
+        height: 25px;
+    }
+
+    .side-menu {
+        height: 95%;
+        width: 0;
+        position: fixed;
+        top: 55px; /* Alinhar abaixo da navbar */
+        left: 0;
+        background-color: #0077C8;
+        overflow-x: hidden;
+        transition: 0.3s;
+        white-space: nowrap;
+        z-index: 3; /* Define uma pilha de ordem para garantir que a aba lateral fique acima de outros elementos */
+    }
+
+    .side-menu a {
+        padding: 15px 20px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #ffffff;
+        display: block;
+        transition: 0.3s;
+        margin: 10px 10px;
+        border-radius: 5px;
+    }
+
+    .side-menu a i {
+    margin-right: 10px; 
+    vertical-align: middle;
+    }
+
+    .side-menu a:hover {
+        background-color: #487DF7;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.26);
+    }
+
+    .logout-btn {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        text-align: center;
+        background-color: #2864F6;
+        color: white;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    /* FIM DO ESTILO NAVBAR */
+
+    .main{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
 
        .tudo {
         display: flex;
         width: 60%;
         height: 60%;
         justify-content: center;
-        border: 2px solid black;
+        border: 2px solid gray;
         border-radius: 20px;
+        background-color: #FFFFFF;
        } 
 
        .coluna1 {
@@ -34,11 +120,7 @@
         overflow: hidden;
         flex: none;
         align-items: stretch; /* Ajustar flexbox */
-      }
-      
-      .coluna1 img {
-        max-height: 100px;
-        max-width: 100%; /* Limitar largura da imagem */
+        margin-right: -20px;
       }
 
       .coluna1 div {
@@ -48,10 +130,14 @@
       }
 
       .text {
+        margin-top: 0;
         display: flex;
         flex-direction: column;
       }
-      
+      .text h3{
+        margin: 0;
+      }
+
       .coluna1 p {
         max-lines: 3;
         overflow: hidden;
@@ -71,13 +157,13 @@
 
 
        .comp1, .comp2 {
-        border: 2px solid black;
+        border: 2px solid gray;
+        height: 50%;
         border-radius: 20px;
         flex: 1; /* Faz com que os componentes ocupem todo o espaço verticalmente */
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: blue;
        }
 
        /*graficos*/
@@ -92,13 +178,18 @@
         width: 200px;
 
        }
-       .graphs p {
+       .graphs p {        
         align-items: center;
         background-color: red;
         text-align: center;
         align-items: center;
         border-radius: 50%;
-        font-size: ;
+       }
+
+       .logoEmpresa{
+        height: 100px;
+        object-fit: contain;
+        width: 100px;
 
        }
 
@@ -125,19 +216,48 @@
         align-items: center;
         justify-content: space-around;
         display: flex;
-        border-radius: 50px;
+        padding-bottom: 10px
        }
 
+       .btn {
+        cursor: pointer;
+        background-color: #FFFFFF;
+       }
+
+       .btn img{
+        margin-bottom: -5px;
+       }
 
 
     </style>
 <body>
-    <div class="tudo">
+  <!-- NAVBAR -->
+    
+  <div class="navbar">
+    <div class="menu-btn" onclick="toggleMenu()">
+        &#9776; <!-- Ícone de menu (três linhas horizontais) -->
+    </div>
+    <div class="return">
+      <a href="/home">
+        <img src="../../static/images/ambientetext.svg" alt="Logo da Empresa">
+      </a>
+    </div>
+  </div>
+
+  <div id="sideMenu" class="side-menu">
+    <a href="/listarEmpresa"><i class="fa-solid fa-building"></i>Empresas</a>
+    <a href="/listarFuncionario"><i class="fa-solid fa-user"></i>Funcionários</a>
+    <a href="/ranking"><i class="fa-solid fa-ranking-star"></i>Ranking</a>
+    <a href="/formulario"><i class="fa-solid fa-comment"></i>Avaliar</a>
+    <a href="/auth" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
+  </div>
+    <div class="main">
+      <div class="tudo">
         <div class="coluna1">
           <div class="comp1">
             <span class="logo">
               <div>
-                <img src="../../static/images/logo _removebg.png" alt="logo_semfundo">
+                <img class="logoEmpresa" src="../../static/images/logo _removebg.png" alt="logo_semfundo">
               </div>
               <div class="text">
                 <h3>Nome Empresa</h3>
@@ -177,15 +297,20 @@
               <div class="textoSelo">
                 <h2>Selo Aprovado!</h2>
                 <p>Amigo do Meio Ambiente</p>
-              </div>
+              </div> 
               <div class="buttons">
-                <button>Exportar</button>
-                <button>Respostas</button>
+                <button class="btn">
+                    <img src="../../static/images/download.svg" alt=""
+                    >Exportar</button>
+                <button class="btn">
+                   <img src="../../static/images/file.svg" alt=""
+                   >Respostas</button>
               </div>
             </span>
           </div>
         </div>
       </div>
+    </div>
       
       
       
@@ -194,15 +319,14 @@
       <script>
         //componente teste
 
-        function component(logo, conteudo) {
-            return
-             `
-              <div class="componente">
-                <img src="${logo}" alt="Logotipo">
-                <p>${conteudo}</p>
-              </div>
-            `;
+        function toggleMenu() {
+          var menu = document.getElementById("sideMenu");
+          if (menu.style.width === "250px") {
+              menu.style.width = "0";
+          } else {
+              menu.style.width = "250px";
           }
+      }
       </script>
 </body>
 </html>
