@@ -172,19 +172,42 @@
         justify-content: space-between;
         align-items: center;        
        }
-       .graphs{
-        display: flex;
-        justify-content: space-between;
-        width: 200px;
 
-       }
+
        .graphs p {        
         align-items: center;
-        background-color: red;
         text-align: center;
         align-items: center;
         border-radius: 50%;
        }
+
+       /*chat*/
+       .container {
+        max-width: 600px;
+        width: 100%;
+        padding: 20px;
+        margin-left: -10px;
+        border-radius: 5px;
+        background-color: #fff;
+        text-align: center;
+    }
+    
+        #progressContainer {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 25px;
+            margin: 20px 0;
+        }
+        
+        #progressBar {
+            height: 25px;
+            width: 0;
+            background-color: #4caf50;
+            border-radius: 25px;
+            transition: width 0.5s;
+        }
+
+
 
        .logoEmpresa{
         height: 100px;
@@ -200,6 +223,14 @@
         align-items: center;
         justify-content: center;
         display: flex;
+        width: 250px;
+        height: 40px
+       }
+
+       .logoSelo img {
+        position: relative;
+        top: 15px;
+
        }
 
        .textoSelo h2{
@@ -283,9 +314,15 @@
           <div class="comp2">
             <span class="porcentagem">
               <div class="graphs">
-                <p>1</p>
-                <p>2</p>
-                <p>3</p>
+                <div class="container">
+                  <div id="resultContainer" style="display: none;">
+                      <h2>Resultado</h2>
+                      <div id="progressContainer">
+                          <div id="progressBar"></div>
+                      </div>
+                      <p id="scoreText"></p>
+                  </div>
+              </div>
             </div>
             </span>
           </div>
@@ -302,9 +339,6 @@
                 <button class="btn">
                     <img src="../../static/images/download.svg" alt=""
                     >Exportar</button>
-                <button class="btn">
-                   <img src="../../static/images/file.svg" alt=""
-                   >Respostas</button>
               </div>
             </span>
           </div>
@@ -317,16 +351,19 @@
       
       
       <script>
-        //componente teste
+        
+        function updateProgressBar(score, totalQuestions) {
+    const percentage = (score / totalQuestions) * 100;
 
-        function toggleMenu() {
-          var menu = document.getElementById("sideMenu");
-          if (menu.style.width === "250px") {
-              menu.style.width = "0";
-          } else {
-              menu.style.width = "250px";
-          }
-      }
+    document.getElementById('resultContainer').style.display = 'block';
+    document.getElementById('progressBar').style.width = `${percentage}%`;
+    document.getElementById('scoreText').innerText = `Sua Empresa Está Conforme em ${score} dos ${totalQuestions} topicos `;
+}
+
+// Exemplo de como usar a função
+const score = 15; // Pontuação de exemplo
+const totalQuestions = 20; // Número total de perguntas
+updateProgressBar(score, totalQuestions);
       </script>
 </body>
 </html>
