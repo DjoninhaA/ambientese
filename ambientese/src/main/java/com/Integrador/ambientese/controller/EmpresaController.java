@@ -99,16 +99,27 @@ public class EmpresaController {
         enderecoEmpresa.setCidade(cidade);
         enderecoEmpresa.setUF(estado);
         enderecoEmpresa.setPais(pais);
-    
-        // Definir o endereço na empresa
+
         empresa.setEndereco(enderecoEmpresa);
-    
-        // Salvar a empresa no repositório
+
         empresaRepository.save(empresa);
     
         return ResponseEntity.ok("Dados salvos com sucesso!");
     }
-    
+
+    @PutMapping("/atualizarPontuacao/{idEmpresa}")
+    public ResponseEntity<String> atualizarPontuacao(
+            @PathVariable long idEmpresa,
+            @RequestParam("pontuacao") Float pontuacao) {
+
+        return empresaRepository.findById(idEmpresa)
+                .map(empresa -> {
+                    empresa.setPontuacao(pontuacao);
+                    empresaRepository.save(empresa);
+                    return ResponseEntity.ok("Pontuação atualizada com sucesso!");
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @PutMapping("/editar/{idEmpresa}")
     public ResponseEntity<String> atualizarEmpresa(
