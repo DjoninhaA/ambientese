@@ -76,6 +76,7 @@ public class EmpresaController {
             @RequestParam("cidade") String cidade,
             @RequestParam("estado") String estado,
             @RequestParam("pais") String pais,
+            @RequestParam("logradouro") String logradouro,
             @RequestParam("email") String email,
             @RequestParam("telefone_empresa") Long telefoneEmpresa) {
     
@@ -97,6 +98,7 @@ public class EmpresaController {
         enderecoEmpresa.setCep(String.valueOf(cep));
         enderecoEmpresa.setNumero(numero);
         enderecoEmpresa.setCidade(cidade);
+        enderecoEmpresa.setLogradouro(logradouro);
         enderecoEmpresa.setUF(estado);
         enderecoEmpresa.setPais(pais);
 
