@@ -70,9 +70,8 @@ public class EmpresaController {
             @RequestParam("inscricao_social") String inscricaoSocial,
             @RequestParam("ramo") String ramo,
             @RequestParam("porte") String porte,
-            //@RequestParam("logo") MultipartFile logo,
+            @RequestParam("logo") String logo,
             @RequestParam("cep") String cep,
-            @RequestParam("endereco") String endereco,
             @RequestParam("numero") Integer numero,
             @RequestParam("cidade") String cidade,
             @RequestParam("estado") String estado,
@@ -88,6 +87,7 @@ public class EmpresaController {
         empresa.setTelefoneSolicitante(telefoneSolicitante);
         empresa.setInscricaoSocial(inscricaoSocial);
         empresa.setRamo(ramo);
+        empresa.setLogo(logo);
         empresa.setPorte(porte);
         empresa.setEmail(email);
         empresa.setTelefoneEmpresa(telefoneEmpresa);
@@ -121,14 +121,14 @@ public class EmpresaController {
         @RequestParam("inscricao_social") String inscricaoSocial,
         @RequestParam("ramo") String ramo,
         @RequestParam("porte") String porte,
-        //@RequestPart("logo") MultipartFile logo,
+        @RequestParam("logo") String logo,
         @RequestParam("cep") String cep,
-        @RequestParam("endereco") String endereco,
         @RequestParam("numero") Integer numero,
         @RequestParam("cidade") String cidade,
         @RequestParam("estado") String estado,
         @RequestParam("pais") String pais,
         @RequestParam("email") String email,
+        @RequestParam("logradouro") String logradouro,
         @RequestParam("telefone_empresa") Long telefoneEmpresa) {
 
     return empresaRepository.findById(idEmpresa)
@@ -140,6 +140,7 @@ public class EmpresaController {
                 empresa.setTelefoneSolicitante(telefoneSolicitante);
                 empresa.setInscricaoSocial(inscricaoSocial);
                 empresa.setRamo(ramo);
+                empresa.setLogo(logo);
                 empresa.setPorte(porte);
                 empresa.setEmail(email);
                 empresa.setTelefoneEmpresa(telefoneEmpresa);
@@ -153,6 +154,7 @@ public class EmpresaController {
                 enderecoEmpresa.setCidade(cidade);
                 enderecoEmpresa.setUF(estado);
                 enderecoEmpresa.setPais(pais);
+                enderecoEmpresa.setLogradouro(logradouro);
                 empresa.setEndereco(enderecoEmpresa);
 
                 empresaRepository.save(empresa);

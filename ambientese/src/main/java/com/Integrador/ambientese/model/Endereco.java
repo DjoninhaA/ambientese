@@ -22,6 +22,8 @@ public class Endereco {
     private String cep;
     @Column(name = "numero", nullable = false)
     private int numero;
+    @Column(name = "logradouro", nullable = false)
+    private String logradouro;
     @Column(name = "complemento")
     private String complemento;
     @Column(name = "cidade", nullable = false)

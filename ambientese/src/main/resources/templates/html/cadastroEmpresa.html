@@ -111,6 +111,20 @@
             transition: background-color 0.3s;
         }
 
+    #messageContainer {
+        width: 250px;
+        height: 40px;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #28a745;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        display: none;
+        z-index: 1000; /* Garante que o contêiner esteja sobre outros elementos */
+    }
+
     /* removendo setas do type number*/
     .form-control::-webkit-inner-spin-button {
         -webkit-appearance: none;
@@ -147,37 +161,37 @@
     <form class="row g-3">
         <div class="col-md-12"><p> <b>Dados da Empresa</b></p></div>
         <div class="col-md-4">
-            <label class="form-label">Razão Social</label>
+            <label class="form-label">Razão Social*</label>
             <input type="text" class="form-control" id="razao_social" placeholder="Digite a razão social da empresa">
         </div>
         <div class="col-md-4">
-            <label class="form-label">Nome fantasia</label>
+            <label class="form-label">Nome fantasia*</label>
             <input type="text" class="form-control" id="nome_fantasia" placeholder=" Nome fantasia">
         </div>
         <div class="col-4">
-            <label class="form-label">CNPJ</label>
+            <label class="form-label">CNPJ*</label>
             <input type="number" class="form-control" id="cnpj" placeholder="CNPJ da empresa" 
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
             maxlength = "14">
         </div>
         <div class="col-md-4">
-            <label class="form-label">Nome do solicitante</label>
+            <label class="form-label">Nome do solicitante*</label>
             <input type="text" class="form-control" id="nome_solicitante" placeholder="Digite o nome do solicitante">
         </div>
         <div class="col-md-4">
-            <label class="form-label">Telefone do solicitante</label>
+            <label class="form-label">Telefone do solicitante*</label>
             <input type="number" class="form-control" id="telefone_solicitante" placeholder="Digite o telefone do solicitante"
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
             maxlength = "11">
         </div>
         <div class="col-4">
-            <label class="form-label">Inscrição Social</label>
+            <label class="form-label">Inscrição Social*</label>
             <input type="text" class="form-control" id="inscricao_social" placeholder="Inscrição Social da empresa"
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
             maxlength = "11">
         </div>
         <div class="col-md-4">
-            <label for="ramo" class="form-label">Ramo</label>
+            <label for="ramo" class="form-label">Ramo*</label>
             <select class="form-select" id="ramo" name="ramo">
               <option value="" selected>Selecione o ramo da empresa</option>
               <option value="Alimenticio">Alimentício</option>
@@ -189,7 +203,7 @@
         </div>
 
         <div class="col-md-4">
-            <label for="porte" class="form-label">Porte</label>
+            <label for="porte" class="form-label">Porte*</label>
             <select id="porte" class="form-select" name="porte">
                 <option value="" selected>Selecione o porte da empresa</option>
                 <option value="Microempresa">Microempresa</option>
@@ -200,44 +214,44 @@
                 <option value="IGrandePorte">Grupo I – Empresa de Grande Porte</option>
             </select>
         </div>
-        <div class="col-4">
-            <label for="logo">Logo</label> <br>
-            <input type="file" class="form-control-file" id="logo">
+        <div class="col-md-4">
+            <label class="form-label" for="logo">Logo*</label>
+            <input type="text" class="form-control" id="logo" placeholder="URL da Imagem do Logo">
         </div>
         <div class="col-md-12"><p> <b>Endereço</b></p></div>
         <div class="col-md-4">
-            <label class="form-label">CEP</label>
+            <label class="form-label">CEP*</label>
             <input type="number" class="form-control" id="cep" placeholder="00.000-000" 
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
             maxlength = "8">
         </div>
         <div class="col-md-4">
-            <label class="form-label">Endereço</label>
+            <label class="form-label">Endereço*</label>
             <input type="text" class="form-control" id="endereco" placeholder="Endereço da empresa">
         </div>
         <div class="col-md-4">
-            <label class="form-label">Número</label>
+            <label class="form-label">Número*</label>
             <input type="number" class="form-control" id="numero" placeholder="0000">
         </div>
         <div class="col-md-4">
-            <label class="form-label">Cidade</label>
+            <label class="form-label">Cidade*</label>
             <input type="text" class="form-control" id="cidade" placeholder="Cidade">
         </div>
         <div class="col-md-4">
-            <label class="form-label">Estado </label>
+            <label class="form-label">Estado* </label>
             <input type="text" class="form-control" id="estado" placeholder="Estado">
         </div>
         <div class="col-md-4">
-            <label class="form-label">País </label>
+            <label class="form-label">País* </label>
             <input type="text" class="form-control" id="pais" placeholder="País">
         </div>
         <div class="col-md-12"><p> <b>Contato</b></p></div>
         <div class="col-md-4">
-            <label class="form-label">E-mail</label>
+            <label class="form-label">E-mail*</label>
             <input type="email" class="form-control" id="email" placeholder="email@email.com">
         </div>
         <div class="col-4">
-            <label class="form-label">Telefone da Empresa</label>
+            <label class="form-label">Telefone da Empresa*</label>
             <input type="number" class="form-control" id="telefone_empresa" placeholder="Telefone da empresa"
             oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
             maxlength = "11">
@@ -252,6 +266,9 @@
 
 
 </form>
+
+    <div id="messageContainer" style="position: fixed;  right: 20px; background-color: #28a745; align-content: center; color: white; padding: 10px; border-radius: 5px; display: none;">
+    </div>
 
 </div>
 
@@ -292,11 +309,11 @@ $(document).ready(function() {
         };
         
         let ramoLabels = {
-            'Alimentício': 'Alimentício',
-            'Tecnológico': 'Tecnológico',
+            'Alimenticio': 'Alimenticio',
+            'Tecnologico': 'Tecnologico',
             'Varejo': 'Varejo',
-            'Saúde': 'Saúde',
-            'Construção civil': 'Construção civil'
+            'Saude': 'Saude',
+            'ConstrucaoCivil': 'ConstrucaoCivil'
         };
     
         if (idEmpresa) {
@@ -307,8 +324,6 @@ $(document).ready(function() {
                 url: url,
                 type: 'GET',
                 success: function(response) {
-                    console.log("Resposta do servidor:", response);
-    
                     $('#razao_social').val(response.razaoSocial);
                     $('#nome_fantasia').val(response.nomeFantasia);
                     $('#cnpj').val(response.cnpj);
@@ -320,7 +335,8 @@ $(document).ready(function() {
                     $('#ramo').val(ramoIndex);
                     $('#porte').val(porteIndex);
                     $('#cep').val(response.endereco.cep);
-                    $('#endereco').val(response.endereco.endereco); 
+                    $('#logo').val(response.logo);
+                    $('#endereco').val(response.endereco.logradouro);
                     $('#numero').val(response.endereco.numero);
                     $('#cidade').val(response.endereco.cidade);
                     $('#estado').val(response.endereco.uf);
@@ -329,8 +345,7 @@ $(document).ready(function() {
                     $('#telefone_empresa').val(response.telefoneEmpresa);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    console.error('Erro ao buscar os dados:', textStatus);
-                    alert('Erro ao buscar os dados: ' + textStatus);
+                    $('#messageContainer').text("Erro ao buscar dados da empresa!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
                 }
             }); 
         }
@@ -347,7 +362,7 @@ $(document).ready(function() {
             formData.append('inscricao_social', $('#inscricao_social').val());
             formData.append('ramo', $('#ramo').val());
             formData.append('porte', $('#porte').val());
-            formData.append('logo', $('#logo')[0].files[0]);
+            formData.append('logo', $('#logo').val());
             formData.append('cep', $('#cep').val());
             formData.append('endereco', $('#endereco').val());
             formData.append('numero', $('#numero').val());
@@ -373,9 +388,9 @@ $(document).ready(function() {
         formData.append('inscricao_social', $('#inscricao_social').val());
         formData.append('ramo', $('#ramo').val());
         formData.append('porte', $('#porte').val());
-        formData.append('logo', $('#logo')[0].files[0]);
+        formData.append('logo', $('#logo').val());
         formData.append('cep', $('#cep').val());
-        formData.append('endereco', $('#endereco').val());
+        formData.append('logradouro', $('#endereco').val());
         formData.append('numero', $('#numero').val());
         formData.append('cidade', $('#cidade').val());
         formData.append('estado', $('#estado').val());
@@ -392,11 +407,16 @@ $(document).ready(function() {
                 contentType: false,
                 processData: false,
                 success: function(response) {
-                    alert('Dados salvos com sucesso!');
-                    window.location = './listarEmpresa'
+                    $('#messageContainer').text("Empresa salva!")
+                        .css('background-color', '#28a745')
+                        .fadeIn()
+                        .delay(1500)
+                        .fadeOut(function() {
+                            window.location.href = '/listarEmpresa';
+                        });
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    alert('Erro ao salvar os dados: ' + textStatus);
+                    $('#messageContainer').text("Erro ao Cadastrar Empresa!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
                 }
             });
 
@@ -404,17 +424,22 @@ $(document).ready(function() {
         
         else{console.log("AQUI!!")
             $.ajax({
-            url:`http://localhost:8080/editarEmpresa/${idEmpresa}`,
+            url:`http://localhost:8080/editar/${idEmpresa}`,
             type: 'PUT',
             data: formData, // Certifique-se de que formData seja um objeto JSON válido
             contentType: false, // Defina o Content-Type como application/json
             processData: false,
-            success: function(response) {
-                alert('Dados salvos com sucesso!');
-            },
+                success: function(response) {
+                    $('#messageContainer').text("Empresa atualizada!")
+                        .css('background-color', '#28a745')
+                        .fadeIn()
+                        .delay(1500)
+                        .fadeOut(function() {
+                                window.location.href = '/listarEmpresa';
+                        });
+                },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.log(response)
-                alert('Erro ao salvar os dados: ' + textStatus);
+                $('#messageContainer').text("Erro ao atualizar Empresa!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
             }
         });
         }
