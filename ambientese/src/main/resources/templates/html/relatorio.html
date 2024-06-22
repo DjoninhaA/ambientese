@@ -353,6 +353,15 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script>
+      function toggleMenu() {
+        var menu = document.getElementById("sideMenu");
+        if (menu.style.width === "250px") {
+            menu.style.width = "0";
+        } else {
+            menu.style.width = "250px";
+        }
+    }
+
       function updateProgressBar(score, totalQuestions) {
         const percentage = (score / totalQuestions) * 100;
     
