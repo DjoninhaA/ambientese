@@ -62,4 +62,11 @@ public class FormularioController {
         return perguntasRepository.findAll();
     }
 
+    @GetMapping("/relatorio/{id}")
+    public ModelAndView relatorioAndView() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("html/relatorio");
+        return modelAndView;
+    }
+
 }
