@@ -54,7 +54,7 @@
 
         $(document).ready(function () {
           function loadEmpresas(page, sortBy = 'pontuacao', sortOrder = 'desc', filters = {}) {
-            let url = `/empresas?page=${page}&size=13&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+            let url = `/empresas?page=${page}&size=10&sortBy=${sortBy}&sortOrder=${sortOrder}`;
             // Adicionando filtros à URL
             if (filters.ramo) url += `&ramo=${filters.ramo}`;
             if (filters.porte) url += `&porte=${filters.porte}`;
@@ -65,7 +65,7 @@
               success: function (response) {
                 var tbody = $('#tableEmpresas tbody');
                 tbody.empty();
-                let start = page * 13 + 2;
+                let start = page * 13 + 2; 
 
                 if (response.content.length > 0) {
                   // Renderiza o topRank com o primeiro item
@@ -186,7 +186,7 @@
 
     <style>
       *{
-            font-family: poppins !important;
+            font-family: poppins;
       }
 
       th{
@@ -484,14 +484,6 @@
               <option value="IIGrandePorte">Grupo II – Empresa de Grande Porte</option>
               <option value="IGrandePorte">Grupo I – Empresa de Grande Porte</option>
             </select>
-
-              <input
-                      id="nome"
-                type="text"
-                class="form-control mb-4 select-style"
-                placeholder="Nome da Empresa"
-                aria-label="Nome da Empresa"
-              />
 
             <button type="button" id="searchButton" class="btn btn-primary mb-4 w-100">
               Buscar
