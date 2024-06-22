@@ -294,10 +294,10 @@
                     type: 'POST',
                     data: $.param(formData),
                     success: function(response) {
-                        $('#messageContainer').text("Dados enviados com sucesso!").css('background-color', '#28a745').fadeIn().delay(9999999999).fadeOut();
+                        $('#messageContainer').text("Dados enviados com sucesso!").css('background-color', '#28a745').fadeIn().delay(3000).fadeOut();
                     },
                     error: function(xhr, status, error) {
-                        $('#messageContainer').text("Erro ao Enviar!").css('background-color', '#ff0000').fadeIn().delay(99999999999).fadeOut();
+                        $('#messageContainer').text("Erro ao Enviar!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
                     }
                 });
             });
