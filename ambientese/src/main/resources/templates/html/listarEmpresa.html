@@ -465,15 +465,20 @@
                             response.content.forEach(function(empresa) {
                                 var porteText = porteLabels[empresa.porte] || 'Não especificado';
                                 var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
+                                var pontuacaoText = empresa.pontuacao !== null ? empresa.pontuacao : 'Não informado';
                                 tbody.append(`
                             <tr>
-                                <td>${empresa.idEmpresa}</td>
+                                <td>${empresa.cnpj}</td>
                                 <td>${empresa.razaoSocial}</td>
                                 <td>${empresa.email}</td>
                                 <td>${ramoText}</td>
-                                <td>${empresa.cnpj}</td>
                                 <td>${porteText}</td>
+                                <td>${pontuacaoText}</td>
+
                                 <td>
+                                 <a href="/formulario/${empresa.idEmpresa}" class="help" data-toggle="tooltip" title="Questionário">
+                                    <i class="material-icons">&#xE887;</i>
+                                </a>
                                     <a href="/editarEmpresa/${empresa.idEmpresa}" class="edit" data-toggle="tooltip" title="Editar">
                                         <i class="material-icons">&#xE254;</i>
                                     </a>
@@ -615,12 +620,12 @@
                 <table class="table table-striped table-hover" id="tableEmpresas">
                     <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>CNPJ</th>
                         <th>Razão Social</th>
                         <th>E-mail</th>
                         <th>Ramo</th>
-                        <th>CNPJ</th>
                         <th>Porte</th>
+                        <th>Pontuação</th>
                         <th>Ações</th>
                     </tr>
                     </thead>

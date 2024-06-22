@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <title>Formulário Ambientese</title>
     <style>
@@ -134,7 +135,7 @@
         width: 50vw;
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
+        justify-content: flex-end;
       }
 
       button {
@@ -153,9 +154,27 @@
         transition: ease-in 200ms;
         cursor: pointer;
       }
-      
 
-      
+      button:disabled {
+          background-color: #ccc; /* Cor de fundo para botão desabilitado */
+          color: #666; /* Cor do texto para botão desabilitado */
+          cursor: not-allowed; /* Cursor para indicar ação proibida */
+      }
+
+      #messageContainer {
+          width: 250px;
+          height: 40px;
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: #28a745;
+          color: white;
+          padding: 10px;
+          border-radius: 5px;
+          display: none;
+          z-index: 1000; /* Garante que o contêiner esteja sobre outros elementos */
+      }
+
     </style>
   </head>
   <body>
@@ -167,7 +186,7 @@
       </div>
       <div class="logo">
         <a href="/home">
-          <img src="../images/ambientetext.svg" alt="Logo da Empresa">
+            <img src="../images/ambientetext.svg" alt="Logo da Empresa">
         </a>
       </div>
     </div>
@@ -181,95 +200,109 @@
     </div>
 
     <!-- FIM NAVBAR  -->
-    <form id="formEmpresa" action="###" method="POST"> 
-      
-      <div class="form-header">
-          <h1>Formulário Ambientese</h1>
-          <hr>
-          <p>
-              Por favor, selecione as opções que melhor representam as práticas e opiniões relacionadas ao meio ambiente.
-          </p>
-      </div>
+    <form id="formEmpresa" action="###" method="POST">
+        <div class="form-header">
+            <h1>Formulário Ambiente-se</h1>
+            <hr>
+            <p>Por favor, selecione as opções que melhor representam as práticas relacionadas a empresa.</p>
+        </div>
+        <div id="questionContainer"></div>
+        <div class="submit">
+            <button type="submit">Enviar</button>
+        </div>
+    </form>
 
-      <div class="question">
-          <h3>A empresa realiza algum tipo de monitoramento ambiental regularmente? <span style="color: red;">*</span></h3>
-          <input type="radio" id="monitoramento-conforme" name="monitoramento" value="conforme" required>
-          <label for="monitoramento-conforme">Conforme</label><br>
-          <input type="radio" id="monitoramento-nao-conforme" name="monitoramento" value="nao-conforme">
-          <label for="monitoramento-nao-conforme">Não Conforme</label><br>
-          <input type="radio" id="monitoramento-nao-se-aplica" name="monitoramento" value="nao-se-aplica">
-          <label for="monitoramento-nao-se-aplica">Não se Aplica</label>
-          
-          <br><br>
+    <div id="messageContainer" style="position: fixed;  right: 20px; background-color: #28a745; align-content: center; color: white; padding: 10px; border-radius: 5px; display: none;">
+    </div>
 
-          <label for="index-file">Anexar arquivo:</label>
-          <input type="file" id="index-file" class="file-button" name="index-file">
-      </div>
+    <script>
+        $(document).ready(function() {
 
-      <div class="question">
-        <h3>A empresa está envolvida em iniciativas de responsabilidade social ou ambiental na comunidade? <span style="color: red;">*</span></h3>
-        <input type="radio" id="responsabilidade-conforme" name="responsabilidade" value="conforme" required>
-        <label for="responsabilidade-conforme">Conforme</label><br>
-        <input type="radio" id="responsabilidade-nao-conforme" name="responsabilidade" value="nao-conforme">
-        <label for="responsabilidade-nao-conforme">Não Conforme</label><br>
-        <input type="radio" id="responsabilidade-nao-se-aplica" name="responsabilidade" value="nao-se-aplica">
-        <label for="responsabilidade-nao-se-aplica">Não se Aplica</label>
-        
-        <br><br>
+            function getEmpresaIdFromUrl() {
+                const path = window.location.pathname;
+                const parts = path.split('/');
+                return parts[parts.length - 1];
+            }
 
-        <label for="index-file">Anexar arquivo:</label>
-        <input type="file" id="index-file" class="file-button" name="index-file">
+            const empresaId = getEmpresaIdFromUrl();
+            $('#empresaId').val(empresaId);
+            function checkAllAnswered() {
+                let allAnswered = true;
+                $('.question').each(function() {
+                    if (!$(this).find('input[type="radio"]:checked').length) {
+                        allAnswered = false;
+                        return false;
+                    }
+                });
+                $('button[type="submit"]').prop('disabled', !allAnswered);
+            }
 
-      </div>
+            function addQuestion(pergunta, index) {
+                const container = document.getElementById('questionContainer');
+                const questionBlock = document.createElement("div");
+                questionBlock.className = "question";
+                questionBlock.setAttribute('data-id', pergunta.idPergunta);
+                questionBlock.innerHTML = `
+                <h3>${index + 1}. ${pergunta.descricaoPergunta} <span style="color: red;">*</span></h3>
+                <input type="radio" id="option1-${pergunta.idPergunta}" name="question${pergunta.idPergunta}" value="conforme" required>
+                <label for="option1-${pergunta.idPergunta}" class="radio-button">Conforme</label><br>
+                <input type="radio" id="option2-${pergunta.idPergunta}" name="question${pergunta.idPergunta}" value="nao-conforme">
+                <label for="option2-${pergunta.idPergunta}" class="radio-button">Não Conforme</label><br>
+                <input type="radio" id="option3-${pergunta.idPergunta}" name="question${pergunta.idPergunta}" value="nao-se-aplica">
+                <label for="option3-${pergunta.idPergunta}" class="radio-button">Não se Aplica</label>
+            `;
+                container.appendChild(questionBlock);
+                $(questionBlock).find('input[type="radio"]').on('change', checkAllAnswered);
+            }
 
-      <div class="question">
-          <h3>A empresa está envolvida em iniciativas de responsabilidade social ou ambiental na comunidade? <span style="color: red;">*</span></h3>
-          <input type="radio" id="iniciativas-conforme" name="iniciativas" value="conforme" required>
-          <label for="iniciativas-conforme">Conforme</label><br>
-          <input type="radio" id="iniciativas-nao-conforme" name="iniciativas" value="nao-conforme">
-          <label for="iniciativas-nao-conforme">Não Conforme</label><br>
-          <input type="radio" id="iniciativas-nao-se-aplica" name="iniciativas" value="nao-se-aplica">
-          <label for="iniciativas-nao-se-aplica">Não se Aplica</label>
-          
-          <br><br>
+            $.ajax({
+                url: '/perguntas',
+                type: 'GET',
+                success: function(perguntas) {
+                    const perguntasLimitadas = perguntas.slice(0, 5);
+                    perguntasLimitadas.forEach(addQuestion);
+                    checkAllAnswered();
+                },
+                error: function(xhr, status, error) {
+                    $('#messageContainer').text("Erro ao carregar perguntas!").css('background-color', '#ff0000').fadeIn().delay(99999999999).fadeOut();
+                }
+            });
 
-          <label for="index-file">Anexar arquivo:</label>
-          <input type="file" id="index-file" class="file-button" name="index-file">
-      </div>
+            $('#formEmpresa').submit(function(event) {
+                event.preventDefault();
 
-      
+                let conformesCount = 0;
+                let score = 0;
+                const formData = {
+                    dataPreenchimento: new Date().toISOString().split('T')[0],
+                    empresaId: getEmpresaIdFromUrl(),
+                    perguntasId: $('.question').first().data('id'),
+                    qtdConformes: 0
+                };
 
-      
+                $('input[type="radio"]:checked').each(function() {
+                    if (this.value === 'conforme') {
+                        conformesCount++;
+                        score += 5;
+                    }
+                });
 
-      <div class="submit">
-          <button type="submit">Enviar</button>
-      </div>
-  </form>
+                formData.qtdConformes = conformesCount;
 
-  <script>
-
-    $(document).ready(function() {
-      $('#formEmpresa').submit(function(event) {
-          // Impede o envio padrão do formulário
-          event.preventDefault();
-  
-          var formData = $(this).serialize();
-  
-          $.ajax({
-              url: 'http://localhost:8080/empresa/cadastrar',
-              type: 'POST',  
-              data: formData,
-              success: function(response) {
-                  console.log('Dados Enviados!', response);
-              },
-              error: function(xhr, status, error) {
-                  console.error('Erro ao Enviar os Dados!', error);
-              }
-          });
-      });
-  });
-  
-  </script>
+                $.ajax({
+                    url: '/salvarFormulario',
+                    type: 'POST',
+                    data: $.param(formData),
+                    success: function(response) {
+                        $('#messageContainer').text("Dados enviados com sucesso!").css('background-color', '#28a745').fadeIn().delay(9999999999).fadeOut();
+                    },
+                    error: function(xhr, status, error) {
+                        $('#messageContainer').text("Erro ao Enviar!").css('background-color', '#ff0000').fadeIn().delay(99999999999).fadeOut();
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 
