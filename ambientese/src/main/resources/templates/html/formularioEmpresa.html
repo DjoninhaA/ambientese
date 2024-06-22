@@ -293,8 +293,24 @@
                     type: 'POST',
                     data: $.param(formData),
                     success: function(response) {
-                        $('#messageContainer').text("Dados enviados com sucesso!").css('background-color', '#28a745').fadeIn().delay(3000).fadeOut();
-                    },
+                        var novaPontuacao = score;
+                        var empresaId = formData.empresaId;
+                        $.ajax({
+                            url: '/atualizarPontuacao/' + empresaId,
+                            type: 'PUT',
+                            data: { pontuacao: novaPontuacao },
+                            success: function(response) {
+                                setTimeout(function() {
+                                    window.location.href = `/listarEmpresa/${empresaId}`; //Coloque o valor AQUI DJONATHAN
+                                }, 1500);
+                            },
+                            error: function(xhr, status, error) {
+                                $('#messageContainer').text("Erro ao salvar pontuação!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
+                            }
+                        });
+                        },
+
+
                     error: function(xhr, status, error) {
                         $('#messageContainer').text("Erro ao Enviar!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
                     }
