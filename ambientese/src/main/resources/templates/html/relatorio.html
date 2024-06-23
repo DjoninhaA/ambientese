@@ -291,7 +291,6 @@
        }
 
        .btn img{
-        margin-bottom: -5px;
         margin-right: 10px;
         
         
@@ -338,7 +337,7 @@
           <div class="comp1">
             <span class="ranking">
               <div class="trofeu">
-                <img src="../images/trofeu.svg" alt="trofeu">
+                <img src="../images/trofeu.png" alt="trofeu">
               </div>
               <div class="text">
                 <p><span id="ramoEmpresa2">Ramo(Data)</span></p>
@@ -364,7 +363,7 @@
           <div class="comp2">
             <span class="selo">
               <div class="logoSelo">
-                <img src="../images/selo.svg" alt="">
+                <img src="../images/certificate.png" alt="">
               </div>
               <div class="textoSelo">
                 <h2>Selo Aprovado!</h2>
@@ -428,6 +427,11 @@
                   const pontuacao = data.pontuacao; // Suponha que 'data.pontuacao' seja dinâmico
                   score = pontuacao; // Atualiza a variável global 'score' com o valor recebido
                   updateProgressBar(score);
+                  return convertToBase64(data.logo);
+                })
+                .then(imageBase64 => {
+                    // Salva a imagem convertida em uma variável global
+                    window.imageBase64 = imageBase64;
 
                   return fetch(API2);
               })
@@ -486,9 +490,6 @@
             .then(data => {
                 document.getElementById('ramoEmpresa').textContent = data.ramo;
                 document.getElementById('pontuacao').textContent = data.pontuacao;
-                console.log('Dados do Ranking:', data);
-                console.log(data.ramo, data.pontuacao)
-                 //Aqui você pode atualizar sua interface com os dados recebidos
             })
             .catch(error => {
                 console.error('Erro na requisição:', error);
@@ -497,46 +498,73 @@
 
         buscarDadosRanking();
 
-        preloadImage('data.logo')
-        .then(image => {
-            // Chamar a função para gerar o certificado apenas após a imagem estar carregada
-            generateCertificate(image.src);
-        })
-        .catch(error => {
-            console.error('Erro ao carregar imagem:', error);
-        });
+
+
+        //CERTIFICADO PDF
+
+        const logoConvert = data.logo;
+
+        function convertToBase64(logoConvert) {
+          return fetch(logoConvert)
+              .then(response => response.blob())
+              .then(blob => new Promise((resolve, reject) => {
+                  const reader = new FileReader();
+                  reader.onloadend = () => resolve(reader.result);
+                  reader.onerror = reject;
+                  reader.readAsDataURL(blob);
+              }));
+      }
+
 
 
         function generateCertificate() {
           const { jsPDF } = window.jspdf;
-      
-          // Criar um documento jsPDF em formato paisagem
+
           const doc = new jsPDF({
               orientation: 'landscape'
           });
-      
-          const companyName = document.getElementById('nomeEmpresa').textContent; // Obtém o nome da empresa do HTML
-          const score = parseInt(document.getElementById('pontuacao').textContent); // Obtém a pontuação do HTML
-          const totalMaxPoints = 100; // Defina isso conforme necessário, com base na sua lógica
-      
+
+          const pageWidth = doc.internal.pageSize.width;
+
+          // Dados dinâmicos (substitua pelos valores dinâmicos necessários)
+          const companyName = document.getElementById('nomeEmpresa').textContent; // Obtém dinamicamente o nome da empresa
+          const score = parseInt(document.getElementById('pontuacao').textContent); // Obtém dinamicamente a pontuação
+          const totalMaxPoints = 100;
           const percentage = (score / totalMaxPoints) * 100;
       
-          doc.setFontSize(22);
-          doc.text('Certificado de Conformidade', 20, 30);
+          const titleText = 'Certificado "Amigo" do Meio Ambiente'; // Texto dinâmico com o nome da empresa
+          const titleFontSize = 22;
+          const titleTextWidth = doc.getTextWidth(titleText);
+          const titleX = 80;
+          const titleY = 30;
       
-          doc.setFontSize(16);
-          doc.text(`Certificamos que a empresa ${companyName} está conforme em`, 20, 50);
-          doc.text(`${score} dos ${totalMaxPoints} tópicos avaliados.`, 20, 60);
-          doc.text(`Isso representa uma conformidade de ${percentage.toFixed(2)}%.`, 20, 70);
+          const imageWidth = 60; // Largura da imagem da empresa, ajuste conforme necessário
+          const imageHeight = 60; // Altura da imagem da empresa, ajuste conforme necessário
+          const imageX = (pageWidth - imageWidth) / 2; // Posição x da imagem para centralizar
+          const imageY = titleY + titleFontSize + 10; // Posição y da imagem
+      
+          doc.setFontSize(titleFontSize);
+          doc.text(titleText, titleX, titleY);
+      
+          // Adiciona a imagem da empresa
+          if (imageBase64) {
+              doc.addImage(imageBase64, 'PNG', imageX, imageY, imageWidth, imageHeight);
+          }
+      
+          const textCenterX = pageWidth / 2;
+          const textY = imageY + imageHeight + 20; // Posição y inicial para os textos abaixo da imagem
+          const lineHeight = 10;
+      
+          doc.setFontSize(20);
+          doc.text(`A empresa cumpriu ${percentage.toFixed(0)}% dos critérios estabelecidos.`, textCenterX, textY, { align: 'center' });
       
           doc.setFontSize(12);
-          doc.text('Parabéns pela conquista do selo "Amigo do Meio Ambiente"!', 20, 90);
-      
-          //const logoUrl = document.getElementById('logoEmp').src = data.logo;; // Substitua 'data.logo' pela URL real do logo
-          //doc.addImage(logoUrl, 'PNG', 20, 100, 50, 50);
+          doc.text('Parabéns pela conquista do selo "Amigo do Meio Ambiente"!', textCenterX, textY + lineHeight, { align: 'center' });
       
           doc.save('certificado.pdf');
-      }     
+      }
+      
+           
     </script> 
 </body>
 </html>
