@@ -404,6 +404,20 @@
             width: 150px; /* Ajuste o valor de acordo com a sua necessidade */
         }
 
+        #messageContainer {
+            width: 250px;
+            height: 40px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+
     </style>
     <script>
         //JS NAVBAR
@@ -514,6 +528,9 @@
                 var startEntry = currentPage * pageSize + 1;
                 var endEntry = startEntry + pageSize - 1;
                 endEntry = (endEntry > totalEntries) ? totalEntries : endEntry;
+                if (endEntry === 0) {
+                    startEntry = 0;
+                }
                 var text = `Mostrando ${startEntry} a ${endEntry} de ${totalEntries} entradas`;
                 $('.hint-text').text(text);
             }
@@ -565,8 +582,6 @@
                 });
                 pagination.append(nextLink);
             }
-
-
 
             // Carregar a primeira página de empresas quando a página é carregada
             loadEmpresas(0);
@@ -763,6 +778,9 @@
     </div>
 </div>
 </div>
+
+    <div id="messageContainer" style="position: fixed;  right: 20px; background-color: #28a745; align-content: center; color: white; padding: 10px; border-radius: 5px; display: none;">
+    </div>
 
 </body>
 

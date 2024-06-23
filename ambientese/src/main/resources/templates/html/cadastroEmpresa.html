@@ -409,7 +409,7 @@ $(document).ready(function() {
                     $('#messageContainer').text("Empresa salva!")
                         .css('background-color', '#28a745')
                         .fadeIn()
-                        .delay(1500)
+                        .delay(750)
                         .fadeOut(function() {
                             window.location.href = '/listarEmpresa';
                         });
@@ -421,7 +421,7 @@ $(document).ready(function() {
 
         }
         
-        else{console.log("AQUI!!")
+        else{
             $.ajax({
             url:`http://localhost:8080/editar/${idEmpresa}`,
             type: 'PUT',
@@ -432,7 +432,7 @@ $(document).ready(function() {
                     $('#messageContainer').text("Empresa atualizada!")
                         .css('background-color', '#28a745')
                         .fadeIn()
-                        .delay(1500)
+                        .delay(750)
                         .fadeOut(function() {
                                 window.location.href = '/listarEmpresa';
                         });
