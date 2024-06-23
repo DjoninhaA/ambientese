@@ -115,6 +115,7 @@
         display: flex;
         width: 60%;
         height: 60%;
+        margin-top: -10%;
         justify-content: center;
         border: 2px solid rgb(228, 225, 225);
         border-radius: 20px;
@@ -242,17 +243,20 @@
         border-radius: 50px;
        }
 
-       .logoEmp
 
 
        /*selo*/
+       .selo {
+        height: 19vh;
+        width: 60vh;
+       }
 
        .logoSelo{
         align-items: center;
         justify-content: center;
         display: flex;
-        width: 250px;
-        height: 40px
+        width: 100%;
+        height: 25%;
        }
 
        .logoSelo img {
@@ -262,13 +266,14 @@
        }
 
        .textoSelo h2{
+        margin-top: 25px;
         font-size: 30px;
         text-align: center;
        }
        .textoSelo p{
+        margin-top: 15px;
         font-size: 25px;
         text-align: center;
-        margin-top: -20px;
        }
 
        .buttons {
@@ -282,7 +287,7 @@
         cursor: pointer;
         background-color: #0077C8;
         color:#ffffff;
-        width: 60%;
+        width: 40%;
        }
 
        .btn img{
@@ -399,7 +404,7 @@
         document.getElementById('resultContainer').style.display = 'block';
         document.getElementById('progressBar').style.width = `${percentage}%`;
         document.getElementById('progressText').innerText = `${percentage.toFixed(0)}%`;
-        document.getElementById('scoreText').innerText = `Sua Empresa Está Conforme em ${score} pontos de ${totalMaxPoints} possíveis.`;
+        document.getElementById('scoreText').innerText = `Sua Empresa alcançou uma pontuação de ${score} pontos de ${totalMaxPoints} possíveis.`;
 }
 
     
