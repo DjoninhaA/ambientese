@@ -46,6 +46,7 @@ public class BuscarempresaController {
 
         // Criando um objeto Specification para adicionar condições de filtro dinâmico
         Specification<Empresa> spec = new Specification<Empresa>() {
+            @SuppressWarnings("null")
             @Override
             public Predicate toPredicate(Root<Empresa> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 List<Predicate> predicates = new ArrayList<>();
