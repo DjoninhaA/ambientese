@@ -515,56 +515,67 @@
               }));
       }
 
-
-
-        function generateCertificate() {
-          const { jsPDF } = window.jspdf;
-
-          const doc = new jsPDF({
-              orientation: 'landscape'
-          });
-
-          const pageWidth = doc.internal.pageSize.width;
-
-          // Dados dinâmicos (substitua pelos valores dinâmicos necessários)
-          const companyName = document.getElementById('nomeEmpresa').textContent; // Obtém dinamicamente o nome da empresa
-          const score = parseInt(document.getElementById('pontuacao').textContent); // Obtém dinamicamente a pontuação
-          const totalMaxPoints = 100;
-          const percentage = (score / totalMaxPoints) * 100;
-      
-          const titleText = 'Certificado "Amigo" do Meio Ambiente'; // Texto dinâmico com o nome da empresa
-          const titleFontSize = 22;
-          const titleTextWidth = doc.getTextWidth(titleText);
-          const titleX = 80;
-          const titleY = 30;
-      
-          const imageWidth = 60; // Largura da imagem da empresa, ajuste conforme necessário
-          const imageHeight = 60; // Altura da imagem da empresa, ajuste conforme necessário
-          const imageX = (pageWidth - imageWidth) / 2; // Posição x da imagem para centralizar
-          const imageY = titleY + titleFontSize + 10; // Posição y da imagem
-      
-          doc.setFontSize(titleFontSize);
-          doc.text(titleText, titleX, titleY);
-      
-          // Adiciona a imagem da empresa
-          if (imageBase64) {
-              doc.addImage(imageBase64, 'PNG', imageX, imageY, imageWidth, imageHeight);
-          }
-      
-          const textCenterX = pageWidth / 2;
-          const textY = imageY + imageHeight + 20; // Posição y inicial para os textos abaixo da imagem
-          const lineHeight = 10;
-      
-          doc.setFontSize(20);
-          doc.text(`A empresa cumpriu ${percentage.toFixed(0)}% dos critérios estabelecidos.`, textCenterX, textY, { align: 'center' });
-      
-          doc.setFontSize(12);
-          doc.text('Parabéns pela conquista do selo "Amigo do Meio Ambiente"!', textCenterX, textY + lineHeight, { align: 'center' });
-      
-          doc.save('certificado.pdf');
+      function generateCertificate() {
+        const { jsPDF } = window.jspdf;
+    
+        const doc = new jsPDF({
+            orientation: 'landscape'
+        });
+    
+        const pageWidth = doc.internal.pageSize.width;
+        const pageHeight = doc.internal.pageSize.height;
+    
+        // Define as margens e a espessura da borda
+        const margin = 10;
+        const borderWidth = 5;
+    
+        // Desenha a borda ao redor de toda a página
+        doc.setLineWidth(borderWidth);
+        doc.setDrawColor(0, 10, 135); // Cor da borda azul (R, G, B)
+        doc.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin, 'D'); // 'D' para desenhar apenas a borda
+    
+        // Dados dinâmicos (substitua pelos valores dinâmicos necessários)
+        const companyName = document.getElementById('nomeEmpresa').textContent; // Obtém dinamicamente o nome da empresa
+        const score = parseInt(document.getElementById('pontuacao').textContent); // Obtém dinamicamente a pontuação
+        const totalMaxPoints = 100;
+        const percentage = (score / totalMaxPoints) * 100;
+    
+        const titleText = 'Certificado "Amigo" do Meio Ambiente'; // Texto dinâmico com o nome da empresa
+        const titleFontSize = 22;
+        const titleTextWidth = doc.getTextWidth(titleText);
+        const titleX = 80;
+        const titleY = 30;
+    
+        const imageWidth = 60; // Largura da imagem da empresa, ajuste conforme necessário
+        const imageHeight = 60; // Altura da imagem da empresa, ajuste conforme necessário
+        const imageX = (pageWidth - imageWidth) / 2; // Posição x da imagem para centralizar
+        const imageY = titleY + titleFontSize + 10;
+    
+        doc.setFontSize(titleFontSize);
+        doc.text(titleText, titleX, titleY);
+    
+        // Adiciona a imagem da empresa (substitua imageBase64 pela variável que contém a imagem em base64)
+        if (imageBase64) {
+          doc.addImage(imageBase64, 'PNG', imageX, imageY, imageWidth, imageHeight);
       }
-      
-           
+    
+        const textCenterX = pageWidth / 2;
+        const textY = imageY + imageHeight + 20;
+        const lineHeight = 10;
+    
+        doc.setFontSize(18);
+        doc.text(`A empresa cumpriu ${percentage.toFixed(0)}% dos critérios estabelecidos.`, textCenterX, textY, { align: 'center' });
+    
+        doc.setFontSize(12);
+        doc.text('Parabéns pela conquista do selo "Amigo do Meio Ambiente"!', textCenterX, textY + lineHeight, { align: 'center' });
+    
+        doc.save('certificado.pdf');
+    }
+    
+    
+    
+
+        
     </script> 
 </body>
 </html>
