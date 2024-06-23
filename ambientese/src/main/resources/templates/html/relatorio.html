@@ -292,12 +292,12 @@
           <div class="comp1">
             <span class="logo">
               <div>
-                <img class="logoEmpresa" src="../../static/images/logo _removebg.png" alt="logo_semfundo">
+                <img id="logoEmp"  class="logoEmpresa" src=""  alt="imagem Empresa">
               </div>
               <div class="text">
-                <h3>Nome Empresa</h3>
-                <p>Ramo</p>
-                <p>porte</p>
+                <h3><span id="nomeEmpresa">Nome da Empresa</span></h3>
+                <p><span id="ramoEmpresa">Ramo</span></p>
+                <p><span id="porteEmpresa">Porte</span></p>
               </div>
             </span>
           </div>
@@ -307,9 +307,9 @@
                 <img src="../../static/images/trofeu.svg" alt="">
               </div>
               <div class="text">
-                <h3>Ranking Geral {data}</h3>
-                <p>No mesmo ramo {data}</p>
-                <p>No mesmo porte {data}</p>
+                <h3>Ranking Geral <span id="rankingGeral">(Data)</span></h3>
+                <p>No mesmo ramo <span id="rankingRamo">(Data)</span></p>
+                <p>No mesmo porte <span id="rankingPorte">(Data)</span></p>
               </div>
             </span>
           </div>
@@ -370,11 +370,84 @@
         document.getElementById('scoreText').innerText = `Sua Empresa Está Conforme em ${score} dos ${totalQuestions} tópicos.`;
       }
     
-      // Exemplo de como usar a função
-      const score = 15; // Pontuação de exemplo
-      const totalQuestions = 20; // Número total de perguntas
-      updateProgressBar(score, totalQuestions);
-    
+      document.addEventListener("DOMContentLoaded", function() {
+       
+        // Função para carregar os dados da empresa via AJAX
+        function buscarDados() {
+          fetch(API)
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Erro ao obter os dados da API');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  // Atualiza os elementos na tela com os dados recebidos
+                  document.getElementById('logoEmp').src = data.logo;
+                  document.getElementById('nomeEmpresa').textContent = data.nomeFantasia;
+                  document.getElementById('ramoEmpresa').textContent = data.ramo;
+                  document.getElementById('porteEmpresa').textContent = data.porte;
+                  console.log(data)
+              })
+              .catch(error => {
+                  console.error('Erro ao buscar dados:', error);
+              });
+      }
+  
+      // Chamar a função para buscar os dados quando a página carregar
+      buscarDados();
+  });
+
+
+        //SEGUNDO FETCH PARA OS DADOS DO RANKING
+        //function buscarDadosRanking() {
+
+        //fetch(`/teste/${idEmpresa}`)
+          //  .then(response => {
+            //    if (!response.ok) {
+              //      throw new Error('Erro ao buscar os dados da empresa');
+               // }
+                //return response.json();
+           // })
+            //.then(data => {
+             //   document.getElementById('rankingGeral').textContent = data.rankingGeral;
+               // document.getElementById('rankingRamo').textContent = data.rankingRamo;
+                //document.getElementById('rankingPorte').textContent = data.rankingPorte;
+                //console.log('Dados do Ranking:', data);
+                // Aqui você pode atualizar sua interface com os dados recebidos
+            //})
+            //.catch(error => {
+             //   console.error('Erro na requisição:', error);
+            //});
+        //}
+
+        //buscarDadosRanking();
+
+
+      
+        // Extrair empresaId da URL (Exemplo: /relatorio/123)
+        function getIdFromUrl() {
+          const pathname = window.location.pathname;
+          const parts = pathname.split('/');
+          const id = parts[2];
+          return id;
+      }
+      
+          const idEmpresa = getIdFromUrl();
+          console.log("ID do Empresa:", idEmpresa);
+
+          const API = `http://localhost:8080/busca/${idEmpresa}`;
+      
+        // Chama a função para carregar os dados da empresa ao carregar a página
+        if (empresaId) {
+          carregarDadosEmpresa(empresaId);
+        } else {
+          console.error('ID da empresa não encontrado na URL.');
+          // Aqui você pode tratar o caso em que o ID da empresa não é fornecido na URL
+        }
+           
+
+
       function generateCertificate() {
         const { jsPDF } = window.jspdf;
     
@@ -398,7 +471,7 @@
         doc.text('Parabéns pela conquista do selo "Amigo do Meio Ambiente"!', 20, 90);
     
         // Opcional: adicionar logo
-        doc.addImage('../../static/images/logo _removebg.png', 'PNG', 20, 100, 50, 50);
+        doc.addImage('data.logo', 'PNG', 20, 100, 50, 50);
     
         doc.save('certificado.pdf');
       }
