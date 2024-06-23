@@ -2,7 +2,6 @@ package com.Integrador.ambientese.model;
 
 import jakarta.persistence.*;
 import java.sql.Date;
-import java.util.Optional;
 
 import com.Integrador.ambientese.model.enums.Cargo;
 import com.Integrador.ambientese.model.enums.Genero;
@@ -10,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.http.ResponseEntity;
 
 @AllArgsConstructor
 @NoArgsConstructor

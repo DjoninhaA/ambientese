@@ -123,6 +123,20 @@
         -moz-appearance: textfield;
     }
 
+    #messageContainer {
+        width: 250px;
+        height: 40px;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #28a745;
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        display: none;
+        z-index: 1000; /* Garante que o contêiner esteja sobre outros elementos */
+    }
+
 </style>
 
 <body class="p-0 m-0 border-0 bd-example m-0 border-0" >
@@ -152,19 +166,19 @@
     <form class="row g-3">
         <div class="col-md-12"><p> <b>Informações pessoais</b></p></div>
         <div class="col-md-4">
-            <label class="form-label">Nome</label>
+            <label class="form-label">Nome*</label>
             <input type="text" class="form-control" id="nome" placeholder="Nome completo">
         </div>
         <div class="col-md-4">
-            <label class="form-label">CPF</label>
+            <label class="form-label">CPF*</label>
             <input type="number" class="form-control" id="cpf" placeholder="000.000.000-00">
         </div>
         <div class="col-4">
-            <label class="form-label">Data de Nascimento</label>
+            <label class="form-label">Data de Nascimento*</label>
             <input type="date" class="form-control" id="data" placeholder="00/00/0000">
         </div>
         <div class="col-md-4">
-            <label class="form-label">Gênero</label>
+            <label class="form-label">Gênero*</label>
             <select id="genero" class="form-select">
                 <option selected="">Gênero</option>
                 <option>Feminino</option>
@@ -173,7 +187,7 @@
             </select>
         </div>
         <div class="col-md-4">
-            <label class="form-label">Cargo</label>
+            <label class="form-label">Cargo*</label>
             <select id="cargo" class="form-select">
                 <option selected="">Cargo</option>
                 <option>Consultor</option>
@@ -184,12 +198,12 @@
 
         <div class="col-md-12"><p> <b>Contato</b></p></div>
         <div class="col-md-4">
-            <label  class="form-label">E-mail</label>
+            <label  class="form-label">E-mail*</label>
             <input type="text" class="form-control" id="email" placeholder="E-mail">
         </div>
 
         <div class="col-md-4">
-            <label  class="form-label">Telefone</label>
+            <label  class="form-label">Telefone*</label>
             <input type="number" class="form-control" id="telefone" placeholder="(00) 0 0000-0000">
         </div>
 
@@ -197,11 +211,11 @@
         <div id="esconder">
         <div class="col-md-12"><p> <b>Acesso</b></p></div>
         <div class="col-md-4" >
-            <label class="form-label">Login</label>
+            <label class="form-label">Login*</label>
             <input type="text" class="form-control" id="login" placeholder="Login">
         </div>
         <div class="col-md-4" >
-            <label class="form-label">Senha</label>
+            <label class="form-label">Senha*</label>
             <input type="password" class="form-control" id="senha" placeholder="*******">
         </div>
 
@@ -217,7 +231,8 @@
 </div>
 
 
-
+    <div id="messageContainer" style="position: fixed;  right: 20px; background-color: #28a745; align-content: center; color: white; padding: 10px; border-radius: 5px; display: none;">
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -267,8 +282,7 @@ $(document).ready(function() {
                 $('#telefone').val(response.telefone);
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                console.error('Erro ao buscar os dados:', textStatus);
-                alert('Erro ao buscar os dados: ' + textStatus);
+                $('#messageContainer').text("Erro ao buscar dados!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
             }
         });
     }
@@ -298,27 +312,37 @@ $(document).ready(function() {
                 data: formData,
                 contentType: false,
                 processData: false,
-                success: function (response) {
-                    alert('Dados salvos com sucesso!');
-                    window.location = './listarFuncionario'
+                success: function(response) {
+                    $('#messageContainer').text("Funcionário cadastrado!")
+                        .css('background-color', '#28a745')
+                        .fadeIn()
+                        .delay(1500)
+                        .fadeOut(function() {
+                            window.location.href = '/listarFuncionario';
+                        });
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
-                    alert('Erro ao salvar os dados: ' + textStatus);
+                    $('#messageContainer').text("Erro ao salvar dados!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
                 }
             });
-        } else{console.log("AQUI!!") //obrigado dionatan
+        } else{
             $.ajax({
-                url:`http://localhost:8080/editarFuncionario/${idFuncionario}`,
+                url:`http://localhost:8080/edit/${idFuncionario}`,
                 type: 'PUT',
                 data: formData, // Certifique-se de que formData seja um objeto JSON válido
                 contentType: false, // Defina o Content-Type como application/json
                 processData: false,
                 success: function(response) {
-                    alert('Dados salvos com sucesso!');
+                    $('#messageContainer').text("Funcionário Editado!")
+                        .css('background-color', '#28a745')
+                        .fadeIn()
+                        .delay(1500)
+                        .fadeOut(function() {
+                            window.location.href = '/listarFuncionario';
+                        });
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    console.log(response)
-                    alert('Erro ao salvar os dados: ' + textStatus);
+                    $('#messageContainer').text("Erro ao editar!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
                 }
             });
         }
