@@ -399,6 +399,11 @@
             transition: background-color 0.3s;
         }
 
+        table.table tr th:last-child,
+        table.table tr td:last-child {
+            width: 150px; /* Ajuste o valor de acordo com a sua necessidade */
+        }
+
     </style>
     <script>
         //JS NAVBAR
@@ -435,14 +440,20 @@
 
             window.deleteEmpresa = function (id) {
                 $.ajax({
-                    url: '/empresas/' + id,
+                    url: '/deletar/' + id,
                     type: 'DELETE',
                     success: function(result) {
                         $('#deleteEmployeeModal').modal('hide'); // Fecha o modal
-                        loadEmpresas(0); // Recarrega a página ou atualiza a tabela de forma dinâmica
+                        $('#messageContainer').text("Empresa removida!")
+                            .css('background-color', '#28a745')
+                            .fadeIn()
+                            .delay(750)
+                            .fadeOut(function() {
+                                window.location.href = '/listarEmpresa';
+                            });
                     },
                     error: function(result) {
-                        alert("Erro ao deletar a empresa. " + result.responseText);
+                        $('#messageContainer').text("Erro ao deletar empresa!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
                     }
                 });
             };

@@ -396,6 +396,21 @@
             transition: background-color 0.3s;
         }
 
+
+        #messageContainer {
+            width: 250px;
+            height: 40px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000; /* Garante que o contêiner esteja sobre outros elementos */
+        }
+
         /* FIM ESTILO NAVBAR */
     </style>
     <script>
@@ -419,7 +434,7 @@
 
         const cargoLabels = {
             Consultor: 'Consultor',
-            Adiministrador: 'Adiministrador'
+            Administrador: 'Administrador'
         };
 
 
@@ -434,10 +449,16 @@
                     type: 'DELETE',
                     success: function(result) {
                         $('#deleteEmployeeModal').modal('hide'); // Fecha o modal
-                        loadFuncionarios(0); // Recarrega a página ou atualiza a tabela de forma dinâmica
+                        $('#messageContainer').text("Funcionário removido!")
+                            .css('background-color', '#28a745')
+                            .fadeIn()
+                            .delay(750)
+                            .fadeOut(function() {
+                                window.location.href = '/listarFuncionario';
+                            });
                     },
                     error: function(result) {
-                        alert("Erro ao deletar o funcionario. " + result.responseText);
+                        $('#messageContainer').text("Erro ao deletar o funcionario!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
                     }
                 });
             };
@@ -453,7 +474,7 @@
                     type: 'GET',
                     success: function (response) {
                         var tbody = $('#tableFuncionarios tbody');
-                        tbody.empty(); // Limpa a tabela antes de adicionar novos dados
+                        tbody.empty();
 
                         response.content.forEach(function (funcionarios) { // Ajuste baseado na estrutura da resposta
                             var generoText = generoLabels[funcionarios.genero] || 'Não especificado';
@@ -476,7 +497,6 @@
                               </td>
                               </tr>
                               `);
-                              console.log(funcionarios.name)
                             });
                             updatePagination(response.totalPages, page); // Atualiza os controles de paginação
                             updateEntriesText(response.size, response.totalElements, page); // Função para atualizar controles de paginação
@@ -616,7 +636,7 @@
                         <th>ID</th>
                         <th>Nome</th>
                         <th>Cargo</th>
-                        <th>Genero</th>
+                        <th>Gênero</th>
                         <th>E-mail</th>
                         <th>Ações</th>
                     </tr>
@@ -731,6 +751,9 @@
         </div>
     </div>
 </div>
+
+    <div id="messageContainer" style="position: fixed;  right: 20px; background-color: #28a745; align-content: center; color: white; padding: 10px; border-radius: 5px; display: none;">
+    </div>
 
 </body>
 

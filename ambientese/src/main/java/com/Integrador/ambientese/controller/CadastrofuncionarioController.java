@@ -1,8 +1,6 @@
 package com.Integrador.ambientese.controller;
 
 import  java.util.*;
-import com.Integrador.ambientese.model.Empresa;
-import com.Integrador.ambientese.model.Endereco;
 import com.Integrador.ambientese.model.Funcionarios;
 import com.Integrador.ambientese.model.Usuario;
 import com.Integrador.ambientese.model.enums.Cargo;
@@ -21,9 +19,7 @@ import org.springframework.data.domain.Sort;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 
