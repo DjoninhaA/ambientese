@@ -114,6 +114,7 @@ public class CadastrofuncionarioController {
             pageable = PageRequest.of(page, size);
         }
         Specification<Funcionarios> spec = new Specification<Funcionarios>() {
+            @SuppressWarnings("null")
             @Override
             public Predicate toPredicate(Root<Funcionarios> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 List<Predicate> predicates = new ArrayList<>();
