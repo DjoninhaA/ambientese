@@ -508,12 +508,15 @@
                     var name = $('#name').val();
                     loadFuncionarios(0, {name: name});
                 });
-                
-            
+
+
             function updateEntriesText(pageSize, totalEntries, currentPage) {
                 var startEntry = currentPage * pageSize + 1;
                 var endEntry = startEntry + pageSize - 1;
                 endEntry = (endEntry > totalEntries) ? totalEntries : endEntry;
+                if (endEntry === 0) {
+                    startEntry = 0;
+                }
                 var text = `Mostrando ${startEntry} a ${endEntry} de ${totalEntries} entradas`;
                 $('.hint-text').text(text);
             }
@@ -573,7 +576,6 @@
             $('#deleteEmployeeModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget); // Botão que acionou o modal
                 var id = button.data('id'); // Extrai informação do data-* atributos
-                console.log("ID do funcionario: ", id);
                 window.funcionarioIdToDelete = id; // Armazena ID para ser usado na deleção
             });
         });
@@ -615,7 +617,7 @@
                     <div class="col-xs-7">
                         <div class="input-group">
                             <input type="text" class="form-control" id="name"
-                                   placeholder="Pesquisar funcionarios">
+                                   placeholder="Pesquisar Funcionários">
 
                             <button type="button" id="searchButton" class="btn btn-primary mb-4 w-100">
                                 Buscar
