@@ -258,7 +258,7 @@
                 url: '/perguntas',
                 type: 'GET',
                 success: function(perguntas) {
-                    const perguntasLimitadas = perguntas.slice(0, 5);
+                    const perguntasLimitadas = perguntas.slice(0, 20);
                     perguntasLimitadas.forEach(addQuestion);
                     checkAllAnswered();
                 },

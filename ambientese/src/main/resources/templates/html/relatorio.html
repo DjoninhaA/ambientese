@@ -4,7 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatorio</title>
+    <link rel="icon" type="image/x-icon" href="/images/fav-Icon/favIcon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  
+    <script src="https://kit.fontawesome.com/568e2b14f2.js" crossorigin="anonymous"></script>
     <style>
+      *{
+        font-family: poppins;
+      }
+
       body {
         margin: 0;
         padding-right: 0;
@@ -102,7 +116,7 @@
         width: 60%;
         height: 60%;
         justify-content: center;
-        border: 2px solid gray;
+        border: 2px solid rgb(228, 225, 225);
         border-radius: 20px;
         background-color: #FFFFFF;
        } 
@@ -110,7 +124,7 @@
        .coluna1 {
         display: flex;
         flex-direction: column;
-        width: 25vh;
+        width: 30%;
         height: 45vh;
         padding: 20px;
         margin-top: 60px;
@@ -144,7 +158,7 @@
       }
 
        .coluna2 {
-        width: 50vh;
+        width: 70%;
         height: 45vh;
         display: flex;
         flex-direction: column;
@@ -155,7 +169,7 @@
 
 
        .comp1, .comp2 {
-        border: 2px solid gray;
+        border: 2px solid rgb(182, 181, 181);
         height: 50%;
         border-radius: 20px;
         flex: 1; /* Faz com que os componentes ocupem todo o espaço verticalmente */
@@ -181,20 +195,28 @@
 
        /*chat*/
        .container {
-        max-width: 600px;
-        width: 100%;
-        padding: 20px;
+        width: 380px;
+        height: 180px;
+        margin: 0;
+        padding: 0;
         margin-left: -10px;
         border-radius: 5px;
         background-color: #fff;
         text-align: center;
     }
+
     
         #progressContainer {
             width: 100%;
-            background-color: #e0e0e0;
+            background-color: #FFFFFF;
+            border: 2px solid black;
             border-radius: 25px;
             margin: 20px 0;
+        }
+
+        #progressText {
+          margin-left: 70px;
+          color:#FFFFFF;
         }
         
         #progressBar {
@@ -217,8 +239,10 @@
         height: 100px;
         object-fit: contain;
         width: 100px;
-
+        border-radius: 50px;
        }
+
+       .logoEmp
 
 
        /*selo*/
@@ -256,11 +280,16 @@
 
        .btn {
         cursor: pointer;
-        background-color: #FFFFFF;
+        background-color: #0077C8;
+        color:#ffffff;
+        width: 60%;
        }
 
        .btn img{
         margin-bottom: -5px;
+        margin-right: 10px;
+        
+        
        }
 
 
@@ -275,7 +304,7 @@
     </div>
     <div class="return">
       <a href="/home">
-        <img src="../../static/images/ambientetext.svg" alt="Logo da Empresa">
+        <img src="../images/ambientetext.svg" alt="Logo da Empresa">
       </a>
     </div>
   </div>
@@ -303,13 +332,12 @@
           </div>
           <div class="comp1">
             <span class="ranking">
-              <div>
-                <img src="../../static/images/trofeu.svg" alt="">
+              <div class="trofeu">
+                <img src="../images/trofeu.svg" alt="trofeu">
               </div>
               <div class="text">
-                <h3>Ranking Geral <span id="rankingGeral">(Data)</span></h3>
-                <p>No mesmo ramo <span id="rankingRamo">(Data)</span></p>
-                <p>No mesmo porte <span id="rankingPorte">(Data)</span></p>
+                <p><span id="ramoEmpresa2">Ramo(Data)</span></p>
+                <p><span id="pontuacao">Pontuação(Data)</span> Pontos</p>
               </div>
             </span>
           </div>
@@ -317,7 +345,6 @@
         <div class="coluna2">
           <div class="comp2">
             <span class="porcentagem">
-              <div class="graphs">
                 <div class="container">
                   <div id="resultContainer" style="display: none;">
                       <h2>Resultado</h2>
@@ -327,24 +354,24 @@
                       <p id="scoreText"></p>
                   </div>
               </div>
-            </div>
             </span>
           </div>
           <div class="comp2">
             <span class="selo">
               <div class="logoSelo">
-                <img src="../../static/images/selo.svg" alt="">
+                <img src="../images/selo.svg" alt="">
               </div>
               <div class="textoSelo">
                 <h2>Selo Aprovado!</h2>
                 <p>Amigo do Meio Ambiente</p>
-              </div> 
-              <div class="buttons">
-                <button class="btn" onclick="generateCertificate()">
-                    <img src="../../static/images/download.svg" alt="Exportar"
-                    >Exportar</button>
-              </div>
+              </div>              
             </span>
+          </div>
+          <div class="buttons">
+            <button type="button" id="searchButton"  onclick="generateCertificate()"  class="btn btn-primary w-40">
+              <img src="../images/download.svg" alt="Exportar"
+                  >Exportar
+            </button>
           </div>
         </div>
       </div>
@@ -361,70 +388,63 @@
         }
     }
 
-      function updateProgressBar(score, totalQuestions) {
-        const percentage = (score / totalQuestions) * 100;
-    
+   // Variável global para armazenar a pontuação inicial da empresa
+    let score = 0;
+    const totalMaxPoints = 100; // Pontuação máxima possível
+
+    // Função para atualizar a barra de progresso com base na pontuação atual
+    function updateProgressBar(score) {
+        const percentage = (score / totalMaxPoints) * 100; // Calcula a porcentagem de progresso
+
         document.getElementById('resultContainer').style.display = 'block';
         document.getElementById('progressBar').style.width = `${percentage}%`;
-        document.getElementById('progressText').innerText = `${percentage.toFixed(1)}%`;
-        document.getElementById('scoreText').innerText = `Sua Empresa Está Conforme em ${score} dos ${totalQuestions} tópicos.`;
-      }
+        document.getElementById('progressText').innerText = `${percentage.toFixed(0)}%`;
+        document.getElementById('scoreText').innerText = `Sua Empresa Está Conforme em ${score} pontos de ${totalMaxPoints} possíveis.`;
+}
+
     
       document.addEventListener("DOMContentLoaded", function() {
        
         // Função para carregar os dados da empresa via AJAX
         function buscarDados() {
-          fetch(API)
+          fetch(API)  // Primeiro fetch
               .then(response => {
                   if (!response.ok) {
-                      throw new Error('Erro ao obter os dados da API');
+                      throw new Error('Erro ao obter os dados da API 1');
                   }
                   return response.json();
               })
               .then(data => {
-                  // Atualiza os elementos na tela com os dados recebidos
+                  // Atualiza os elementos na tela com os dados do primeiro fetch
                   document.getElementById('logoEmp').src = data.logo;
                   document.getElementById('nomeEmpresa').textContent = data.nomeFantasia;
                   document.getElementById('ramoEmpresa').textContent = data.ramo;
                   document.getElementById('porteEmpresa').textContent = data.porte;
-                  console.log(data)
+                  const pontuacao = data.pontuacao; // Suponha que 'data.pontuacao' seja dinâmico
+                  score = pontuacao; // Atualiza a variável global 'score' com o valor recebido
+                  updateProgressBar(score);
+
+                  return fetch(API2);
+              })
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Erro ao obter os dados da API 2');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  document.getElementById('ramoEmpresa2').textContent = data.ramo;
+                  document.getElementById('pontuacao').textContent = data.pontuacao;
               })
               .catch(error => {
                   console.error('Erro ao buscar dados:', error);
               });
       }
+      
   
       // Chamar a função para buscar os dados quando a página carregar
       buscarDados();
-  });
-
-
-        //SEGUNDO FETCH PARA OS DADOS DO RANKING
-        //function buscarDadosRanking() {
-
-        //fetch(`/teste/${idEmpresa}`)
-          //  .then(response => {
-            //    if (!response.ok) {
-              //      throw new Error('Erro ao buscar os dados da empresa');
-               // }
-                //return response.json();
-           // })
-            //.then(data => {
-             //   document.getElementById('rankingGeral').textContent = data.rankingGeral;
-               // document.getElementById('rankingRamo').textContent = data.rankingRamo;
-                //document.getElementById('rankingPorte').textContent = data.rankingPorte;
-                //console.log('Dados do Ranking:', data);
-                // Aqui você pode atualizar sua interface com os dados recebidos
-            //})
-            //.catch(error => {
-             //   console.error('Erro na requisição:', error);
-            //});
-        //}
-
-        //buscarDadosRanking();
-
-
-      
+  });      
         // Extrair empresaId da URL (Exemplo: /relatorio/123)
         function getIdFromUrl() {
           const pathname = window.location.pathname;
@@ -437,6 +457,7 @@
           console.log("ID do Empresa:", idEmpresa);
 
           const API = `http://localhost:8080/busca/${idEmpresa}`;
+          const API2 = `/teste/${idEmpresa}`;
       
         // Chama a função para carregar os dados da empresa ao carregar a página
         if (empresaId) {
@@ -447,34 +468,70 @@
         }
            
 
+      //SEGUNDO FETCH PARA OS DADOS DO RANKING
+        function buscarDadosRanking() {
 
-      function generateCertificate() {
-        const { jsPDF } = window.jspdf;
-    
-        // Criar um documento jsPDF em formato paisagem
-        const doc = new jsPDF({
-          orientation: 'landscape'
+        fetch()
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar os dados da empresa');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('ramoEmpresa').textContent = data.ramo;
+                document.getElementById('pontuacao').textContent = data.pontuacao;
+                console.log('Dados do Ranking:', data);
+                console.log(data.ramo, data.pontuacao)
+                 //Aqui você pode atualizar sua interface com os dados recebidos
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+            });
+        }
+
+        buscarDadosRanking();
+
+        preloadImage('data.logo')
+        .then(image => {
+            // Chamar a função para gerar o certificado apenas após a imagem estar carregada
+            generateCertificate(image.src);
+        })
+        .catch(error => {
+            console.error('Erro ao carregar imagem:', error);
         });
-    
-        const companyName = "Nome Empresa"; // Você pode obter isso dinamicamente
-        const percentage = (score / totalQuestions) * 100;
-    
-        doc.setFontSize(22);
-        doc.text('Certificado de Conformidade', 20, 30);
-    
-        doc.setFontSize(16);
-        doc.text(`Certificamos que a empresa ${companyName} está conforme em`, 20, 50);
-        doc.text(`${score} dos ${totalQuestions} tópicos avaliados.`, 20, 60);
-        doc.text(`Isso representa uma conformidade de ${percentage.toFixed(2)}%.`, 20, 70);
-    
-        doc.setFontSize(12);
-        doc.text('Parabéns pela conquista do selo "Amigo do Meio Ambiente"!', 20, 90);
-    
-        // Opcional: adicionar logo
-        doc.addImage('data.logo', 'PNG', 20, 100, 50, 50);
-    
-        doc.save('certificado.pdf');
-      }
-    </script>
+
+
+        function generateCertificate() {
+          const { jsPDF } = window.jspdf;
+      
+          // Criar um documento jsPDF em formato paisagem
+          const doc = new jsPDF({
+              orientation: 'landscape'
+          });
+      
+          const companyName = document.getElementById('nomeEmpresa').textContent; // Obtém o nome da empresa do HTML
+          const score = parseInt(document.getElementById('pontuacao').textContent); // Obtém a pontuação do HTML
+          const totalMaxPoints = 100; // Defina isso conforme necessário, com base na sua lógica
+      
+          const percentage = (score / totalMaxPoints) * 100;
+      
+          doc.setFontSize(22);
+          doc.text('Certificado de Conformidade', 20, 30);
+      
+          doc.setFontSize(16);
+          doc.text(`Certificamos que a empresa ${companyName} está conforme em`, 20, 50);
+          doc.text(`${score} dos ${totalMaxPoints} tópicos avaliados.`, 20, 60);
+          doc.text(`Isso representa uma conformidade de ${percentage.toFixed(2)}%.`, 20, 70);
+      
+          doc.setFontSize(12);
+          doc.text('Parabéns pela conquista do selo "Amigo do Meio Ambiente"!', 20, 90);
+      
+          //const logoUrl = document.getElementById('logoEmp').src = data.logo;; // Substitua 'data.logo' pela URL real do logo
+          //doc.addImage(logoUrl, 'PNG', 20, 100, 50, 50);
+      
+          doc.save('certificado.pdf');
+      }     
+    </script> 
 </body>
 </html>
