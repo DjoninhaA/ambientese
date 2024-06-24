@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ambientese</title>
+    <link rel="icon" type="image/x-icon" href="/images/fav-Icon/favIcon.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/568e2b14f2.js" crossorigin="anonymous"></script>
+    <style>
+        *{
+            font-family: poppins;
+        }
+
+        body {
+            background-color: #e7e5e4;
+            font-size: 13px;
+        }
+
+        .table-responsive {
+            margin: 30px 0;
+        }
+
+
+
+        .table-wrapper {
+            min-width: 1000px;
+            padding: 20px 25px;
+            border-radius: 3px;
+
+        }
+
+        .table-title {
+            padding-bottom: 15px;
+            background: #FFFFFF;
+            color: #101828;
+            padding: 16px 30px;
+            margin: -20px -25px 10px;
+            border-radius: 15px;
+        }
+
+        .table-title h2 {
+            margin: 5px 0 0;
+            font-size: 24px;
+        }
+
+        .table-title .btn-group {
+            float: right;
+        }
+
+        .table-title .btn {
+            color: #fff;
+            float: right;
+            font-size: 13px;
+            border: none;
+            min-width: 50px;
+            border-radius: 2px;
+            border: none;
+            outline: none !important;
+            margin-left: 10px;
+        }
+
+        .table-title .btn i {
+            float: left;
+            font-size: 21px;
+            margin-right: 5px;
+        }
+
+        .table-title .btn span {
+            float: left;
+            margin-top: 2px;
+        }
+
+        table.table tr th,
+        table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+        table.table tr th:first-child {
+            width: 60px;
+        }
+
+        table.table tr th:last-child {
+            width: 100px;
+        }
+
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fff;
+            /* Cor das linhas ímpares */
+        }
+
+        .table-striped tbody tr:nth-of-type(even) {
+            background-color: #E5E5E5;
+            /* Cor das linhas pares */
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table td:last-child i {
+            opacity: 0.9;
+            font-size: 22px;
+            margin: 0 5px;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+            outline: none !important;
+        }
+
+        table.table td a:hover {
+            color: #2196F3;
+        }
+
+        table.table td a.edit {
+            color: #101828;
+        }
+
+        table.table td a.delete {
+            color: #101828;
+        }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table .avatar {
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+
+        .pagination li a {
+            border: none;
+            font-size: 13px;
+            min-width: 30px;
+            min-height: 30px;
+            color: #999;
+            margin: 0 2px;
+            line-height: 30px;
+            border-radius: 2px !important;
+            text-align: center;
+            padding: 0 6px;
+        }
+
+        .pagination li a:hover {
+            color: #666;
+        }
+
+        .pagination li.active a,
+        .pagination li.active a.page-link {
+            background: #0077C8;
+        }
+
+        .pagination li.active a:hover {
+            background: #0397d6;
+        }
+
+        .pagination li.disabled i {
+            color: #ccc;
+        }
+
+        .pagination li i {
+            font-size: 16px;
+            padding-top: 6px
+        }
+
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .btn-novo-registro {
+            background-color: #0077C8;
+            /* Cor desejada */
+            border-color: #0077C8;
+            /* Cor da borda do botão */
+        }
+
+        .btn-novo-registro:hover {
+            background-color: #066CB1;
+            /* Cor desejada quando o mouse passa por cima */
+            border-color: #066CB1;
+            /* Cor da borda do botão quando o mouse passa por cima */
+        }
+
+        .input-group .form-control {
+            border-right: 1px solid #ccc;
+            /* Adiciona uma borda direita */
+            width: calc(100% - 38px);
+            /* Ajusta a largura da caixa de pesquisa */
+            width: 500px;
+
+        }
+
+
+
+        /* Custom checkbox */
+        .custom-checkbox {
+            position: relative;
+        }
+
+        .custom-checkbox input[type="checkbox"] {
+            opacity: 0;
+            position: absolute;
+            margin: 5px 0 0 3px;
+            z-index: 9;
+        }
+
+        .custom-checkbox label:before {
+            width: 18px;
+            height: 18px;
+        }
+
+        .custom-checkbox label:before {
+            content: '';
+            margin-right: 10px;
+            display: inline-block;
+            vertical-align: text-top;
+            background: white;
+            border: 1px solid #bbb;
+            border-radius: 2px;
+            box-sizing: border-box;
+            z-index: 2;
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked+label:after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 3px;
+            width: 6px;
+            height: 11px;
+            border: solid #000;
+            border-width: 0 3px 3px 0;
+            transform: inherit;
+            z-index: 3;
+            transform: rotateZ(45deg);
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked+label:before {
+            border-color: #03A9F4;
+            background: #03A9F4;
+        }
+
+        .custom-checkbox input[type="checkbox"]:checked+label:after {
+            border-color: #fff;
+        }
+
+        .custom-checkbox input[type="checkbox"]:disabled+label:before {
+            color: #b8b8b8;
+            cursor: auto;
+            box-shadow: none;
+            background: #ddd;
+        }
+
+        /* Modal styles */
+        .modal .modal-dialog {
+            max-width: 400px;
+        }
+
+        .modal .modal-header,
+        .modal .modal-body,
+        .modal .modal-footer {
+            padding: 20px 30px;
+        }
+
+        .modal .modal-content {
+            border-radius: 3px;
+        }
+
+        .modal .modal-footer {
+            background: #ecf0f1;
+            border-radius: 0 0 3px 3px;
+        }
+
+        .modal .modal-title {
+            display: inline-block;
+        }
+
+        .modal .form-control {
+            border-radius: 2px;
+            box-shadow: none;
+            border-color: #dddddd;
+        }
+
+        .modal textarea.form-control {
+            resize: vertical;
+        }
+
+        .modal .btn {
+            border-radius: 2px;
+            min-width: 100px;
+        }
+
+        .modal form label {
+            font-weight: normal;
+        }
+
+        /* Estilos da navbar */
+        .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #0077C8;
+            padding: 10px;
+            color: white;
+            border-radius: 0px !important;
+            z-index: 2; /* Define uma pilha de ordem para garantir que a navbar fique acima de outros elementos */
+            top: 0;
+            position: sticky;
+        }
+
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+            margin-right: 20px;
+        }
+        .logo{
+            cursor: pointer;
+        }
+
+        .logo img {
+            height: 25px;
+        }
+
+        .side-menu {
+            height:92%;
+            width: 0;
+            position: fixed;
+            top: 65px; /* Alinhar abaixo da navbar */
+            left: 0;
+            background-color: #0077C8;
+            overflow-x: hidden;
+            transition: 0.3s;
+            white-space: nowrap;
+            z-index: 3; /* Define uma pilha de ordem para garantir que a aba lateral fique acima de outros elementos */
+        }
+
+        .side-menu a {
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #ffffff; 
+            display: block;
+            transition: 0.3s;
+            margin: 10px 10px;
+            border-radius: 5px; 
+        }
+
+        .side-menu a i {
+        margin-right: 10px; 
+        vertical-align: middle;
+        }
+
+        .side-menu a:hover {
+            background-color: #487DF7; 
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.26);
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            text-align: center;
+            background-color: #2864F6; 
+            color: white; 
+            border-radius: 5px; 
+            transition: background-color 0.3s;
+        }
+
+        table.table tr th:last-child,
+        table.table tr td:last-child {
+            width: 150px; /* Ajuste o valor de acordo com a sua necessidade */
+        }
+
+        #messageContainer {
+            width: 250px;
+            height: 40px;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+
+    </style>
+    <script>
+        //JS NAVBAR
+        function toggleMenu() {
+            var menu = document.getElementById("sideMenu");
+            if (menu.style.width === "250px") {
+                menu.style.width = "0";
+            } else {
+                menu.style.width = "250px";
+            }
+        }
+
+        //FIM JS NAVBAR
+        
+        const porteLabels = {
+            Microempresa: 'Microempresa',
+            PequenoPorte: 'Empresa de Pequeno Porte (EPP)',
+            IVMedioPorte: 'Grupo IV – Empresa de Médio Porte',
+            IIIMedioPorte: 'Grupo III – Empresa de Médio Porte',
+            IIGrandePorte : 'Grupo II – Empresa de Grande Porte',
+            IGrandePorte: 'Grupo I – Empresa de Grande Porte'
+        };
+
+        const ramoLabels = {
+            Alimenticio: 'Alimentício',
+            Tecnologico: 'Tecnológico',
+            Varejo: 'Varejo',
+            Saude: 'Saúde',
+            ContrucaoCivil: 'Construção Civil'
+        }
+
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            window.deleteEmpresa = function (id) {
+                $.ajax({
+                    url: '/deletar/' + id,
+                    type: 'DELETE',
+                    success: function(result) {
+                        $('#deleteEmployeeModal').modal('hide'); // Fecha o modal
+                        $('#messageContainer').text("Empresa removida!")
+                            .css('background-color', '#28a745')
+                            .fadeIn()
+                            .delay(750)
+                            .fadeOut(function() {
+                                window.location.href = '/listarEmpresa';
+                            });
+                    },
+                    error: function(result) {
+                        $('#messageContainer').text("Erro ao deletar empresa!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
+                    }
+                });
+            };
+
+            function loadEmpresas(page, filters = {}) {
+                let url = `/empresas?page=${page}&size=10`;
+
+                if (filters.nome) url += `&nome=${encodeURIComponent(filters.nome)}`;
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    success: function(response) {
+                        var tbody = $('#tableEmpresas tbody');
+                        tbody.empty();
+                        if (response.content.length === 0) {
+                            tbody.append('<tr><td colspan="7" class="text-center">Nenhum registro encontrado.</td></tr>');
+                        } else {
+                            response.content.forEach(function(empresa) {
+                                var porteText = porteLabels[empresa.porte] || 'Não especificado';
+                                var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
+                                var pontuacaoText = empresa.pontuacao !== null ? empresa.pontuacao : 'Não informado';
+                                tbody.append(`
+                            <tr>
+                                <td>${empresa.cnpj}</td>
+                                <td>${empresa.razaoSocial}</td>
+                                <td>${empresa.email}</td>
+                                <td>${ramoText}</td>
+                                <td>${porteText}</td>
+                                <td>${pontuacaoText}</td>
+
+                                <td>
+                                 <a href="/formulario/${empresa.idEmpresa}" class="edit" data-toggle="tooltip" title="Questionário">
+                                    <i class="material-icons">assignment</i>
+                                </a>
+                                    <a href="/editarEmpresa/${empresa.idEmpresa}" class="edit" data-toggle="tooltip" title="Editar">
+                                        <i class="material-icons">&#xE254;</i>
+                                    </a>
+                                    <a href="#deleteEmployeeModal" class="delete" data-toggle="modal" data-id="${empresa.idEmpresa}" data-target="#deleteEmployeeModal">
+                                        <i class="material-icons" data-toggle="tooltip" title="Deletar">&#xE872;</i>
+                                    </a>
+                                </td>
+                            </tr>
+                        `);
+                            });
+                        }
+                        updatePagination(response.totalPages, page); // Atualiza os controles de paginação
+                        updateEntriesText(response.size, response.totalElements, page); // Função para atualizar controles de paginação
+                    }
+                });
+            }
+
+            $('#searchButton').click(function() {
+                var nome = $('#nome').val();
+                loadEmpresas(0, {nome: nome});
+            });
+
+            function updateEntriesText(pageSize, totalEntries, currentPage) {
+                var startEntry = currentPage * pageSize + 1;
+                var endEntry = startEntry + pageSize - 1;
+                endEntry = (endEntry > totalEntries) ? totalEntries : endEntry;
+                if (endEntry === 0) {
+                    startEntry = 0;
+                }
+                var text = `Mostrando ${startEntry} a ${endEntry} de ${totalEntries} entradas`;
+                $('.hint-text').text(text);
+            }
+
+            function updatePagination(totalPages, currentPage) {
+                var pagination = $('.pagination');
+                pagination.empty(); // Limpa a paginação existente antes de adicionar novos links
+
+                // Botão "Anterior"
+                var prevClassName = currentPage > 0 ? '' : 'disabled';
+                var prevLink = $(`<li class="page-item ${prevClassName}"><a href="#" class="page-link">Anterior</a></li>`);
+                prevLink.click(function(event) {
+                    event.preventDefault();
+                    if (currentPage > 0) {
+                        loadEmpresas(currentPage - 1);
+                    }
+                });
+                pagination.append(prevLink);
+
+                // Números de página com limite de 5 opções visíveis
+                var startPage = Math.max(0, currentPage - 2); // Garante que o número inicial seja pelo menos 0
+                var endPage = Math.min(startPage + 4, totalPages - 1); // Garante que o número final não seja maior que o total de páginas
+
+                // Ajusta o startPage se o endPage atingiu o limite e ainda há espaço para ajustar para trás
+                if (endPage - startPage < 4) {
+                    startPage = Math.max(0, endPage - 4);
+                }
+
+                for (let i = startPage; i <= endPage; i++) {
+                    var className = i === currentPage ? 'active' : '';
+                    var link = $('<li class="page-item ' + className + '"><a href="#" class="page-link">' + (i + 1) + '</a></li>');
+                    link.click((function(page) {
+                        return function(event) {
+                            event.preventDefault();
+                            loadEmpresas(page);
+                        };
+                    })(i));
+                    pagination.append(link);
+                }
+
+                // Botão "Próximo"
+                var nextClassName = currentPage < totalPages - 1 ? '' : 'disabled';
+                var nextLink = $(`<li class="page-item ${nextClassName}"><a href="#" class="page-link">Próximo</a></li>`);
+                nextLink.click(function(event) {
+                    event.preventDefault();
+                    if (currentPage < totalPages - 1) {
+                        loadEmpresas(currentPage + 1);
+                    }
+                });
+                pagination.append(nextLink);
+            }
+
+            // Carregar a primeira página de empresas quando a página é carregada
+            loadEmpresas(0);
+
+            $('#deleteEmployeeModal').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget); // Botão que acionou o modal
+                var id = button.data('id'); // Extrai informação do data-* atributos
+                window.empresaIdToDelete = id; // Armazena ID para ser usado na deleção
+            });
+        });
+
+    </script>
+</head>
+
+<body>
+    <div class="navbar">
+        <div class="menu-btn" onclick="toggleMenu()">
+            &#9776; <!-- Ícone de menu (três linhas horizontais) -->
+        </div>
+        <div class="logo" href="/home">
+            <a href="/home">
+                <img src="../images/ambientetext.svg" alt="Logo da Empresa">
+            </a>
+        </div>
+    </div>
+
+    <div id="sideMenu" class="side-menu">
+        <a href="/listarEmpresa"><i class="fa-solid fa-building"></i>Empresas</a>
+        <a href="/listarFuncionario"><i class="fa-solid fa-user"></i>Funcionários</a>
+        <a href="/ranking"><i class="fa-solid fa-ranking-star"></i>Ranking</a>
+        <a href="/auth" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
+    </div>
+
+<div class="container">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-xs-2">
+                        <h2><b>Empresas</b></h2>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="nome"
+                                   placeholder="Pesquisar empresas">
+
+                            <button type="button" id="searchButton" class="btn btn-primary mb-4 w-100">
+                                Buscar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-xs-">
+                        <a href="/cadastroEmpresa" class="btn btn-novo-registro"><i
+                                class="material-icons">&#xE147;</i> <span>Novo registro</span></a>
+                    </div>
+                </div>
+
+
+                <table class="table table-striped table-hover" id="tableEmpresas">
+                    <thead>
+                    <tr>
+                        <th>CNPJ</th>
+                        <th>Razão Social</th>
+                        <th>E-mail</th>
+                        <th>Ramo</th>
+                        <th>Porte</th>
+                        <th>Pontuação</th>
+                        <th>Ações</th>
+                    </tr>
+                    </thead>
+                <tbody></tbody>
+                </table>
+                <div class="clearfix">
+                    <div class="hint-text"></div>
+                    <ul class="pagination">
+                        <li class="page-item disabled"><a href="#">Anterior</a></li>
+                        <li class="page-item"><a href="#" class="page-link">1</a></li>
+                        <li class="page-item"><a href="#" class="page-link">2</a></li>
+                        <li class="page-item active"><a href="#" class="page-link">3</a></li>
+                        <li class="page-item"><a href="#" class="page-link">4</a></li>
+                        <li class="page-item"><a href="#" class="page-link">5</a></li>
+                        <li class="page-item"><a href="#" class="page-link">Próximo</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Modal HTML -->
+    <div id="addEmployeeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Novo registro</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Razão social</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ramo</label>
+                            <textarea class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Logo</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CNPJ</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Porte</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                        <input type="submit" class="btn btn-success btn-novo-registro" value="Adicionar">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Edit Modal HTML -->
+    <div id="editEmployeeModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form>
+                    <div class="modal-header">
+                        <h4 class="modal-title">Editar Empresa</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Razão social</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>E-mail</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ramo</label>
+                            <textarea class="form-control" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Logo</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CNPJ</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Porte</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                        <input type="submit" class="btn btn-info" value="Salvar">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+<div id="deleteEmployeeModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form>
+                <div class="modal-header">
+                    <h4 class="modal-title">Deletar Empresa</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza de que deseja excluir esses registros?</p>
+                    <p class="text-warning"><small>Essa ação não pode ser desfeita.</small></p>
+                </div>
+                <div class="modal-footer">
+                    <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancelar">
+                    <input type="button" class="btn btn-danger" value="Deletar" onclick="deleteEmpresa(window.empresaIdToDelete)">
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+    <div id="messageContainer" style="position: fixed;  right: 20px; background-color: #28a745; align-content: center; color: white; padding: 10px; border-radius: 5px; display: none;">
+    </div>
+
+</body>
+
+</html>

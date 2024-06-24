@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://kit.fontawesome.com/568e2b14f2.js" crossorigin="anonymous"></script>
+    <title>Formulário Ambientese</title>
+    <style>
+      * {
+        font-family: poppins;
+      }
+      body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        background-color: #e7e5e4;
+      }
+      
+      /* ESTILO NAVBAR */
+      .navbar {
+          display: flex;
+          align-items: center;
+          background-color: #0077C8;
+          padding: 10px;
+          justify-content: normal;
+          color: white;
+          z-index: 2; /* Define uma pilha de ordem para garantir que a navbar fique acima de outros elementos */
+          top: 0;
+          position: sticky;
+      }
+
+      .menu-btn {
+          font-size: 30px;
+          cursor: pointer;
+          color: white;
+          margin-right: 20px;
+      }
+
+      .logo{
+          cursor: pointer;
+      }
+      .logo img {
+          height: 25px;
+      }
+
+      .side-menu {
+          height:92%;
+          width: 0;
+          position: fixed;
+          top: 65px; /* Alinhar abaixo da navbar */
+          left: 0;
+          background-color: #0077C8;
+          overflow-x: hidden;
+          transition: 0.3s;
+          white-space: nowrap;
+          z-index: 3; /* Define uma pilha de ordem para garantir que a aba lateral fique acima de outros elementos */
+      }
+
+      .side-menu a {
+          padding: 15px 20px;
+          text-decoration: none;
+          font-size: 18px;
+          color: #ffffff;
+          display: block;
+          transition: 0.3s;
+          margin: 10px 10px;
+          border-radius: 5px;
+      }
+
+      .side-menu a i {
+          margin-right: 10px;
+          vertical-align: middle;
+      }
+
+      .side-menu a:hover {
+          background-color: #487DF7;
+          color: white;
+          border: 1px solid rgba(255, 255, 255, 0.26);
+      }
+
+      .logout-btn {
+          position: absolute;
+          bottom: 20px;
+          left: 20px;
+          right: 20px;
+          padding: 15px 20px;
+          text-align: center;
+          background-color: #2864F6;
+          color: white;
+          border-radius: 5px;
+          transition: background-color 0.3s;
+      }
+
+      /* FIM DO ESTILO NAVBAR */
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 50px;
+      }
+      .form-header {
+        width: 50vw;
+        box-sizing: border-box;
+        background-color: white;
+        border-top: 12px solid #0077C8;
+        border-radius: 10px;
+        margin: 13px;
+        margin-bottom: 0;
+        padding: 10px;
+        padding-left: 30px;
+        font-size: 15px;
+        padding-right: 30px;
+      }
+      .form-header h1 {
+        font-size: 25px;
+      }
+      .question {
+        background-color: white;
+        box-sizing: border-box;
+        width: 50vw;
+        margin: 13px;
+        padding: 10px;
+        padding-left: 30px;
+        padding-bottom: 30px;
+        margin-bottom: 0;
+        border-radius: 10px;
+      }
+      
+      .submit {
+        width: 50vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+      }
+
+      button {
+        margin: 13px;
+        margin-left: 0;
+        margin-bottom: 0;
+        padding: 8px 19px;
+        border-radius: 3px;
+        background-color: #0077C8;
+        border: none;
+        color: white;
+      }
+
+      button:hover {
+        background-color: #03609e;
+        transition: ease-in 200ms;
+        cursor: pointer;
+      }
+
+      button:disabled {
+          background-color: #ccc; /* Cor de fundo para botão desabilitado */
+          color: #666; /* Cor do texto para botão desabilitado */
+          cursor: not-allowed; /* Cursor para indicar ação proibida */
+      }
+
+      #messageContainer {
+          width: 250px;
+          height: 40px;
+          position: fixed;
+          bottom: 20px;
+          right: 20px;
+          background-color: #28a745;
+          color: white;
+          padding: 10px;
+          border-radius: 5px;
+          display: none;
+          z-index: 1000; /* Garante que o contêiner esteja sobre outros elementos */
+      }
+
+    </style>
+  </head>
+  <body>
+
+  <!-- NAVBAR -->
+
+  <div class="navbar">
+      <div class="menu-btn" onclick="toggleMenu()">
+          &#9776; <!-- Ícone de menu (três linhas horizontais) -->
+      </div>
+      <div class="logo">
+          <a href="/home">
+              <img src="../images/ambientetext.svg" alt="Logo da Empresa">
+          </a>
+      </div>
+  </div>
+
+  <div id="sideMenu" class="side-menu">
+      <a href="/listarEmpresa"><i class="fa-solid fa-building"></i>Empresas</a>
+      <a href="/listarFuncionario"><i class="fa-solid fa-user"></i>Funcionários</a>
+      <a href="/ranking"><i class="fa-solid fa-ranking-star"></i>Ranking</a>
+      <a href="/auth" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
+  </div>
+
+  <!-- FIM NAVBAR  -->
+
+    <form id="formEmpresa" action="###" method="POST">
+        <div class="form-header">
+            <h1>Formulário Ambiente-se</h1>
+            <hr>
+            <p>Por favor, selecione as opções que melhor representam as práticas relacionadas a empresa.</p>
+        </div>
+        <div id="questionContainer"></div>
+        <div class="submit">
+            <button type="submit">Enviar</button>
+        </div>
+    </form>
+
+    <div id="messageContainer" style="position: fixed;  right: 20px; background-color: #28a745; align-content: center; color: white; padding: 10px; border-radius: 5px; display: none;">
+    </div>
+
+    <script>
+
+        //js navbar
+        function toggleMenu() {
+            var menu = document.getElementById("sideMenu");
+            if (menu.style.width === "250px") {
+                menu.style.width = "0";
+            } else {
+                menu.style.width = "250px";
+            }
+        }
+        //fim js navbar
+        $(document).ready(function() {
+
+            function getEmpresaIdFromUrl() {
+                const path = window.location.pathname;
+                const parts = path.split('/');
+                return parts[parts.length - 1];
+            }
+
+            const empresaId = getEmpresaIdFromUrl();
+            $('#empresaId').val(empresaId);
+            function checkAllAnswered() {
+                let allAnswered = true;
+                $('.question').each(function() {
+                    if (!$(this).find('input[type="radio"]:checked').length) {
+                        allAnswered = false;
+                        return false;
+                    }
+                });
+                $('button[type="submit"]').prop('disabled', !allAnswered);
+            }
+
+            function addQuestion(pergunta, index) {
+                const container = document.getElementById('questionContainer');
+                const questionBlock = document.createElement("div");
+                questionBlock.className = "question";
+                questionBlock.setAttribute('data-id', pergunta.idPergunta);
+                questionBlock.innerHTML = `
+                <h3>${index + 1}. ${pergunta.descricaoPergunta} <span style="color: red;">*</span></h3>
+                <input type="radio" id="option1-${pergunta.idPergunta}" name="question${pergunta.idPergunta}" value="conforme" required>
+                <label for="option1-${pergunta.idPergunta}" class="radio-button">Conforme</label><br>
+                <input type="radio" id="option2-${pergunta.idPergunta}" name="question${pergunta.idPergunta}" value="nao-conforme">
+                <label for="option2-${pergunta.idPergunta}" class="radio-button">Não Conforme</label><br>
+                <input type="radio" id="option3-${pergunta.idPergunta}" name="question${pergunta.idPergunta}" value="nao-se-aplica">
+                <label for="option3-${pergunta.idPergunta}" class="radio-button">Não se Aplica</label>
+            `;
+                container.appendChild(questionBlock);
+                $(questionBlock).find('input[type="radio"]').on('change', checkAllAnswered);
+            }
+
+            $.ajax({
+                url: '/perguntas',
+                type: 'GET',
+                success: function(perguntas) {
+                    const perguntasLimitadas = perguntas.slice(0, 20);
+                    perguntasLimitadas.forEach(addQuestion);
+                    checkAllAnswered();
+                },
+                error: function(xhr, status, error) {
+                    $('#messageContainer').text("Erro ao carregar perguntas!").css('background-color', '#ff0000').fadeIn().delay(99999999999).fadeOut();
+                }
+            });
+
+            $('#formEmpresa').submit(function(event) {
+                event.preventDefault();
+
+                let conformesCount = 0;
+                let score = 0;
+                const formData = {
+                    dataPreenchimento: new Date().toISOString().split('T')[0],
+                    empresaId: getEmpresaIdFromUrl(),
+                    perguntasId: $('.question').first().data('id'),
+                    qtdConformes: 0
+                };
+
+                $('input[type="radio"]:checked').each(function() {
+                    if (this.value === 'conforme') {
+                        conformesCount++;
+                        score += 5;
+                    }
+                });
+
+                formData.qtdConformes = conformesCount;
+
+                $.ajax({
+                    url: '/salvarFormulario',
+                    type: 'POST',
+                    data: $.param(formData),
+                    success: function(response) {
+                        var novaPontuacao = score;
+                        var empresaId = formData.empresaId;
+                        $.ajax({
+                            url: '/atualizarPontuacao/' + empresaId,
+                            type: 'PUT',
+                            data: { pontuacao: novaPontuacao },
+                            success: function(response) {
+                                setTimeout(function() {
+                                    window.location.href = `/relatorio/${empresaId}`; //Coloque o valor AQUI DJONATHAN
+                                }, 1500);
+                            },
+                            error: function(xhr, status, error) {
+                                $('#messageContainer').text("Erro ao salvar pontuação!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
+                            }
+                        });
+                        },
+
+
+                    error: function(xhr, status, error) {
+                        $('#messageContainer').text("Erro ao Enviar!").css('background-color', '#ff0000').fadeIn().delay(3000).fadeOut();
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
+
+
+

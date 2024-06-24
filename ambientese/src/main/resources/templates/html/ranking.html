@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ranking</title>
+    <link rel="icon" type="image/x-icon" href="/images/fav-Icon/favIcon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/568e2b14f2.js" crossorigin="anonymous"></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"
+    ></script>
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+    crossorigin="anonymous"
+  />
+    <script>
+
+      function toggleMenu() {
+        var menu = document.getElementById("sideMenu");
+        if (menu.style.width === "250px") {
+            menu.style.width = "0";
+        } else {
+            menu.style.width = "250px";
+        }
+    }      
+      const porteLabels = {
+        Microempresa: 'Microempresa',
+        PequenoPorte: 'Empresa de Pequeno Porte (EPP)',
+        IVMedioPorte: 'Grupo IV – Empresa de Médio Porte',
+        IIIMedioPorte: 'Grupo III – Empresa de Médio Porte',
+        IIGrandePorte : 'Grupo II – Empresa de Grande Porte',
+        IGrandePorte: 'Grupo I – Empresa de Grande Porte'
+      };
+
+      const ramoLabels = {
+        Tecnologico: 'Tecnológico',
+        Varejo: 'Varejo',
+        Saude: 'Saúde',
+        ContrucaoCivil: 'Construção Civil'
+      }
+
+        $(document).ready(function () {
+          function loadEmpresas(page, sortBy = 'pontuacao', sortOrder = 'desc', filters = {}) {
+            let url = `/empresas?page=${page}&size=10&sortBy=${sortBy}&sortOrder=${sortOrder}`;
+            // Adicionando filtros à URL
+            if (filters.ramo) url += `&ramo=${filters.ramo}`;
+            if (filters.porte) url += `&porte=${filters.porte}`;
+            if (filters.nome) url += `&nome=${encodeURIComponent(filters.nome)}`;
+            $.ajax({
+              url: url,
+              type: 'GET',
+              success: function (response) {
+                var tbody = $('#tableEmpresas tbody');
+                tbody.empty();
+                let start = page * 13 + 2; 
+
+                if (response.content.length > 0) {
+                  // Renderiza o topRank com o primeiro item
+                  renderTopRank(response.content[0]);
+
+                  response.content.slice(0).forEach(function (empresa, index) {
+                    var porteText = porteLabels[empresa.porte] || 'Não especificado';
+                    var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
+                    tbody.append(`
+                      <tr>
+                        <td>${index+1}</td>
+                        <td>${empresa.cnpj}</td>
+                        <td>${empresa.razaoSocial}</td>
+                        <td>${porteText}</td>
+                        <td>${ramoText}</td>
+                        <td>${empresa.pontuacao}</td>
+                      </tr>
+                    `);
+                  });
+                } else {
+                  // Adiciona uma linha informando que não há itens
+                  tbody.append(`
+                  <tr>
+                    <td colspan="6" class="text-center">Não existem itens com os filtros aplicados.</td>
+                  </tr>
+                `);
+                  renderTopRank(null);
+                }
+                updatePagination(response.totalPages, page);
+              },
+              error: function (error) {
+                console.error('Erro ao buscar empresas:', error);
+              }
+            });
+          }
+          function handleSearchClick() {
+            const ramo = $('#ramo').val();
+            const porte = $('#porte').val();
+            const nome = $('#nome').val();
+
+            const filters = { ramo, porte, nome };
+            loadEmpresas(0, 'pontuacao', 'desc', filters);
+          }
+
+          $('#searchButton').click(handleSearchClick);
+          function renderTopRank(empresa) {
+            let topRankHtml;
+            if (empresa) {
+              var porteText = porteLabels[empresa.porte] || 'Não especificado';
+              var ramoText = ramoLabels[empresa.ramo] || 'Não especificado';
+              topRankHtml = `
+                <div class="card-header">
+                  ${empresa.razaoSocial}
+                </div>
+                <div class="card-body">
+                  <p class="card-title">1º LUGAR</p>
+                  <p class="card-score mb-2 text-muted">${empresa.pontuacao} pontos</p>
+                  <p class="card-text">Ramo: ${ramoText}</p>
+                  <p class="card-text">Porte: ${porteText}</p>
+                </div>
+              `;
+                      } else {
+                        topRankHtml = `
+                <div class="card-header text-center">Sem Resultados</div>
+                <div class="card-body">
+                  <p class="card-text">Não existem empresas com os filtros aplicados.</p>
+                </div>
+              `;
+            }
+            $('#topRankCard').html(topRankHtml);
+          }
+
+        function updatePagination(totalPages, currentPage) {
+          var pagination = $('.pagination');
+          pagination.empty();
+
+          // Botão "Anterior"
+          var previousClass = currentPage === 0 ? ' disabled' : '';
+          pagination.append(`<li class="page-item${previousClass}"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>`);
+
+          // Evento para o botão "Anterior"
+          if (currentPage > 0) {
+            $('.pagination li:first a').click(function (event) {
+              event.preventDefault();
+              loadEmpresas(currentPage - 1);
+            });
+          }
+
+          // Números de página
+          for (let i = 0; i < totalPages; i++) {
+            var className = i === currentPage ? ' active' : '';
+            var link = $(`<li class="page-item ${className}"><a class="page-link" href="#">${i + 1}</a></li>`);
+            link.click(function (event) {
+              event.preventDefault();
+              loadEmpresas(i);
+            });
+            pagination.append(link);
+          }
+
+          // Botão "Próximo"
+          var nextClass = currentPage === totalPages - 1 ? ' disabled' : '';
+          pagination.append(`<li class="page-item${nextClass}"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a></li>`);
+
+          // Evento para o botão "Próximo"
+          if (currentPage < totalPages - 1) {
+            $('.pagination li:last a').click(function (event) {
+              event.preventDefault();
+              loadEmpresas(currentPage + 1);
+            });
+          }
+        }
+
+
+        // Carregar a primeira página de empresas quando a página é carregada
+        loadEmpresas(0);
+      });
+    </script>
+
+    <style>
+      *{
+            font-family: poppins;
+      }
+
+      th{
+        font-weight: 500;
+        color: #818181 !important;
+      }
+
+      .card {
+        border-radius: 15px;
+      }
+
+      .card-title{
+        color: #0077C8;
+        font-weight: 700;
+        font-size: 25px;
+      }
+      .table.bordered-table {
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+
+
+      .table th {
+        border-top: 0px solid #dee2e6;
+        vertical-align: middle !important;
+        height: 60px !important;
+      }
+
+      .card-header:first-child {
+        border-radius: 15px 15px 0px 0px;
+      }
+      /* MUDA A COR DAS LINHAS NA TABELA
+      .table.bordered-table tbody tr:nth-child(odd) {
+        background-color: #ffffff;
+      }
+
+      .table.bordered-table tbody tr:nth-child(even) {
+        background-color: rgba(0, 119, 200, 0.24);
+      } */
+
+      .table td,
+      .table th {
+        border-top: 0px solid #dee2e6;
+        padding: 0.5rem;
+        vertical-align: middle;
+      }
+
+
+      .select-style {
+        border-radius: 8px;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        background-color: #e7e5e4;
+        min-height: 100vh;
+        padding-right: 0 !important;
+      }
+
+      .home-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: calc(100vh - 80px);
+        max-width: 100%;
+        width: 100%;
+      }
+
+      .imagem-usuario img {
+        border-radius: 50%;
+        border: 4px solid #0077c8;
+        object-fit: cover;
+      }
+
+      .options {
+        display: flex;
+        justify-content: space-between;
+        max-width: 1000px;
+        margin: 20px auto;
+      }
+
+      .options .option1,
+      .options .option2,
+      .options .option3 {
+        width: calc((100% - 20px) / 3);
+        display: flex;
+        align-items: center;
+        background-color: #ffffff;
+        padding: 20px;
+        border-radius: 10px;
+        margin: 5px;
+        border: 1px solid #d5d5d5;
+      }
+
+      .options .option1 img,
+      .options .option2 img,
+      .options .option3 img {
+        margin-right: 20px;
+        width: 50px;
+      }
+      .icon-menu {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-left: 1rem;
+        height: 4rem;
+        color: white;
+      }
+      .ms-1 {
+        font-size: 1.2rem;
+        color: white;
+      }
+
+      .item-list {
+        background: #0077c8;
+        margin-bottom: 0.5rem;
+        width: 100%;
+        border-radius: 0.75rem;
+      }
+      .sign-out {
+        display: flex;
+        /*background: #0077C8;*/
+        align-items: center;
+        flex-direction: column;
+        border-radius: 20px;
+        height: 100%;
+        width: 60%;
+        margin-left: 3.5rem;
+        /*box-shadow: 5px 5px rgba(0, 0, 0, 0.635);*/
+      }
+      .sign-out:hover {
+        box-shadow: 5px 5px rgba(0, 0, 0, 0.635);
+      }
+
+      .space-list {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+      }
+
+      .firstPosition{
+        border-radius: 15px 0 0 0;
+      }
+
+      .UltimaPosition{
+        border-radius: 0 15px 0 0;
+      }
+
+      /* ESTILO NAVBAR */
+      .navbar {
+            display: flex;
+            align-items: center;
+            background-color: #0077C8; 
+            padding: 10px;
+            color: white;
+            justify-content: normal;
+            z-index: 2; /* Define uma pilha de ordem para garantir que a navbar fique acima de outros elementos */
+            top: 0;
+            position: sticky;
+        }
+
+        .menu-btn {
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+            margin-right: 20px;
+        }
+
+        .logo img {
+          height: 25px;
+        }
+      .logo{
+        cursor: pointer;
+      }
+
+        .side-menu {
+            height:92%;
+            width: 0;
+            position: fixed;
+            top: 65px; /* Alinhar abaixo da navbar */
+            left: 0;
+            background-color: #0077C8; 
+            overflow-x: hidden;
+            transition: 0.3s;
+            white-space: nowrap;
+            z-index: 3; /* Define uma pilha de ordem para garantir que a aba lateral fique acima de outros elementos */
+        }
+
+        .side-menu a {
+            padding: 15px 20px;
+            text-decoration: none;
+            font-size: 18px; 
+            color: #ffffff; 
+            display: block;
+            transition: 0.3s;
+            margin: 10px 10px;
+            border-radius: 5px;
+        }
+
+        .side-menu a i {
+        margin-right: 10px; 
+        vertical-align: middle;
+        }
+
+        .side-menu a:hover {
+            background-color: #487DF7;
+            color: white; 
+            border: 1px solid rgba(255, 255, 255, 0.26);
+        }
+
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            text-align: center;
+            background-color: #2864F6;
+            color: white; 
+            border-radius: 5px; 
+            transition: background-color 0.3s;
+        }
+      /* FIM DO ESTILO NAVBAR */
+      .card-body p{
+        align-content: center;
+        align-items: center;
+      }
+
+    </style>
+  </head>
+
+  <body style="background: #F8F8F8">
+
+    <div>
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="offcanvas"
+        data-bs-keyboard="false"
+        data-bs-backdrop="false"
+        style="margin-top: 80px; overflow-x: auto; width: 20rem"
+      >
+      </div>
+    </div>
+
+      <!-- NAVBAR -->
+
+      <div class="navbar">
+        <div class="menu-btn" onclick="toggleMenu()">
+            &#9776; <!-- Ícone de menu (três linhas horizontais) -->
+        </div>
+        <div class="logo" href="/home">
+          <a href="/home">
+            <img src="../images/ambientetext.svg" alt="Logo da Empresa">
+          </a>
+        </div>
+      </div>
+
+    <div id="sideMenu" class="side-menu">
+      <a href="/listarEmpresa"><i class="fa-solid fa-building"></i>Empresas</a>
+      <a href="/listarFuncionario"><i class="fa-solid fa-user"></i>Funcionários</a>
+      <a href="/ranking"><i class="fa-solid fa-ranking-star"></i>Ranking</a>
+      <a href="/auth" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
+    </div>
+      
+
+
+      <!-- FIM NAVBAR -->
+    <div class="ranking-container">
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-4" id="topRankCard"></div>
+
+
+            <select class="custom-select mb-2 select-style" id="ramo" name="ramo">
+              <option value="" selected>Selecione o ramo da empresa</option>
+              <option value="Alimenticio">Alimentício</option>
+              <option value="Tecnologico">Tecnológico</option>
+              <option value="Varejo">Varejo</option>
+              <option value="Saude">Saúde</option>
+              <option value="ContrucaoCivil">Construção civil</option>
+            </select>
+
+            <select class="custom-select mb-2 select-style" id="porte" name="porte">
+              <option value="" selected>Selecione o porte da empresa</option>
+              <option value="Microempresa">Microempresa</option>
+              <option value="PequenoPorte">Empresa de Pequeno Porte (EPP)</option>
+              <option value="IVMedioPorte">Grupo IV – Empresa de Médio Porte</option>
+              <option value="IIIMedioPorte">Grupo III – Empresa de Médio Porte</option>
+              <option value="IIGrandePorte">Grupo II – Empresa de Grande Porte</option>
+              <option value="IGrandePorte">Grupo I – Empresa de Grande Porte</option>
+            </select>
+
+            <button type="button" id="searchButton" class="btn btn-primary mb-4 w-100">
+              Buscar
+            </button>
+
+          </div>
+
+          <div class="col-md-8" style="background-color: white; border-radius: 15px !important;">
+            <table class="table bordered-table" id="tableEmpresas">
+                <thead>
+                <tr class="tablerow">
+                  <th>Posição</th>
+                  <th>CNPJ</th>
+                  <th>Razão Social</th>
+                  <th>Porte</th>
+                  <th>Ramo</th>
+                  <th>Pontuação</th>
+                </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+              <nav aria-label="Page navigation">
+                <ul class="pagination justify-content-center"></ul>
+              </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+
+  </body>
+
+</html>

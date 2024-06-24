@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatorio</title>
+    <link rel="icon" type="image/x-icon" href="/images/fav-Icon/favIcon.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  
+    <script src="https://kit.fontawesome.com/568e2b14f2.js" crossorigin="anonymous"></script>
+    <style>
+      *{
+        font-family: poppins;
+      }
+
+      body {
+        margin: 0;
+        padding-right: 0;
+        background-color: #e7e5e4;
+      }
+
+     /* ESTILO NAVBAR */
+      .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: normal;
+        background-color: #0077C8;
+        padding: 10px;
+        height: 100%;
+        color: white;
+        z-index: 2; /* Define uma pilha de ordem para garantir que a navbar fique acima de outros elementos */
+        top: 0;
+        position: sticky;
+    }
+
+    .menu-btn {
+        font-size: 30px;
+        cursor: pointer;
+        color: white;
+        margin-right: 20px;
+    }
+
+    .return{
+      cursor: pointer;
+    }
+    .return img {
+        height: 25px;
+    }
+
+    .side-menu {
+        height: 95%;
+        width: 0;
+        position: fixed;
+        top: 55px; /* Alinhar abaixo da navbar */
+        left: 0;
+        background-color: #0077C8;
+        overflow-x: hidden;
+        transition: 0.3s;
+        white-space: nowrap;
+        z-index: 3; /* Define uma pilha de ordem para garantir que a aba lateral fique acima de outros elementos */
+    }
+
+    .side-menu a {
+        padding: 15px 20px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #ffffff;
+        display: block;
+        transition: 0.3s;
+        margin: 10px 10px;
+        border-radius: 5px;
+    }
+
+    .side-menu a i {
+    margin-right: 10px; 
+    vertical-align: middle;
+    }
+
+    .side-menu a:hover {
+        background-color: #487DF7;
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.26);
+    }
+
+    .logout-btn {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        padding: 15px 20px;
+        text-align: center;
+        background-color: #2864F6;
+        color: white;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    /* FIM DO ESTILO NAVBAR */
+
+    .main{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+
+       .tudo {
+        display: flex;
+        width: 60%;
+        height: 60%;
+        margin-top: -10%;
+        justify-content: center;
+        border: 2px solid rgb(228, 225, 225);
+        border-radius: 20px;
+        background-color: #FFFFFF;
+       } 
+
+       .coluna1 {
+        display: flex;
+        flex-direction: column;
+        width: 30%;
+        height: 45vh;
+        padding: 20px;
+        margin-top: 60px;
+        gap: 15px;
+        overflow: hidden;
+        flex: none;
+        align-items: stretch; /* Ajustar flexbox */
+        margin-right: -20px;
+      }
+
+      .coluna1 div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .text {
+        margin-top: 0;
+        display: flex;
+        flex-direction: column;
+      }
+      .text h3{
+        margin: 0;
+      }
+
+      .coluna1 p {
+        max-lines: 3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0; /* Remover margens do texto */
+      }
+
+       .coluna2 {
+        width: 70%;
+        height: 45vh;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        margin-top: 60px;
+        gap: 15px;
+       }
+
+
+       .comp1, .comp2 {
+        border: 2px solid rgb(182, 181, 181);
+        height: 50%;
+        border-radius: 20px;
+        flex: 1; /* Faz com que os componentes ocupem todo o espaço verticalmente */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       }
+
+       /*graficos*/
+       .porcentagem {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;        
+       }
+
+
+       .graphs p {        
+        align-items: center;
+        text-align: center;
+        align-items: center;
+        border-radius: 50%;
+       }
+
+       /*chat*/
+       .container {
+        width: 380px;
+        height: 180px;
+        margin: 0;
+        padding: 0;
+        margin-left: -10px;
+        border-radius: 5px;
+        background-color: #fff;
+        text-align: center;
+    }
+
+    
+        #progressContainer {
+            width: 100%;
+            background-color: #FFFFFF;
+            border: 2px solid black;
+            border-radius: 25px;
+            margin: 20px 0;
+        }
+
+        #progressText {
+          margin-left: 70px;
+          color:#FFFFFF;
+        }
+        
+        #progressBar {
+          height: 25px;
+          width: 0;
+          background-color: #4caf50;
+          border-radius: 25px;
+          transition: width 0.5s;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          color: white;
+          font-weight: bold;
+        }
+        
+
+
+       .logoEmpresa{
+        height: 100px;
+        object-fit: contain;
+        width: 100px;
+        border-radius: 50px;
+       }
+
+
+
+       /*selo*/
+       .selo {
+        height: 20vh;
+        width: 60vh;
+       }
+
+       .logoSelo{
+        align-items: center;
+        justify-content: center;
+        display: flex;
+        width: 100%;
+        height: 25%;
+       }
+
+       .logoSelo img {
+        position: relative;
+        top: 15px;
+
+       }
+
+       .textoSelo h2{
+        margin-top: 25px;
+        font-size: 30px;
+        text-align: center;
+       }
+       .textoSelo p{
+        margin-top: 15px;
+        font-size: 25px;
+        text-align: center;
+       }
+
+       .buttons {
+        align-items: center;
+        justify-content: space-around;
+        display: flex;
+        padding-bottom: 10px
+       }
+
+       .btn {
+        cursor: pointer;
+        background-color: #0077C8;
+        color:#ffffff;
+        width: 40%;
+       }
+
+       .btn img{
+        margin-right: 10px;
+        
+        
+       }
+
+
+    </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+    
+  <div class="navbar">
+    <div class="menu-btn" onclick="toggleMenu()">
+        &#9776; <!-- Ícone de menu (três linhas horizontais) -->
+    </div>
+    <div class="return">
+      <a href="/home">
+        <img src="../images/ambientetext.svg" alt="Logo da Empresa">
+      </a>
+    </div>
+  </div>
+
+  <div id="sideMenu" class="side-menu">
+    <a href="/listarEmpresa"><i class="fa-solid fa-building"></i>Empresas</a>
+    <a href="/listarFuncionario"><i class="fa-solid fa-user"></i>Funcionários</a>
+    <a href="/ranking"><i class="fa-solid fa-ranking-star"></i>Ranking</a>
+    <a href="/auth" class="logout-btn"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
+  </div>
+    <div class="main">
+      <div class="tudo">
+        <div class="coluna1">
+          <div class="comp1">
+            <span class="logo">
+              <div>
+                <img id="logoEmp"  class="logoEmpresa" src=""  alt="imagem Empresa">
+              </div>
+              <div class="text">
+                <h3><span id="nomeEmpresa">Nome da Empresa</span></h3>
+                <p><span id="ramoEmpresa">Ramo</span></p>
+                <p><span id="porteEmpresa">Porte</span></p>
+              </div>
+            </span>
+          </div>
+          <div class="comp1">
+            <span class="ranking">
+              <div class="trofeu">
+                <img src="../images/trofeu.png" alt="trofeu">
+              </div>
+              <div class="text">
+                <p><span id="ramoEmpresa2">Ramo(Data)</span></p>
+                <p><span id="pontuacao">Pontuação(Data)</span> Pontos</p>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div class="coluna2">
+          <div class="comp2">
+            <span class="porcentagem">
+                <div class="container">
+                  <div id="resultContainer" style="display: none;">
+                      <h2>Resultado</h2>
+                      <div id="progressContainer">
+                          <div id="progressBar"><span id="progressText"></span></div>
+                      </div>
+                      <p id="scoreText"></p>
+                  </div>
+              </div>
+            </span>
+          </div>
+          <div class="comp2">
+            <span class="selo">
+              <div class="logoSelo">
+                <img src="../images/certificate.png" alt="">
+              </div>
+              <div class="textoSelo">
+                <h2>Selo Aprovado!</h2>
+                <p>Amigo do Meio Ambiente</p>
+              </div>              
+            </span>
+          </div>
+          <div class="buttons">
+            <button type="button" id="searchButton"  onclick="generateCertificate()"  class="btn btn-primary w-40">
+              <img src="../images/download.svg" alt="Exportar"
+                  >Exportar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+      function toggleMenu() {
+        var menu = document.getElementById("sideMenu");
+        if (menu.style.width === "250px") {
+            menu.style.width = "0";
+        } else {
+            menu.style.width = "250px";
+        }
+    }
+
+   // Variável global para armazenar a pontuação inicial da empresa
+    let score = 0;
+    const totalMaxPoints = 100; // Pontuação máxima possível
+
+    // Função para atualizar a barra de progresso com base na pontuação atual
+    function updateProgressBar(score) {
+        const percentage = (score / totalMaxPoints) * 100; // Calcula a porcentagem de progresso
+
+        document.getElementById('resultContainer').style.display = 'block';
+        document.getElementById('progressBar').style.width = `${percentage}%`;
+        document.getElementById('progressText').innerText = `${percentage.toFixed(0)}%`;
+        document.getElementById('scoreText').innerText = `Sua Empresa alcançou uma pontuação de ${score} pontos de ${totalMaxPoints} possíveis.`;
+}
+
+    
+      document.addEventListener("DOMContentLoaded", function() {
+       
+        // Função para carregar os dados da empresa via AJAX
+        function buscarDados() {
+          fetch(API)  // Primeiro fetch
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Erro ao obter os dados da API 1');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  // Atualiza os elementos na tela com os dados do primeiro fetch
+                  document.getElementById('logoEmp').src = data.logo;
+                  document.getElementById('nomeEmpresa').textContent = data.nomeFantasia;
+                  document.getElementById('ramoEmpresa').textContent = data.ramo;
+                  document.getElementById('porteEmpresa').textContent = data.porte;
+                  const pontuacao = data.pontuacao; // Suponha que 'data.pontuacao' seja dinâmico
+                  score = pontuacao; // Atualiza a variável global 'score' com o valor recebido
+                  updateProgressBar(score);
+                  return convertToBase64(data.logo);
+                })
+                .then(imageBase64 => {
+                    // Salva a imagem convertida em uma variável global
+                    window.imageBase64 = imageBase64;
+
+                  return fetch(API2);
+              })
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Erro ao obter os dados da API 2');
+                  }
+                  return response.json();
+              })
+              .then(data => {
+                  document.getElementById('ramoEmpresa2').textContent = data.ramo;
+                  document.getElementById('pontuacao').textContent = data.pontuacao;
+              })
+              .catch(error => {
+                  console.error('Erro ao buscar dados:', error);
+              });
+      }
+      
+  
+      // Chamar a função para buscar os dados quando a página carregar
+      buscarDados();
+  });      
+        // Extrair empresaId da URL (Exemplo: /relatorio/123)
+        function getIdFromUrl() {
+          const pathname = window.location.pathname;
+          const parts = pathname.split('/');
+          const id = parts[2];
+          return id;
+      }
+      
+          const idEmpresa = getIdFromUrl();
+          console.log("ID do Empresa:", idEmpresa);
+
+          const API = `http://localhost:8080/busca/${idEmpresa}`;
+          const API2 = `/teste/${idEmpresa}`;
+      
+        // Chama a função para carregar os dados da empresa ao carregar a página
+        if (empresaId) {
+          carregarDadosEmpresa(empresaId);
+        } else {
+          console.error('ID da empresa não encontrado na URL.');
+          // Aqui você pode tratar o caso em que o ID da empresa não é fornecido na URL
+        }
+           
+
+      //SEGUNDO FETCH PARA OS DADOS DO RANKING
+        function buscarDadosRanking() {
+
+        fetch()
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Erro ao buscar os dados da empresa');
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById('ramoEmpresa').textContent = data.ramo;
+                document.getElementById('pontuacao').textContent = data.pontuacao;
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+            });
+        }
+
+        buscarDadosRanking();
+
+
+
+        //CERTIFICADO PDF
+
+        const logoConvert = data.logo;
+
+        function convertToBase64(logoConvert) {
+          return fetch(logoConvert)
+              .then(response => response.blob())
+              .then(blob => new Promise((resolve, reject) => {
+                  const reader = new FileReader();
+                  reader.onloadend = () => resolve(reader.result);
+                  reader.onerror = reject;
+                  reader.readAsDataURL(blob);
+              }));
+      }
+
+      function generateCertificate() {
+        const { jsPDF } = window.jspdf;
+    
+        const doc = new jsPDF({
+            orientation: 'landscape'
+        });
+    
+        const pageWidth = doc.internal.pageSize.width;
+        const pageHeight = doc.internal.pageSize.height;
+    
+        // Define as margens e a espessura da borda
+        const margin = 10;
+        const borderWidth = 5;
+    
+        // Desenha a borda ao redor de toda a página
+        doc.setLineWidth(borderWidth);
+        doc.setDrawColor(0, 10, 135); // Cor da borda azul (R, G, B)
+        doc.rect(margin, margin, pageWidth - 2 * margin, pageHeight - 2 * margin, 'D'); // 'D' para desenhar apenas a borda
+    
+        // Dados dinâmicos (substitua pelos valores dinâmicos necessários)
+        const companyName = document.getElementById('nomeEmpresa').textContent; // Obtém dinamicamente o nome da empresa
+        const score = parseInt(document.getElementById('pontuacao').textContent); // Obtém dinamicamente a pontuação
+        const totalMaxPoints = 100;
+        const percentage = (score / totalMaxPoints) * 100;
+    
+        const titleText = 'Certificado "Amigo" do Meio Ambiente'; // Texto dinâmico com o nome da empresa
+        const titleFontSize = 22;
+        const titleTextWidth = doc.getTextWidth(titleText);
+        const titleX = 80;
+        const titleY = 30;
+    
+        const imageWidth = 60; // Largura da imagem da empresa, ajuste conforme necessário
+        const imageHeight = 60; // Altura da imagem da empresa, ajuste conforme necessário
+        const imageX = (pageWidth - imageWidth) / 2; // Posição x da imagem para centralizar
+        const imageY = titleY + titleFontSize + 10;
+    
+        doc.setFontSize(titleFontSize);
+        doc.text(titleText, titleX, titleY);
+    
+        // Adiciona a imagem da empresa (substitua imageBase64 pela variável que contém a imagem em base64)
+        if (imageBase64) {
+          doc.addImage(imageBase64, 'PNG', imageX, imageY, imageWidth, imageHeight);
+      }
+    
+        const textCenterX = pageWidth / 2;
+        const textY = imageY + imageHeight + 20;
+        const lineHeight = 10;
+    
+        doc.setFontSize(18);
+        doc.text(`A empresa cumpriu ${percentage.toFixed(0)}% dos critérios estabelecidos.`, textCenterX, textY, { align: 'center' });
+    
+        doc.setFontSize(12);
+        doc.text('Parabéns pela conquista do selo "Amigo do Meio Ambiente"!', textCenterX, textY + lineHeight, { align: 'center' });
+    
+        doc.save('certificado.pdf');
+    }
+    
+    
+    
+
+        
+    </script> 
+</body>
+</html>
