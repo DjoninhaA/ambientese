@@ -40,6 +40,7 @@ cd ambientese
 5 - Crie um novo Pull Request
 
 ## Autores
+-Djonathan Leonardo de Souza
 -Edvaldo de Fendi
 -Felipe Boufleuher da Silva
 -Paola Julie dos Santos da Silva
