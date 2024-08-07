@@ -2,8 +2,11 @@
 
 ## O que é o projeto?
 O projeto consiste em um Sistema de Avaliação Ambiental de Empresas, que permite o cadastro e avaliação de empresas com base em critérios e questionários pré-definidos. O objetivo é facilitar a tomada de decisões e o monitoramento de desempenho ambiental empresarial.
-![image](https://github.com/user-attachments/assets/019a0aaf-980f-4c87-af73-59aa71dcd5e5)
-![image](https://github.com/user-attachments/assets/cc4bbcb0-ccf6-450c-9357-a745731d8ca6)
+
+![image](https://github.com/user-attachments/assets/f161ab57-231b-4346-a1a1-2b1b7c849837)
+![image](https://github.com/user-attachments/assets/be846da2-af48-4bf7-a569-7eac34b62ceb)
+
+
 
 
 ## Tecnologias Utilizadas
