@@ -2,6 +2,9 @@
 
 ## O que é o projeto?
 O projeto consiste em um Sistema de Avaliação Ambiental de Empresas, que permite o cadastro e avaliação de empresas com base em critérios e questionários pré-definidos. O objetivo é facilitar a tomada de decisões e o monitoramento de desempenho ambiental empresarial.
+![image](https://github.com/user-attachments/assets/019a0aaf-980f-4c87-af73-59aa71dcd5e5)
+![image](https://github.com/user-attachments/assets/cc4bbcb0-ccf6-450c-9357-a745731d8ca6)
+
 
 ## Tecnologias Utilizadas
 
@@ -19,10 +22,10 @@ Antes de começar, verifique se você possui o Java Development Kit (JDK) instal
 Certifique-se de ter também um ambiente de desenvolvimento integrado (IDE) configurado, como IntelliJ IDEA ou Eclipse.
 
 ### Clonando o Repositório
-Clone o repositório do GitLab para obter uma cópia do código-fonte do projeto:
+Clone o repositório do GitHub para obter uma cópia do código-fonte do projeto:
 
 ```bash
-git clone https://gitlab.com/grupo-86654708/redme-test.git
+git clone https://github.com/DjoninhaA/ambientese
 ```
 
 ## Compilando e Executando
@@ -40,11 +43,11 @@ cd ambientese
 5 - Crie um novo Pull Request
 
 ## Autores
--Djonathan Leonardo de Souza
--Edvaldo de Fendi
--Felipe Boufleuher da Silva
--Paola Julie dos Santos da Silva
--Vitor Luiz Duarte da Silva
+* Djonathan Leonardo de Souza
+* Edvaldo de Fendi
+* Felipe Boufleuher da Silva
+* Paola Julie dos Santos da Silva
+* Vitor Luiz Duarte da Silva
 
 ## Status do projeto
-O projeto está em fase de desenvolvimento...
+Este é o MVP do projeto!
