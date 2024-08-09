@@ -16,6 +16,7 @@ Este projeto foram utilizadas as seguintes tecnologias:
 - Java
 - SpringBoot
 - HTML
+- Docker
 
 ## Instalação
 Antes de começar, verifique se você possui o Java Development Kit (JDK) instalado em seu sistema. Você pode baixá-los e instalá-los nos seguintes links:
@@ -37,20 +38,31 @@ Navegue até o diretório do projeto e execute os arquivos em sua IDE:
 ```bash
 cd ambientese
 ```
+```bash
+./mvnw spring-boot:run
+```
+
+Acessar o Sistema via Navegador:
+
+Abra seu navegador e vá para http://localhost:8080. Você será apresentado à tela de login.
+
+Utilize as credenciais
+- login:
+- admin senha:admin
 
 ## Como Contribuir
-1 - Faça um fork do repositório
-2 - Crie uma branch para sua feature (git checkout -b feature/nova-feature)
-3 - Faça commit de suas mudanças (git commit -m 'Adicione uma nova feature')
-4 - Faça push para a branch (git push origin feature/nova-feature)
-5 - Crie um novo Pull Request
+* 1 - Faça um fork do repositório
+* 2 - Crie uma branch para sua feature (git checkout -b feature/nova-feature)
+* 3 - Faça commit de suas mudanças (git commit -m 'Adicione uma nova feature')
+* 4 - Faça push para a branch (git push origin feature/nova-feature)
+* 5 - Crie um novo Pull Request
 
 ## Autores
-* Djonathan Leonardo de Souza
-* Edvaldo de Fendi
-* Felipe Boufleuher da Silva
-* Paola Julie dos Santos da Silva
-* Vitor Luiz Duarte da Silva
+* [Djonathan Leonardo de Souza](https://github.com/DjoninhaA)
+* [Edvaldo de Fendi](https://github.com/Edv-Fendi)
+* [Felipe Boufleuher da Silva](https://github.com/FelipeBoufleuher)
+* [Paola Julie dos Santos da Silva](https://github.com/paolajulie)
+* [Vitor Luiz Duarte da Silva](https://github.com/ctrlVi)
 
 ## Status do projeto
 Este é o MVP do projeto!
